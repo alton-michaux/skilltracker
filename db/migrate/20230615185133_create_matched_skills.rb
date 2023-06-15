@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMatchedSkills < ActiveRecord::Migration[5.2]
   def change
     create_table :matched_skills do |t|
