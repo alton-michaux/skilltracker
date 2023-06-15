@@ -3,7 +3,7 @@ class CreateTickets < ActiveRecord::Migration[5.2]
     create_table :tickets do |t|
       t.string :title
       t.text :description
-      t.enum :status
+      t.integer :status
       t.string :assignee
 
       t.timestamps
