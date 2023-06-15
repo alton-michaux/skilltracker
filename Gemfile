@@ -19,7 +19,6 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 gem 'active_model_serializers', '~>0.10.10'
 gem 'devise', '~> 4.7.1'
-gem 'rspec-rails', '~> 3.8'
 gem 'rswag', '~>2.0.5'
 
 # Use CoffeeScript for .coffee assets and views
@@ -48,6 +47,8 @@ gem 'sendgrid-actionmailer'
 gem 'sendgrid-ruby'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.8'
+  gem 'rswag-specs'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
