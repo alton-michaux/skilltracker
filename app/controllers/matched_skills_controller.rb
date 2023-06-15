@@ -1,0 +1,2 @@
+class MatchedSkillsController < ApplicationController
+end
