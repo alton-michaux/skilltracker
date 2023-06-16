@@ -11,7 +11,6 @@ describe 'Skills API' do
       tags 'Skills'
       produces 'application/json', 'application/xml'
       parameter name: :user_id, in: :path, type: :string
-      parameter name: :id, in: :path, type: :string
 
       response '200', 'skills found' do
         schema type: :object,

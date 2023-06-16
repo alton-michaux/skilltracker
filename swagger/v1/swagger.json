@@ -21,12 +21,6 @@
             "in": "path",
             "type": "string",
             "required": true
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
           }
         ],
         "responses": {
@@ -264,12 +258,6 @@
         "parameters": [
           {
             "name": "user_id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "id",
             "in": "path",
             "type": "string",
             "required": true
