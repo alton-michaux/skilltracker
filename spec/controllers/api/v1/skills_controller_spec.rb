@@ -2,5 +2,5 @@
 
 require 'rails_helper'
 
-RSpec.describe SkillsController, type: :controller do
+RSpec.describe Api::V1::SkillsController, type: :controller do
 end

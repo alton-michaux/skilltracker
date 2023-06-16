@@ -2,5 +2,5 @@
 
 require 'rails_helper'
 
-RSpec.describe TicketsController, type: :controller do
+RSpec.describe Api::V1::TicketsController, type: :controller do
 end
