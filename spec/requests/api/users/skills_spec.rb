@@ -2,12 +2,40 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
+  let!(:user1) { create(:user) }
+  let!(:skill1) { create(:skill, name: 'Skill1', description: 'Skill description')}
 
-  path '/skills' do
+  path '/api/v1/users/{id}/skills' do
+
+    get 'Retrieves all skills' do
+      tags 'Skills'
+      produces 'application/json', 'application/xml'
+      parameter name: :user_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'skills found' do
+        schema type: :object,
+          properties: {
+            id: { type: :integer },
+            name: { type: :string },
+            description: { type: :string }
+          },
+          required: [ 'id', 'title' ]
+
+        let(:id) { skill1.id }
+        run_test!
+      end
+
+      response '404', 'skill not found' do
+        let(:id) { 'invalid' }
+        run_test!
+      end
+    end
 
     post 'Creates a Skill' do
       tags 'Skills'
       consumes 'application/json'
+      parameter name: :user_id, in: :path, type: :string
       parameter name: :skill, in: :body, schema: {
         type: :object,
         properties: {
@@ -29,15 +57,16 @@ describe 'Skills API' do
     end
   end
 
-  path '/skills/{id}' do
+  path '/api/v1/users/{id}/skills/{id}' do
     let!(:skill) { Skill.create(name: 'Fishing', description: 'Catching fish with a pole')}
 
     get 'Retrieves a skill' do
       tags 'Skills'
       produces 'application/json', 'application/xml'
+      parameter name: :user_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
 
-      response '200', 'blog found' do
+      response '200', 'skill found' do
         schema type: :object,
           properties: {
             id: { type: :integer },
@@ -46,7 +75,7 @@ describe 'Skills API' do
           },
           required: [ 'id', 'title' ]
 
-        let(:id) { skill.id }
+        let(:id) { skill1.id }
         run_test!
       end
 
@@ -59,6 +88,7 @@ describe 'Skills API' do
     put 'Updates a skill' do
       tags 'Skills'
       consumes 'application/json'
+      parameter name: :user_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
       parameter name: :skill, in: :body, schema: {
         type: :object,
@@ -69,13 +99,13 @@ describe 'Skills API' do
         required: [ 'name', 'description' ]
       }
 
-      response '200', 'blog found' do
+      response '200', 'skill updated' do
         schema type: :object,
                properties: {
                  skill: { type: :object },
                },
                required: ['skill']
-        let(:id) { skill.id }
+        let(:id) { skill1.id }
         let(:name) { 'Juggling' }
         run_test! do | response |
           data = JSON.parse(response.body)
@@ -92,10 +122,11 @@ describe 'Skills API' do
     delete 'Deletes a skill' do
       tags 'Skills'
       consumes 'application/json'
+      parameter name: :user_id, in: :path, type: :string
       parameter name: :id, in: :path, type: :string
 
-      response '200', 'blog found' do
-        let(:id) { skill.id }
+      response '200', 'skill deleted' do
+        let(:id) { skill1.id }
         run_test!
       end
 
