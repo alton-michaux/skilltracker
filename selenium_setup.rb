@@ -1,4 +1,3 @@
-
 require 'selenium-webdriver'
 
 # Specify the path to chromedriver

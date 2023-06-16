@@ -9,22 +9,18 @@ module Api
         @skills = UserSkill.all.find_by(user_id: @current_user.id)
       end
 
+      def show
+        @skill = Skill.find(skill_params[:id])
+      end
+
       def create
         @skill = Skill.create(user_id: @current_user.id)
       end
 
       private
 
-      def user_params
-        params.permit(:user_id)
-      end
-
       def skill_params
-        params.require(:skill).permit(:name, :description, :user_id)
-      end
-
-      def get_current_user
-        @current_user = User.find(user_params["user_id"])
+        params.require(:skill).permit(:id, :name, :description, :user_id)
       end
     end
   end

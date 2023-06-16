@@ -15,9 +15,9 @@ Rails.application.routes.draw do
         registrations: 'api/v1/users/registrations'
       }
 
-      resources :users, only: [:index, :show] do
-        resources :skills, only: [:index, :create, :destroy]
-        resources :tickets, only: [:index, :create, :show]
+      resources :users, only: %i[index show] do
+        resources :skills, only: %i[index create destroy]
+        resources :tickets, only: %i[index create show]
         resources :matched_skills, only: [:index]
       end
     end

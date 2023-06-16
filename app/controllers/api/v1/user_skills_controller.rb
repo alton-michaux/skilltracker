@@ -18,9 +18,8 @@ module Api
       end
 
       def get_current_user
-        @current_user = User.find(user_params["user_id"])
+        @current_user = User.find(user_params['user_id'])
       end
     end
   end
 end
-

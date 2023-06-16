@@ -93,8 +93,8 @@
           "201": {
             "description": "skill created"
           },
-          "422": {
-            "description": "invalid request"
+          "401": {
+            "description": "unauthorized"
           }
         }
       }
@@ -250,12 +250,11 @@
           "Tickets"
         ],
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "user_id",
+            "name": "id",
             "in": "path",
             "type": "string",
             "required": true
@@ -284,10 +283,7 @@
                 }
               },
               "required": [
-                "id",
-                "title",
-                "status",
-                "assignee"
+                "id"
               ]
             }
           },
@@ -306,7 +302,7 @@
         ],
         "parameters": [
           {
-            "name": "user_id",
+            "name": "id",
             "in": "path",
             "type": "string",
             "required": true
@@ -341,11 +337,11 @@
         }
       }
     },
-    "/api/v1/users/{id/skills/{id}": {
+    "/api/v1/users/{id}/tickets/{id}": {
       "get": {
-        "summary": "Retrieves a skill",
+        "summary": "Retrieves a ticket",
         "tags": [
-          "Skills"
+          "Tickets"
         ],
         "produces": [
           "application/json",
@@ -359,7 +355,7 @@
             "required": true
           },
           {
-            "name": "id",
+            "name": "skill_id",
             "in": "path",
             "type": "string",
             "required": true

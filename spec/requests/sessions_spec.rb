@@ -14,11 +14,11 @@ describe 'sessions API' do
           user: {
             properties: {
               email: { type: :string },
-              password: { type: :string },
-            },
-          },
+              password: { type: :string }
+            }
+          }
         },
-        required: %w[email password],
+        required: %w[email password]
       }
 
       response '200', 'session created' do
@@ -26,8 +26,8 @@ describe 'sessions API' do
           {
             user: {
               email: user1.email,
-              password: user1.password,
-            },
+              password: user1.password
+            }
           }
         end
         run_test!
@@ -38,8 +38,8 @@ describe 'sessions API' do
           {
             user: {
               email: user1.email,
-              password: "",
-            },
+              password: ''
+            }
           }
         end
         run_test!
@@ -58,7 +58,7 @@ describe 'sessions API' do
       response '200', 'blacklist token' do
         run_test! do |response|
           data = JSON.parse(response.body)
-          data['success'].should eq("successfully logged out")
+          data['success'].should eq('successfully logged out')
         end
       end
       # This does not include anything in the header so it fails

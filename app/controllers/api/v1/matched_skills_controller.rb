@@ -4,7 +4,7 @@ module Api
   module V1
     class Api::V1::MatchedSkillsController < ApplicationController
       def index
-        current_user = User.find(user_params["user_id"])
+        current_user = User.find(user_params['user_id'])
         @matched_skills = current_user.matched_skills
       end
 
