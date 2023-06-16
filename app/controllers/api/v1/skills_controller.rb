@@ -6,11 +6,18 @@ module Api
       before_action :get_current_user
 
       def index
-        @skills = UserSkill.all.find_by(user_id: @current_user.id)
+        skills = {}
+
+        UserSkill.all.each do |skill|
+          skill.user_id == @current_user.id ? skills["Skills"] = skill : next
+        end
+
+        render json: skills
       end
 
       def show
         @skill = Skill.find(skill_params[:id])
+        render json: { skill: SkillSerializer.new(@skill) }
       end
 
       def create
