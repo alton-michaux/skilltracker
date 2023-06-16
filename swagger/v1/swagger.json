@@ -12,12 +12,11 @@
           "Skills"
         ],
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "user_id",
+            "name": "id",
             "in": "path",
             "type": "string",
             "required": true
@@ -46,8 +45,7 @@
                 }
               },
               "required": [
-                "id",
-                "title"
+                "id"
               ]
             }
           },
@@ -66,7 +64,7 @@
         ],
         "parameters": [
           {
-            "name": "user_id",
+            "name": "id",
             "in": "path",
             "type": "string",
             "required": true

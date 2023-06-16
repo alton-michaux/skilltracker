@@ -9,8 +9,8 @@ describe 'Skills API' do
 
     get 'Retrieves all skills' do
       tags 'Skills'
-      produces 'application/json', 'application/xml'
-      parameter name: :user_id, in: :path, type: :string
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
 
       response '200', 'skills found' do
         schema type: :object,
@@ -19,7 +19,7 @@ describe 'Skills API' do
             name: { type: :string },
             description: { type: :string }
           },
-          required: [ 'id', 'title' ]
+          required: [ 'id' ]
 
         let(:id) { skill1.id }
         run_test!
@@ -34,7 +34,7 @@ describe 'Skills API' do
     post 'Creates a Skill' do
       tags 'Skills'
       consumes 'application/json'
-      parameter name: :user_id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string
       parameter name: :skill, in: :body, schema: {
         type: :object,
         properties: {
