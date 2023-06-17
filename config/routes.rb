@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -20,7 +21,12 @@ Rails.application.routes.draw do
         resources :tickets, only: %i[index create show]
         resources :matched_skills, only: [:index]
       end
+
+      # Add your custom API controller routes here
+      post 'skills', to: 'skills_api#create'
+      delete 'skills/:id', to: 'skills_api#delete'
     end
   end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
