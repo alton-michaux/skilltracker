@@ -33,17 +33,18 @@ describe 'Skills API' do
     post 'Creates a Skill' do
       tags 'Skills'
       consumes 'application/json'
-      parameter name: :id, in: :path, type: :string
       parameter name: :skill, in: :body, schema: {
         type: :object,
         properties: {
+          user_id: { type: :integer },
           name: { type: :string },
           description: { type: :string }
         },
-        required: %w[name description]
+        required: %w[user_id name description]
       }
       let(:skill) { { name: 'foo', description: 'bar' } }
       let!(:user_skill1) { create(:user_skill, user_id: user1.id, skill_id: skill1.id )}
+      let!(:id) { user1.id }
 
       response '201', 'skill created' do
         run_test!

@@ -64,17 +64,14 @@
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
             "name": "skill",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
+                "user_id": {
+                  "type": "integer"
+                },
                 "name": {
                   "type": "string"
                 },
@@ -83,6 +80,7 @@
                 }
               },
               "required": [
+                "user_id",
                 "name",
                 "description"
               ]

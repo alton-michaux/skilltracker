@@ -12,7 +12,7 @@ module Api
           skill.user_id == @current_user.id ? skills["Skills"] = skill : next
         end
 
-        render json: skills
+        render json: skills, each_serializer: SkillSerializer, status: 200
       end
 
       def show
@@ -21,7 +21,14 @@ module Api
       end
 
       def create
-        @skill = Skill.create(user_id: @current_user.id)
+        @skill = Skill.new(user_id: @current_user.id)
+        if @skill.save
+          render json: { skill: SkillSerializer.new(@skill) }, status: 201
+        else
+          render json: @skill.errors.full_messages, status: 422
+        end
+      rescue ActiveRecord::NotNullViolation => e
+        render json: { error: e.message }, status: 422
       end
 
       private
