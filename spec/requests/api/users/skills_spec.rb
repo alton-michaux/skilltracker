@@ -2,7 +2,7 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
-  let!(:user1) { create(:user) }
+  let!(:user1) { create(:user, email: 'user@info.com', password: 'password') }
   let!(:skill1) { create(:skill, name: 'Skill1', description: 'Skill description') }
   let!(:user_skill1) { create(:user_skill, user_id: user1.id, skill_id: skill1.id )}
 

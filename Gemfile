@@ -76,6 +76,7 @@ group :test do
   # simplecov to check test coverage
   gem 'database_cleaner-active_record'
   gem 'simplecov', require: false
+  gem 'factory_bot_rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

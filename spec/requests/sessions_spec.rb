@@ -1,5 +1,4 @@
 require 'swagger_helper'
-# require 'devise/jwt/test_helpers'
 
 describe 'sessions API' do
   # Creates swagger for documentaion for login

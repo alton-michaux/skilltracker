@@ -15,13 +15,14 @@ module Api
         render json: skills, each_serializer: SkillSerializer, status: 200
       end
 
-      def show
-        @skill = Skill.find(skill_params[:id])
-        render json: { skill: SkillSerializer.new(@skill) }
-      end
+      # def show
+      #   @skill = Skill.find(skill_params[:id])
+      #   render json: { skill: SkillSerializer.new(@skill) }
+      # end
 
       def create
         @skill = Skill.new(user_id: @current_user.id)
+        byebug
         if @skill.save
           render json: { skill: SkillSerializer.new(@skill) }, status: 201
         else
