@@ -17,14 +17,15 @@ Rails.application.routes.draw do
       }
 
       resources :users, only: %i[index show] do
-        resources :skills, only: %i[index]
+        resources :skills, only: %i[index create destroy]
         resources :tickets, only: %i[index create show]
         resources :matched_skills, only: [:index]
       end
 
       # Add your custom API controller routes here
-      post 'skills', to: 'skills_api#create'
-      delete 'skills/:id', to: 'skills_api#delete'
+      # get 'skills', to: 'skills_api#index'
+      # post 'skills', to: 'skills_api#create'
+      # delete 'skills/:id', to: 'skills_api#delete'
     end
   end
 

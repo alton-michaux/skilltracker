@@ -54,7 +54,7 @@
     },
     "/api/v1/users/{user_id}/skills": {
       "get": {
-        "summary": "Retrieves all skills",
+        "summary": "Query skill data",
         "tags": [
           "Skills"
         ],
@@ -73,7 +73,7 @@
           "200": {
             "description": "Return correct information based on query",
             "schema": {
-              "type": "object",
+              "type": "array",
               "properties": {
                 "id": {
                   "type": "integer"
@@ -92,8 +92,8 @@
               ]
             }
           },
-          "404": {
-            "description": "skill not found"
+          "401": {
+            "description": "unauthorized"
           }
         }
       }

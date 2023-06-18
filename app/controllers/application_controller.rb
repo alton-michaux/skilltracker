@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def user_params
     params.permit(:user_id)
   end
-  
+
   def get_current_user
     @current_user = User.find(user_params['user_id'])
   end

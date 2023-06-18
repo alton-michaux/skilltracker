@@ -49,12 +49,6 @@ module Api
           render json: @skills.errors.full_messages, status: 422
         end
       end
-  
-      private
-
-      def skill_params
-        params.require(:skill).permit(:id, :name, :description, :user_id)
-      end
     end
   end
 end
