@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       }
 
       resources :users, only: %i[index show] do
-        resources :skills, only: %i[index create destroy]
+        resources :skills, only: %i[index]
         resources :tickets, only: %i[index create show]
         resources :matched_skills, only: [:index]
       end

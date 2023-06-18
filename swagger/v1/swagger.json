@@ -71,7 +71,7 @@
         ],
         "responses": {
           "200": {
-            "description": "skills found",
+            "description": "Return correct information based on query",
             "schema": {
               "type": "object",
               "properties": {
@@ -86,7 +86,9 @@
                 }
               },
               "required": [
-                "id"
+                "id",
+                "name",
+                "description"
               ]
             }
           },

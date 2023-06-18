@@ -9,26 +9,31 @@ module Api
 
         # GET /resource/sign_up
         def new
+          byebug
           super
         end
 
         # POST /resource
         def create
+          byebug
           super
         end
 
         # GET /resource/edit
         def edit
+          byebug
           super
         end
 
         # PUT /resource
         def update
+          byebug
           super
         end
 
         # DELETE /resource
         def destroy
+          byebug
           super
         end
 
@@ -38,6 +43,7 @@ module Api
         # cancel oauth signing in/up in the middle of the process,
         # removing all OAuth session data.
         def cancel
+          byebug
           super
         end
 
@@ -55,11 +61,13 @@ module Api
 
         # The path used after sign up.
         def after_sign_up_path_for(resource)
+          byebug
           super(resource)
         end
 
         # The path used after sign up for inactive accounts.
         def after_inactive_sign_up_path_for(resource)
+          byebug
           super(resource)
         end
       end

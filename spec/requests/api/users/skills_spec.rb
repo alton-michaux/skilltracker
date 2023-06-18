@@ -2,26 +2,34 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
-  let!(:user1) { create(:user) }
+  let!(:user) { create(:user) }
+  let!(:skill) { create(:skill) }
+  let!(:skill2) { create(:skill, :javascript) }
 
   path '/api/v1/users/{user_id}/skills' do
-    let!(:skill1) { create(:skill) }
-    let!(:user_skill1) { create(:user_skill, user: user1, skill: skill1 )}
-    get 'Retrieves all skills' do
+    get 'Query skill data' do
       tags 'Skills'
       produces 'application/json'
       parameter name: :user_id, in: :path, type: :string, required: true
 
-      response '200', 'skills found' do
-        schema type: :object,
+      response '200', 'Return correct information based on query' do
+        schema type: :array,
                properties: {
                  id: { type: :integer },
                  name: { type: :string },
                  description: { type: :string }
                },
-               required: ['id']
+               required: %w[id name description]
+        let!(:user_skill) { create(:user_skill, user: user, skill: skill )}
+        let!(:user_skill2) { create(:user_skill, user: user, skill: skill2 )}
+        let!(:user_id) { user.id }
 
-        run_test!
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data[0]["id"]).to eq skill.id
+          expect(data[0]["name"]).to eq skill.name
+          expect(data[0]["description"]).to eq skill.description
+        end
       end
 
       response '404', 'skill not found' do
@@ -32,8 +40,8 @@ describe 'Skills API' do
   end
 
   path '/api/v1/skills' do
-    let(:skill) { { name: 'foo', description: 'bar' } }
-    let!(:user_skill1) { create(:user_skill, user_id: user1.id, skill_id: skill1.id )}
+    let!(:skill) { create(:skill) }
+    let!(:user_skill) { create(:user_skill, user_id: user.id, skill_id: skill.id )}
   
     post 'Creates a Skill' do
       tags 'Skills'
@@ -46,7 +54,7 @@ describe 'Skills API' do
         },
         required: %w[name description]
       }
-      let!(:id) { user1.id }
+      let!(:id) { user.id }
 
       response '201', 'skill created' do
         run_test!
@@ -125,7 +133,7 @@ describe 'Skills API' do
   
   path '/api/v1/skills/{id}' do
     let!(:skill) { Skill.create(name: 'Fishing', description: 'Catching fish with a pole') }
-    let!(:user_skill2) { create(:user_skill, user_id: user1.id, skill_id: skill.id )}
+    let!(:user_skill2) { create(:user_skill, user_id: user.id, skill_id: skill.id )}
 
     delete 'Deletes a skill' do
       tags 'Skills'
