@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/concerns/form_auth.rb
 module FormAuth
   extend ActiveSupport::Concern

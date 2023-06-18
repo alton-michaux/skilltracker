@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/requests/blogs_spec.rb
 require 'swagger_helper'
 
@@ -43,7 +45,7 @@ describe 'Skills API' do
 
       response '201', 'skill created' do
         run_test! do |response|
-          data = JSON.parse(response.body)
+          JSON.parse(response.body)
         end
       end
     end

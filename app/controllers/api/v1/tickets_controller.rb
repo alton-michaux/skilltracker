@@ -2,17 +2,21 @@
 
 module Api
   module V1
-    class Api::V1::TicketsController < ApplicationController
-      before_action :get_current_user
+    module Api
+      module V1
+        class TicketsController < ApplicationController
+          before_action :get_current_user
 
-      def index
-        @tickets = @current_user.tickets
-      end
+          def index
+            @tickets = @current_user.tickets
+          end
 
-      private
+          private
 
-      def ticket_params
-        params.require(:ticket).permit(:title, :description, :status, :assignee, :user_id)
+          def ticket_params
+            params.require(:ticket).permit(:title, :description, :status, :assignee, :user_id)
+          end
+        end
       end
     end
   end
