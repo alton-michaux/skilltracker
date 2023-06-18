@@ -26,12 +26,6 @@ describe 'Skills API' do
           expect(data[0]['description']).to eq skill.description
         end
       end
-
-      # response '404', 'Not found' do
-      #   let!(:user_id) { "" }
-        
-      #   run_test!
-      # end
     end
 
     post 'Creates a Skill' do
@@ -54,99 +48,6 @@ describe 'Skills API' do
       end
     end
   end
-
-  # path '/api/v1/skills' do
-  #   post 'Creates a Skill' do
-  #     tags 'Skills'
-  #     consumes 'application/json'
-  #     parameter name: :skill, in: :body, schema: {
-  #       type: :object,
-  #       properties: {
-  #         name: { type: :string },
-  #         description: { type: :string }
-  #       },
-  #       required: %w[name description]
-  #     }
-  #     let!(:user_skill) { create(:user_skill, user_id: user.id, skill_id: skill.id) }
-  #     let!(:user_id) { user.id }
-
-  #     response '201', 'skill created' do
-  #       run_test! do |response|
-  #         byebug
-  #         data = JSON.parse(response.body)
-  #       end
-  #     end
-
-  #     response '401', 'unauthorized' do
-  #       let(:user) { nil }
-  #       run_test!
-  #     end
-  #   end
-  # end
-
-  # path '/api/v1/users/{user_id}/skills/{id}' do
-  # get 'Retrieves a skill' do
-  #   tags 'Skills'
-  #   produces 'application/json', 'application/xml'
-  #   parameter name: :user_id, in: :path, type: :string, required: true
-  #   parameter name: :id, in: :path, type: :string, required: true
-
-  #   response '200', 'skill found' do
-  #     schema type: :object,
-  #            properties: {
-  #              id: { type: :integer },
-  #              name: { type: :string },
-  #              description: { type: :string }
-  #            },
-  #            required: %w[id title description]
-
-  #     let(:id) { skill.id }
-  #     run_test!
-  #   end
-
-  #   response '404', 'skill not found' do
-  #     let(:id) { 'invalid' }
-  #     run_test!
-  #   end
-  # end
-
-  # put 'Updates a skill' do
-  #   tags 'Skills'
-  #   consumes 'application/json'
-  #   parameter name: :user_id, in: :path, type: :string, required: true
-  #   parameter name: :id, in: :path, type: :string, required: true
-  #   parameter name: :skill, in: :body, schema: {
-  #     type: :object,
-  #     properties: {
-  #       id: { type: :integer },
-  #       name: { type: :string },
-  #       description: { type: :string }
-  #     },
-  #     required: %w[id name description]
-  #   }
-
-  #   response '200', 'skill updated' do
-  #     schema type: :object,
-  #            properties: {
-  #              skill: { type: :object }
-  #            },
-  #            required: ['skill']
-
-  #     let(:id) { skill.id }
-  #     let(:name) { 'Juggling' }
-
-  #     run_test! do |response|
-  #       data = JSON.parse(response.body)
-  #       expect(data['skill']['name']).to eq 'Juggling'
-  #     end
-  #   end
-
-  #   response '404', 'skill not found' do
-  #     let(:id) { 'invalid' }
-  #     run_test!
-  #   end
-  # end
-  # end
 
   path '/api/v1/skills/{id}' do
     delete 'Deletes a skill' do

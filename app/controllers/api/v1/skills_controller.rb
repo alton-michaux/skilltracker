@@ -5,21 +5,10 @@ module Api
     class SkillsController < ApplicationController
       include FormAuth
 
-      before_action :form_auth_token
+      before_action :form_auth_token, except: [:index]
       before_action :set_skill, only: [:delete]
 
       def index
-        # skills = {}
-
-        # UserSkill.all.each do |relation|
-        #   if relation.user_id == @current_user.id
-        #     matched_skill = Skill.find(relation.skill_id)
-        #     skills[matched_skill.id] = matched_skill.name, matched_skill.description
-        #   else
-        #     next
-        #   end
-        # end
-
         render json: Skill.all, each_serializer: SkillSerializer, status: 200
       end
 
@@ -43,9 +32,9 @@ module Api
       private
 
       def set_skill
-        @skill = Skill.find(params["id"])
+        @skill = Skill.find(params['id'])
       rescue ActiveRecord::RecordNotFound
-        render json: { error: "No Record found or not active" }, status: 404
+        render json: { error: 'No Record found or not active' }, status: 404
       end
 
       def skill_params

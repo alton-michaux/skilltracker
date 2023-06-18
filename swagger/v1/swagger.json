@@ -52,7 +52,7 @@
         }
       }
     },
-    "/api/v1/users/{user_id}/skills": {
+    "/api/v1/skills": {
       "get": {
         "summary": "Query skill data",
         "tags": [
@@ -60,14 +60,6 @@
         ],
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
         ],
         "responses": {
           "200": {
@@ -91,14 +83,9 @@
                 "description"
               ]
             }
-          },
-          "401": {
-            "description": "unauthorized"
           }
         }
-      }
-    },
-    "/api/v1/skills": {
+      },
       "post": {
         "summary": "Creates a Skill",
         "tags": [
@@ -131,9 +118,6 @@
         "responses": {
           "201": {
             "description": "skill created"
-          },
-          "401": {
-            "description": "unauthorized"
           }
         }
       }

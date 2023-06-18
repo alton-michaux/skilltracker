@@ -15,12 +15,12 @@ module FormAuth
     csrf_token = form_authenticity_token
 
     # Step 2: Include the CSRF token in your API response headers
-    response.headers["X-CSRF-Token"] = csrf_token
+    response.headers['X-CSRF-Token'] = csrf_token
 
     # Process the API request and generate the response
     # ...
 
     # Example usage of logger
-    logger.info("API request processed successfully")
+    logger.info('API request processed successfully')
   end
 end
