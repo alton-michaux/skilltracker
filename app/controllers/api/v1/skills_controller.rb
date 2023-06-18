@@ -5,8 +5,8 @@ module Api
     class SkillsController < ApplicationController
       include FormAuth
 
-      before_action :get_current_user
       before_action :form_auth_token
+      before_action :set_skill, only: [:delete]
 
       def index
         # skills = {}
@@ -24,7 +24,7 @@ module Api
       end
 
       def create
-        @skill = Skill.new(user_id: @current_user.id)
+        @skill = Skill.new(skill_params)
         if @skill.save
           render json: { skill: SkillSerializer.new(@skill) }, status: 201
         else
@@ -36,14 +36,20 @@ module Api
         if @skill.destroy
           render json: { success: 'Skill destroyed' }, status: 200
         else
-          render json: @skills.errors.full_messages, status: 422
+          render json: { error: 'Skill not found' }, status: 404
         end
       end
 
       private
 
+      def set_skill
+        @skill = Skill.find(params["id"])
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "No Record found or not active" }, status: 404
+      end
+
       def skill_params
-        params.require(:skill).permit(:id, :name, :description, :user_id)
+        params.require(:skill).permit(:id, :name, :description)
       end
     end
   end

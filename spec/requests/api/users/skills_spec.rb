@@ -2,15 +2,13 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
-  let!(:user) { create(:user) }
   let!(:skill) { create(:skill) }
   let!(:skill2) { create(:skill, :javascript) }
 
-  path '/api/v1/users/{user_id}/skills' do
+  path '/api/v1/skills' do
     get 'Query skill data' do
       tags 'Skills'
       produces 'application/json'
-      parameter name: :user_id, in: :path, type: :string, required: true
 
       response '200', 'Return correct information based on query' do
         schema type: :array,
@@ -20,9 +18,6 @@ describe 'Skills API' do
                  description: { type: :string }
                },
                required: %w[id name description]
-        let!(:user_skill) { create(:user_skill, user: user, skill: skill) }
-        let!(:user_skill2) { create(:user_skill, user: user, skill: skill2) }
-        let!(:user_id) { user.id }
 
         run_test! do |response|
           data = JSON.parse(response.body)
@@ -38,9 +33,7 @@ describe 'Skills API' do
       #   run_test!
       # end
     end
-  end
 
-  path '/api/v1/skills' do
     post 'Creates a Skill' do
       tags 'Skills'
       consumes 'application/json'
@@ -52,22 +45,44 @@ describe 'Skills API' do
         },
         required: %w[name description]
       }
-      let!(:user_skill) { create(:user_skill, user_id: user.id, skill_id: skill.id) }
-      let!(:user_id) { user.id }
+      let!(:skill) { build(:skill, name: 'Python', description: 'AI language') }
 
       response '201', 'skill created' do
         run_test! do |response|
-          byebug
           data = JSON.parse(response.body)
         end
       end
-
-      response '401', 'unauthorized' do
-        let(:user) { nil }
-        run_test!
-      end
     end
   end
+
+  # path '/api/v1/skills' do
+  #   post 'Creates a Skill' do
+  #     tags 'Skills'
+  #     consumes 'application/json'
+  #     parameter name: :skill, in: :body, schema: {
+  #       type: :object,
+  #       properties: {
+  #         name: { type: :string },
+  #         description: { type: :string }
+  #       },
+  #       required: %w[name description]
+  #     }
+  #     let!(:user_skill) { create(:user_skill, user_id: user.id, skill_id: skill.id) }
+  #     let!(:user_id) { user.id }
+
+  #     response '201', 'skill created' do
+  #       run_test! do |response|
+  #         byebug
+  #         data = JSON.parse(response.body)
+  #       end
+  #     end
+
+  #     response '401', 'unauthorized' do
+  #       let(:user) { nil }
+  #       run_test!
+  #     end
+  #   end
+  # end
 
   # path '/api/v1/users/{user_id}/skills/{id}' do
   # get 'Retrieves a skill' do
@@ -134,9 +149,6 @@ describe 'Skills API' do
   # end
 
   path '/api/v1/skills/{id}' do
-    let!(:skill) { Skill.create(name: 'Fishing', description: 'Catching fish with a pole') }
-    let!(:user_skill2) { create(:user_skill, user_id: user.id, skill_id: skill.id) }
-
     delete 'Deletes a skill' do
       tags 'Skills'
       consumes 'application/json'
