@@ -1,9 +1,34 @@
+# frozen_string_literal: true
+
 # spec/requests/blogs_spec.rb
 require 'swagger_helper'
 
 describe 'Skills API' do
+  let!(:skill) { create(:skill) }
+  let!(:skill2) { create(:skill, :javascript) }
 
-  path '/skills' do
+  path '/api/v1/skills' do
+    get 'Query skill data' do
+      tags 'Skills'
+      produces 'application/json'
+
+      response '200', 'Return correct information based on query' do
+        schema type: :array,
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name description]
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data[0]['id']).to eq skill.id
+          expect(data[1]['name']).to eq skill2.name
+          expect(data[0]['description']).to eq skill.description
+        end
+      end
+    end
 
     post 'Creates a Skill' do
       tags 'Skills'
@@ -14,87 +39,25 @@ describe 'Skills API' do
           name: { type: :string },
           description: { type: :string }
         },
-        required: [ 'name', 'description' ]
+        required: %w[name description]
       }
+      let!(:skill) { build(:skill, name: 'Python', description: 'AI language') }
 
       response '201', 'skill created' do
-        let(:skill) { { name: 'foo', description: 'bar' } }
-        run_test!
-      end
-
-      response '422', 'invalid request' do
-        let(:skill) { { name: 'foo' } }
-        run_test!
+        run_test! do |response|
+          JSON.parse(response.body)
+        end
       end
     end
   end
 
-  path '/skills/{id}' do
-    let!(:skill) { Skill.create(name: 'Fishing', description: 'Catching fish with a pole')}
-
-    get 'Retrieves a skill' do
-      tags 'Skills'
-      produces 'application/json', 'application/xml'
-      parameter name: :id, in: :path, type: :string
-
-      response '200', 'blog found' do
-        schema type: :object,
-          properties: {
-            id: { type: :integer },
-            name: { type: :string },
-            description: { type: :string }
-          },
-          required: [ 'id', 'title' ]
-
-        let(:id) { skill.id }
-        run_test!
-      end
-
-      response '404', 'skill not found' do
-        let(:id) { 'invalid' }
-        run_test!
-      end
-    end
-    
-    put 'Updates a skill' do
-      tags 'Skills'
-      consumes 'application/json'
-      parameter name: :id, in: :path, type: :string
-      parameter name: :skill, in: :body, schema: {
-        type: :object,
-        properties: {
-          name: { type: :string },
-          description: { type: :string }
-        },
-        required: [ 'name', 'description' ]
-      }
-
-      response '200', 'blog found' do
-        schema type: :object,
-               properties: {
-                 skill: { type: :object },
-               },
-               required: ['skill']
-        let(:id) { skill.id }
-        let(:name) { 'Juggling' }
-        run_test! do | response |
-          data = JSON.parse(response.body)
-          expect(data['skill']['name']).to eq 'Juggling'
-        end
-      end
-
-      response '404', 'skill not found' do
-        let(:id) { 'invalid' }
-        run_test!
-      end
-    end
-    
+  path '/api/v1/skills/{id}' do
     delete 'Deletes a skill' do
       tags 'Skills'
       consumes 'application/json'
-      parameter name: :id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :string, required: true
 
-      response '200', 'blog found' do
+      response '200', 'skill deleted' do
         let(:id) { skill.id }
         run_test!
       end

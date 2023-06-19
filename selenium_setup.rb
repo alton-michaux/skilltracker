@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'selenium-webdriver'
 
@@ -5,4 +6,4 @@ require 'selenium-webdriver'
 Selenium::WebDriver::Chrome::Service.driver_path = '/usr/bin/chromedriver'
 
 # Create a new instance of the WebDriver using Chrome
-driver = Selenium::WebDriver.for :chrome
+Selenium::WebDriver.for :chrome
