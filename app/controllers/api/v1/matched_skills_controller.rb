@@ -3,9 +3,16 @@
 module Api
   module V1
     class MatchedSkillsController < ApplicationController
+      before_action :get_current_user
+
       def index
-        current_user = User.find(user_params['user_id'])
-        @matched_skills = current_user.matched_skills
+        @matched_skills = @current_user.matched_skills
+
+        unless @matched_skills.empty?
+          render json: @matched_skills, each_serializer: MatchedSkillSerializer, status: 200
+        else
+          render json: { error: "No matched skills" }, status: 404
+        end
       end
 
       private
