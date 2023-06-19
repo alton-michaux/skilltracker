@@ -15,7 +15,7 @@ module Api
         if !@tickets.empty?
           render json: @tickets, each_serializer: TicketSerializer, status: 200
         else
-          render json: { error: "Not found" }, status: 404
+          render json: { error: 'Not found' }, status: 404
         end
       end
 
@@ -26,7 +26,7 @@ module Api
       private
 
       def set_ticket
-        @ticket = Ticket.find(params["id"])
+        @ticket = Ticket.find(params['id'])
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'No Record found or not active' }, status: 404
       end
