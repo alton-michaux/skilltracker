@@ -171,34 +171,33 @@
             "description": "Return correct information based on query",
             "schema": {
               "type": "array",
-              "properties": {
-                "id": {
-                  "type": "integer"
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "text"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  }
                 },
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "text"
-                },
-                "status": {
-                  "type": "integer"
-                },
-                "assignee": {
-                  "type": "string"
-                },
-                "user_id": {
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id",
-                "title",
-                "description",
-                "status",
-                "assignee",
-                "user_id"
-              ]
+                "required": [
+                  "id",
+                  "title",
+                  "description",
+                  "status",
+                  "assignee"
+                ]
+              }
             }
           },
           "404": {
@@ -207,7 +206,7 @@
         }
       }
     },
-    "/api/v1/users/{id}/tickets/{id}": {
+    "/api/v1/users/{user_id}/tickets/{id}": {
       "get": {
         "summary": "Retrieves a ticket",
         "tags": [
@@ -225,7 +224,7 @@
             "required": true
           },
           {
-            "name": "ticket_id",
+            "name": "id",
             "in": "path",
             "type": "string",
             "required": true
@@ -251,17 +250,14 @@
                 },
                 "assignee": {
                   "type": "string"
-                },
-                "user_id": {
-                  "type": "integer"
                 }
               },
               "required": [
                 "id",
                 "title",
+                "description",
                 "status",
-                "assignee",
-                "user_id"
+                "assignee"
               ]
             }
           },

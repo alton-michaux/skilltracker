@@ -6,6 +6,7 @@ module Api
       include FormAuth
 
       before_action :form_auth_token, except: [:index]
+      before_action :set_ticket, only: [:show]
       before_action :get_current_user
 
       def index
@@ -18,7 +19,19 @@ module Api
         end
       end
 
+      def show
+        byebug
+        render json: { ticket: TicketSerializer.new(@ticket) }, status: 200
+      end
+
       private
+
+      def set_ticket
+        byebug
+        @ticket = Ticket.find(params["id"])
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: 'No Record found or not active' }, status: 404
+      end
 
       def ticket_params
         params.require(:ticket).permit(:title, :description, :status, :assignee, :user_id)
