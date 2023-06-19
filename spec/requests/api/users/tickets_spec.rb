@@ -78,7 +78,7 @@ describe 'Tickets API' do
 
       response '404', 'Not found' do
         let(:user_id) { user2.id }
-        let(:id) { 45 }
+        let(:id) { 450 }
 
         run_test!
       end
