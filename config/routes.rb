@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
       resources :users, only: %i[index show] do
         get 'tickets', to: 'tickets#index'
-        get 'tickets', to: 'tickets#show'
+        get 'tickets/:id', to: 'tickets#show'
         # resources :tickets, only: %i[index show]
         resources :matched_skills, only: [:index]
       end

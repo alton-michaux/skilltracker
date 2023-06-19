@@ -58,25 +58,27 @@ describe 'Tickets API' do
       response '200', 'Query for specific ticket' do
         schema type: :object,
                properties: {
-                 id: { type: :integer },
                  title: { type: :string },
                  description: { type: :text },
                  status: { type: :integer },
                  assignee: { type: :string }
-               },
-               required: %w[id title description status assignee]
+               }
 
         let(:user_id) { user.id }
-        let(:ticket_id) { ticket2.id }
+        let(:id) { ticket2.id }
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          byebug
+          expect(data["ticket"]["title"]).to eq ticket2.title
+          expect(data["ticket"]["status"]).to eq ticket2.status
+          expect(data["ticket"]["user"]["id"]).to eq user_id
         end
       end
 
       response '404', 'Not found' do
-        let(:user_id) { nil }
+        let(:user_id) { user2.id }
+        let(:id) { 45 }
+
         run_test!
       end
     end

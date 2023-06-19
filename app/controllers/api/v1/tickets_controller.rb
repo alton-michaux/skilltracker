@@ -20,14 +20,12 @@ module Api
       end
 
       def show
-        byebug
         render json: { ticket: TicketSerializer.new(@ticket) }, status: 200
       end
 
       private
 
       def set_ticket
-        byebug
         @ticket = Ticket.find(params["id"])
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'No Record found or not active' }, status: 404
