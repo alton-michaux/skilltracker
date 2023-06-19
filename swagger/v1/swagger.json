@@ -102,16 +102,15 @@
         }
       }
     },
-    "/api/v1/users/{id}/skills": {
+    "/api/v1/users/{user_id}/matched_skills": {
       "get": {
-        "summary": "Retrieves all matched skills",
+        "summary": "Query matched skill data",
         "tags": [
           "Skills",
           "Users"
         ],
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
@@ -123,28 +122,27 @@
         ],
         "responses": {
           "200": {
-            "description": "skills found",
+            "description": "Return correct information based on query",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "proficiency": {
-                  "type": "integer"
-                },
-                "endorsements": {
-                  "type": "integer"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "proficiency": {
+                    "type": "integer"
+                  },
+                  "endorsements": {
+                    "type": "integer"
+                  }
                 }
-              },
-              "required": [
-                "id",
-                "proficiency"
-              ]
+              }
             }
           },
           "404": {
-            "description": "skill not found"
+            "description": "Not found"
           }
         }
       }
@@ -251,14 +249,7 @@
                 "assignee": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "id",
-                "title",
-                "description",
-                "status",
-                "assignee"
-              ]
+              }
             }
           },
           "404": {
@@ -305,28 +296,6 @@
         "responses": {
           "200": {
             "description": "session created"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/api/v1/logout": {
-      "delete": {
-        "summary": "Destroy session",
-        "tags": [
-          "sessions"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "blacklist token"
-          },
-          "400": {
-            "description": "no token to blacklist"
           }
         }
       }

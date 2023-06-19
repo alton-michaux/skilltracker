@@ -8,10 +8,10 @@ module Api
       def index
         @matched_skills = @current_user.matched_skills
 
-        unless @matched_skills.empty?
-          render json: @matched_skills, each_serializer: MatchedSkillSerializer, status: 200
+        if @matched_skills.empty?
+          render json: { error: 'No matched skills' }, status: 404
         else
-          render json: { error: "No matched skills" }, status: 404
+          render json: @matched_skills, each_serializer: MatchedSkillSerializer, status: 200
         end
       end
 

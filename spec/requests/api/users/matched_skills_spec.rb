@@ -17,23 +17,23 @@ describe 'Skills API' do
 
       response '200', 'Return correct information based on query' do
         schema type: :array,
-                items: {
-                  type: :object,
-                  properties: {
-                    id: { type: :integer },
-                    proficiency: { type: :integer },
-                    endorsements: { type: :integer }
-                  }
-                }
+               items: {
+                 type: :object,
+                 properties: {
+                   id: { type: :integer },
+                   proficiency: { type: :integer },
+                   endorsements: { type: :integer }
+                 }
+               }
 
         let(:user_id) { user.id }
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data[0]["proficiency"]).to eq matched_skill.proficiency
-          expect(data[0]["endorsements"]).to eq matched_skill.endorsements
-          expect(data[0]["user"]["email"]).to eq user.email
-          expect(data[0]["skill"]["name"]).to eq skill.name
+          expect(data[0]['proficiency']).to eq matched_skill.proficiency
+          expect(data[0]['endorsements']).to eq matched_skill.endorsements
+          expect(data[0]['user']['email']).to eq user.email
+          expect(data[0]['skill']['name']).to eq skill.name
         end
       end
 

@@ -58,11 +58,11 @@ describe 'Tickets API' do
       response '200', 'Query for specific ticket' do
         schema type: :object,
                properties: {
-                id: { type: :integer },
-                title: { type: :string },
-                description: { type: :text },
-                status: { type: :integer },
-                assignee: { type: :string }
+                 id: { type: :integer },
+                 title: { type: :string },
+                 description: { type: :text },
+                 status: { type: :integer },
+                 assignee: { type: :string }
                }
 
         let(:user_id) { user.id }
