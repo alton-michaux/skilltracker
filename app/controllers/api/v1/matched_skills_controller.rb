@@ -3,6 +3,9 @@
 module Api
   module V1
     class MatchedSkillsController < ApplicationController
+      include FormAuth
+
+      before_action :form_auth_token, except: [:index]
       before_action :get_current_user
 
       def index
@@ -16,10 +19,6 @@ module Api
       end
 
       private
-
-      def user_params
-        params.permit(:user_id)
-      end
 
       def matched_skill_params
         params.require(:matched_skills).permit(:user_id, :skill_id, :proficiency, :endorsements)
