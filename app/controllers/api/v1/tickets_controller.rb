@@ -2,21 +2,26 @@
 
 module Api
   module V1
-    module Api
-      module V1
-        class TicketsController < ApplicationController
-          before_action :get_current_user
+    class TicketsController < ApplicationController
+      include FormAuth
 
-          def index
-            @tickets = @current_user.tickets
-          end
+      before_action :form_auth_token, except: [:index]
+      before_action :get_current_user
 
-          private
+      def index
+        @tickets = @current_user.tickets
 
-          def ticket_params
-            params.require(:ticket).permit(:title, :description, :status, :assignee, :user_id)
-          end
+        if !@tickets.empty?
+          render json: @tickets, each_serializer: TicketSerializer, status: 200
+        else
+          render json: { error: "Not found" }, status: 404
         end
+      end
+
+      private
+
+      def ticket_params
+        params.require(:ticket).permit(:title, :description, :status, :assignee, :user_id)
       end
     end
   end

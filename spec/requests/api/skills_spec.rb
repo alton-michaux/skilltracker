@@ -24,7 +24,7 @@ describe 'Skills API' do
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data[0]['id']).to eq skill.id
-          expect(data[0]['name']).to eq skill.name
+          expect(data[1]['name']).to eq skill2.name
           expect(data[0]['description']).to eq skill.description
         end
       end

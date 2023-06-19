@@ -5,53 +5,6 @@
     "version": "v1"
   },
   "paths": {
-    "/api/v1/users/{id}/skills": {
-      "get": {
-        "summary": "Retrieves all matched skills",
-        "tags": [
-          "Skills",
-          "Users"
-        ],
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "skills found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "proficiency": {
-                  "type": "integer"
-                },
-                "endorsements": {
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id",
-                "proficiency"
-              ]
-            }
-          },
-          "404": {
-            "description": "skill not found"
-          }
-        }
-      }
-    },
     "/api/v1/skills": {
       "get": {
         "summary": "Query skill data",
@@ -149,9 +102,56 @@
         }
       }
     },
-    "/api/v1/users/{id}/tickets": {
+    "/api/v1/users/{id}/skills": {
       "get": {
-        "summary": "Retrieves all tickets",
+        "summary": "Retrieves all matched skills",
+        "tags": [
+          "Skills",
+          "Users"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "skills found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "proficiency": {
+                  "type": "integer"
+                },
+                "endorsements": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "proficiency"
+              ]
+            }
+          },
+          "404": {
+            "description": "skill not found"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{user_id}/tickets": {
+      "get": {
+        "summary": "Query ticket data",
         "tags": [
           "Tickets"
         ],
@@ -160,7 +160,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "user_id",
             "in": "path",
             "type": "string",
             "required": true
@@ -168,9 +168,9 @@
         ],
         "responses": {
           "200": {
-            "description": "tickets found",
+            "description": "Return correct information based on query",
             "schema": {
-              "type": "object",
+              "type": "array",
               "properties": {
                 "id": {
                   "type": "integer"
@@ -186,59 +186,23 @@
                 },
                 "assignee": {
                   "type": "string"
+                },
+                "user_id": {
+                  "type": "integer"
                 }
               },
               "required": [
-                "id"
+                "id",
+                "title",
+                "description",
+                "status",
+                "assignee",
+                "user_id"
               ]
             }
           },
           "404": {
-            "description": "skill not found"
-          }
-        }
-      },
-      "post": {
-        "summary": "Creates a Ticket",
-        "tags": [
-          "Tickets"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "skill",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "name",
-                "description"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "skill created"
-          },
-          "422": {
-            "description": "invalid request"
+            "description": "Not found"
           }
         }
       }
@@ -261,7 +225,7 @@
             "required": true
           },
           {
-            "name": "skill_id",
+            "name": "ticket_id",
             "in": "path",
             "type": "string",
             "required": true
@@ -269,7 +233,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ticket found",
+            "description": "Query for specific ticket",
             "schema": {
               "type": "object",
               "properties": {
@@ -287,18 +251,22 @@
                 },
                 "assignee": {
                   "type": "string"
+                },
+                "user_id": {
+                  "type": "integer"
                 }
               },
               "required": [
                 "id",
                 "title",
                 "status",
-                "assignee"
+                "assignee",
+                "user_id"
               ]
             }
           },
           "404": {
-            "description": "skill not found"
+            "description": "Not found"
           }
         }
       }

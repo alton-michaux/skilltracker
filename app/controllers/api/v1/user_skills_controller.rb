@@ -2,27 +2,23 @@
 
 module Api
   module V1
-    module Api
-      module V1
-        class UserSkillsController < ApplicationController
-          before_action :get_current_user
+    class UserSkillsController < ApplicationController
+      before_action :get_current_user
 
-          attr_accessor :user_skills
+      attr_accessor :user_skills
 
-          def index
-            @user_skills = UserSkill.where(user_id: @current_user.id)
-          end
+      def index
+        @user_skills = UserSkill.where(user_id: @current_user.id)
+      end
 
-          private
+      private
 
-          def user_params
-            params.permit(:user_id)
-          end
+      def user_params
+        params.permit(:user_id)
+      end
 
-          def get_current_user
-            @current_user = User.find(user_params['user_id'])
-          end
-        end
+      def get_current_user
+        @current_user = User.find(user_params['user_id'])
       end
     end
   end
