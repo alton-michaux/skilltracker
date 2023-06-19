@@ -19,4 +19,3 @@ module FormAuth
     # ...
   end
 end
-

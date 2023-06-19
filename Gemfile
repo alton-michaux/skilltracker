@@ -76,6 +76,7 @@ group :test do
   # simplecov to check test coverage
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'simplecov', require: false
 end
 
