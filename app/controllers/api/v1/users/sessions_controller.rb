@@ -4,6 +4,9 @@ module Api
   module V1
     module Users
       class SessionsController < Devise::SessionsController
+        include FormAuth
+  
+        before_action :form_auth_token, except: [:index]
         before_action :configure_sign_in_params, only: [:create]
 
         # GET /resource/sign_in

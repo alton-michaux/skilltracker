@@ -4,6 +4,9 @@ module Api
   module V1
     module Users
       class RegistrationsController < Devise::RegistrationsController
+        include FormAuth
+  
+        before_action :form_auth_token
         before_action :configure_sign_up_params, only: [:create]
         before_action :configure_account_update_params, only: [:update]
 
