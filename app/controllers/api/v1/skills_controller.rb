@@ -5,7 +5,7 @@ module Api
     class SkillsController < ApplicationController
       include FormAuth
 
-      before_action :form_auth_token, except: [:index]
+      before_action :form_auth_token
       before_action :set_skill, only: [:delete]
 
       def index

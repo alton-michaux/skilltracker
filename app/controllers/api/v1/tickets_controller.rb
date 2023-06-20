@@ -5,7 +5,7 @@ module Api
     class TicketsController < ApplicationController
       include FormAuth
 
-      before_action :form_auth_token, except: [:index]
+      before_action :form_auth_token
       before_action :set_ticket, only: [:show]
       before_action :get_current_user
 

@@ -26,6 +26,13 @@ Rails.application.routes.draw do
       get 'skills', to: 'skills#index'
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
+
+      post 'jira_sessions', to: 'jira_sessions#new'
+      post 'jira_sessions', to: 'jira_sessions#authorize'
+      delete 'jira_sessions/:id', to: 'jira_sessions#destroy'
+
+      get 'jira_issues', to: 'issues#index'
+      get 'jira_issues/:id', to: 'issues#show'
     end
   end
 
