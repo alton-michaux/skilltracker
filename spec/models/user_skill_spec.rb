@@ -15,7 +15,17 @@ RSpec.describe UserSkill, type: :model do
     expect(subject.user).to eq user
   end
 
+  it 'is not valid without a user' do
+    subject.user = nil
+    expect(subject).to_not be_valid
+  end
+
   it 'has an associated skill' do
     expect(subject.skill).to eq skill
+  end
+
+  it 'is not valid without a skill' do
+    subject.skill = nil
+    expect(subject).to_not be_valid
   end
 end
