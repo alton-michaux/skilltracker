@@ -9,16 +9,12 @@ module Api
 
       def index
         @user_skills = UserSkill.where(user_id: @current_user.id)
-      end
 
-      private
-
-      def user_params
-        params.permit(:user_id)
-      end
-
-      def get_current_user
-        @current_user = User.find(user_params['user_id'])
+        if !@user_skills.empty?
+          render json: @user_skills, each_serializer: UserSkillSerializer, status: 200
+        else
+          render json: { error: 'Not found' }, status: 404
+        end
       end
     end
   end
