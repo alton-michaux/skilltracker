@@ -14,7 +14,7 @@ puts "#{User.count} users created"
 
 users = [user1, user2]
 
-10.times do |_i|
+10.times do
   Skill.create(name: Faker::Job.unique.key_skill, description: Faker::Lorem.sentence(word_count: 3, supplemental: false, random_words_to_add: 4))
 end
 
@@ -36,3 +36,10 @@ puts "#{Ticket.count} tickets created"
 end
 
 puts "#{MatchedSkill.count} matched skills created"
+
+5.times do |index|
+  user = users.sample
+  UserSkill.create(user: user, skill: Skill.find(index + 1))
+end
+
+puts "#{UserSkill.count} user skills created"
