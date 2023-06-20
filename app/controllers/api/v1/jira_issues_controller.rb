@@ -1,10 +1,10 @@
 module Api
   module V1
-    class IssuesController < ApplicationController
+    class JiraIssuesController < ApplicationController
       include FormAuth
 
       before_action :form_auth_token
-      before_filter :get_jira_client
+      before_action :get_jira_client
 
       def index
         @issues = @jira_client.Issue.all

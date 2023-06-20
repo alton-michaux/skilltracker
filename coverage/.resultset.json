@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/matched_skills_controller_spec.rb": {
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/jira_issues_controller_spec.rb": {
         "lines": [
           null,
           null,
@@ -831,6 +831,13 @@
           1,
           1,
           null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
           null,
           null,
           null,
@@ -920,10 +927,8 @@
           null
         ]
       },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/matched_skills_controller.rb": {
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/jira_issues_controller.rb": {
         "lines": [
-          null,
-          null,
           1,
           1,
           1,
@@ -933,16 +938,8 @@
           1,
           null,
           1,
-          2,
+          0,
           null,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
           null,
           1,
           0,
@@ -1004,16 +1001,115 @@
           1,
           null,
           1,
-          4,
-          4,
-          4,
+          7,
+          7,
+          7,
           null,
-          4,
+          7,
           null,
           null,
           1,
-          7,
-          7,
+          14,
+          14,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/jira_sessions_controller_spec.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/jira_sessions_controller.rb": {
+        "lines": [
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/matched_skills_controller_spec.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/matched_skills_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
           null,
           null,
           null,
@@ -1132,7 +1228,45 @@
           null
         ]
       },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/user/sessions_controller_spec.rb": {
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/user_skills_controller_spec.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/user_skills_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/users/sessions_controller_spec.rb": {
         "lines": [
           null,
           null,
@@ -1170,51 +1304,6 @@
           null,
           null,
           null,
-          null
-        ]
-      },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/user_skills_controller_spec.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/app/controllers/api/v1/user_skills_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          2,
-          null,
-          2,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/controllers/api/v1/users/sessions_controller_spec.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          1,
           null
         ]
       },
@@ -1534,6 +1623,59 @@
           null
         ]
       },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/requests/api/jira_issues_spec.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/swagger_helper.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/requests/api/jira_sessions_spec.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
       "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/requests/api/skills_spec.rb": {
         "lines": [
           null,
@@ -1603,37 +1745,6 @@
           1,
           2,
           1,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/alton-michaux/code/pers/fullstack/ror/skilltracker/spec/swagger_helper.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
           null,
           null,
           null,
@@ -1963,6 +2074,6 @@
         ]
       }
     },
-    "timestamp": 1687232283
+    "timestamp": 1687235630
   }
 }

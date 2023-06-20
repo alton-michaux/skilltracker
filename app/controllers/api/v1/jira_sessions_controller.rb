@@ -5,7 +5,7 @@ module Api
       include FormAuth
 
       before_action :form_auth_token
-      before_filter :get_jira_client
+      before_action :get_jira_client
 
       def new
         callback_url = 'http://callback'
