@@ -21,6 +21,7 @@ gem 'active_model_serializers', '~>0.10.10'
 gem 'devise', '~> 4.7.1'
 gem 'rswag', '~>2.0.5'
 
+gem 'jira-ruby', :require => 'jira-ruby'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
