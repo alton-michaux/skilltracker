@@ -258,6 +258,51 @@
         }
       }
     },
+    "/api/v1/users/{user_id}/user_skills": {
+      "get": {
+        "summary": "Query user skill data",
+        "tags": [
+          "Skills",
+          "Users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return correct information based on query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "user": {
+                    "type": "object"
+                  },
+                  "skill": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
     "/api/v1/login": {
       "post": {
         "summary": "Creates a session",
