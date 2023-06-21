@@ -8,7 +8,7 @@ module Api
       before_action :get_jira_client
 
       def new
-        callback_url = 'http://callback'
+        callback_url = 'http://localhost:3000'
         request_token = @jira_client.request_token(oauth_callback: callback_url)
         session[:request_token] = request_token.token
         session[:request_secret] = request_token.secret
@@ -33,6 +33,10 @@ module Api
         session.delete(:request_secret)
 
         redirect_to projects_path
+      end
+
+      def callback
+        redirect_to jira_issues_path
       end
 
       def destroy

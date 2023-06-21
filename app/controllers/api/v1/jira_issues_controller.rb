@@ -5,13 +5,21 @@ module Api
 
       before_action :form_auth_token
       before_action :get_jira_client
+      before_action :set_issue, only: :show
 
       def index
-        @issues = @jira_client.Issue.all
+        byebug
+        @issues = @client.Issue.all
       end
 
       def show
-        @issue = @jira_client.Issue.find(params[:id])
+        @issue
+      end
+
+      private
+
+      def set_issue
+        @issue = @client.Issue.find(params[:id])
       end
     end
   end
