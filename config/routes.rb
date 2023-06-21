@@ -31,8 +31,10 @@ Rails.application.routes.draw do
       post 'jira_sessions', to: 'jira_sessions#authorize'
       delete 'jira_sessions/:id', to: 'jira_sessions#destroy'
 
-      get 'jira_issues', to: 'issues#index'
-      get 'jira_issues/:id', to: 'issues#show'
+      get 'jira_issues', to: 'jira_issues#index'
+      get 'jira_issues/:id', to: 'jira_issues#show'
+
+      get 'oauth2/callback', to: 'jira_sessions#callback'
     end
   end
 
