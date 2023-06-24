@@ -20,17 +20,10 @@ module Api
       end
 
       def authorize
-        @jira_client.set_request_token(
-          session[:request_token], session[:request_secret]
-        )
-        access_token = @jira_client.init_access_token(
-          oauth_verifier: params[:oauth_verifier]
-        )
+        jira_service = JiraService.new(@jira_client)
+        jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
 
-        session[:jira_auth] = {
-          access_token: access_token.token,
-          access_key: access_token.secret
-        }
+        session[:jira_auth] = jira_auth
 
         session.delete(:request_token)
         session.delete(:request_secret)
@@ -43,7 +36,10 @@ module Api
       end
 
       def destroy
-        @session.data.delete(:jira_auth)
+        jira_service = JiraService.new(@jira_client)
+        jira_service.delete_session(@session)
+
+        redirect_to skills_path
       end
     end
   end

@@ -10,11 +10,15 @@ module Api
       before_action :set_issue, only: :show
 
       def index
-        @issues = @client.Issue.all
+        @issues = @jira_client.Issue.all
       end
 
       def show
-        @issue
+        if @issue
+          render json: { issue: @issue }, status: 200
+        else
+          render json: { error: "Issue not found" }, status: 404
+        end
       end
 
       private
