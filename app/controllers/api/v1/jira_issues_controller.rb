@@ -17,7 +17,7 @@ module Api
         if @issue
           render json: { issue: @issue }, status: 200
         else
-          render json: { error: "Issue not found" }, status: 404
+          render json: { error: 'Issue not found' }, status: 404
         end
       end
 
