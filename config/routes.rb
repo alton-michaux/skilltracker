@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
+  get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
+
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -27,9 +29,9 @@ Rails.application.routes.draw do
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
 
-      post 'jira_sessions', to: 'jira_sessions#new'
-      post 'jira_sessions', to: 'jira_sessions#authorize'
-      delete 'jira_sessions/:id', to: 'jira_sessions#destroy'
+      resources :jira_sessions, only: [:new, :destroy] do
+        post 'oauth/authorize', on: :collection, action: :authorize
+      end
 
       get 'jira_issues', to: 'jira_issues#index'
       get 'jira_issues/:id', to: 'jira_issues#show'

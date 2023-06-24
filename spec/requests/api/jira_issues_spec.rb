@@ -9,13 +9,11 @@ describe 'Jira Issues API' do
       tags 'Jira', 'Issues'
       produces 'application/json'
 
-      response '200', 'Return correct information based on query' do
-        schema type: :object,
-        properties: {
-
-        }, required: []
-
-        run_test!
+      response '302', 'Redirect for authorization' do
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          byebug
+        end
       end
     end
   end
