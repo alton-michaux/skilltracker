@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/jira_sessions_controller.rb
 module Api
   module V1
@@ -5,7 +7,8 @@ module Api
       include FormAuth
 
       before_action :form_auth_token
-      before_action :get_jira_client
+      before_action :fetch_jira_client, only: %i[new authorize]
+      before_action :fetch_session, only: :destroy
 
       def new
         callback_url = 'http://localhost:3000'
@@ -17,16 +20,16 @@ module Api
       end
 
       def authorize
-        request_token = @jira_client.set_request_token(
+        @jira_client.set_request_token(
           session[:request_token], session[:request_secret]
         )
         access_token = @jira_client.init_access_token(
-          :oauth_verifier => params[:oauth_verifier]
+          oauth_verifier: params[:oauth_verifier]
         )
 
         session[:jira_auth] = {
-          :access_token => access_token.token,
-          :access_key => access_token.secret
+          access_token: access_token.token,
+          access_key: access_token.secret
         }
 
         session.delete(:request_token)
@@ -40,7 +43,7 @@ module Api
       end
 
       def destroy
-        session.data.delete(:jira_auth)
+        @session.data.delete(:jira_auth)
       end
     end
   end

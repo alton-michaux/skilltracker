@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class JiraIssuesController < ApplicationController
@@ -8,7 +10,6 @@ module Api
       before_action :set_issue, only: :show
 
       def index
-        byebug
         @issues = @client.Issue.all
       end
 

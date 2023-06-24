@@ -11,8 +11,7 @@ describe 'Jira Issues API' do
 
       response '302', 'Redirect for authorization' do
         run_test! do |response|
-          data = JSON.parse(response.body)
-          byebug
+          JSON.parse(response.body)
         end
       end
     end

@@ -5,6 +5,40 @@
     "version": "v1"
   },
   "paths": {
+    "/api/v1/jira_issues": {
+      "get": {
+        "summary": "Query issue data",
+        "tags": [
+          "Jira",
+          "Issues"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect for authorization"
+          }
+        }
+      }
+    },
+    "/api/v1/jira_sessions/oauth/authorize": {
+      "post": {
+        "summary": "Authorize Jira session",
+        "tags": [
+          "Jira",
+          "Sessions"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect for authorization"
+          }
+        }
+      }
+    },
     "/api/v1/skills": {
       "get": {
         "summary": "Query skill data",

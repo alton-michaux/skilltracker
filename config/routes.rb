@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
 
-      resources :jira_sessions, only: [:new, :destroy] do
+      resources :jira_sessions, only: %i[new destroy] do
         post 'oauth/authorize', on: :collection, action: :authorize
       end
 
