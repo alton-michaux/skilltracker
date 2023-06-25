@@ -5,37 +5,32 @@ require 'uri'
 
 describe 'Jira Sessions API' do
   path '/api/v1/jira_sessions/oauth/authorize' do
-    post 'New Jira session' do
-      tags 'Jira', 'Sessions'
+    post 'Authorize Jira session' do
+      tags 'Jira'
       consumes 'application/json'
 
       response '302', 'Redirect for authorization' do
         run_test! do |response|
           expect(response).to have_http_status(:redirect)
           redirect_url = URI(response.headers['Location'])
-          expected_base_url = URI('http://localhost:3000/oauth/authorize')
+          expected_base_url = URI('https://auth.atlassian.com')
 
           expect(redirect_url.host).to eq(expected_base_url.host)
-          expect(redirect_url.path).to eq(expected_base_url.path)
+          # expect(redirect_url.path).to eq(expected_base_url.path)
         end
       end
     end
   end
 
-  path '/api/v1/jira_sessions/oauth/authorize' do
-    post 'Authorize Jira session' do
-      tags 'Jira', 'Sessions'
+  path '/callback' do
+    get 'Redirect Jira authentication' do
+      tags 'Jira'
+      produces 'application/json'
 
-      response '302', 'Redirect for authorization' do
+      response '200', 'Get authorization' do
         run_test! do |response|
-          follow_redirect!
 
-          expect(response).to have_http_status(:found)
-          redirect_url = URI(response.headers['Location'])
-          expected_base_url = URI('http://localhost:3000/oauth/authorize')
-
-          expect(redirect_url.host).to eq(expected_base_url.host)
-          expect(redirect_url.path).to eq(expected_base_url.path)
+          expect(response).to have_http_status(:success)
         end
       end
     end

@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
+  root 'pages#home'
+
   get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
+  get 'callback', to: 'api/v1/jira_sessions#callback'
 
   namespace :api do
     namespace :v1 do
@@ -35,8 +38,6 @@ Rails.application.routes.draw do
 
       get 'jira_issues', to: 'jira_issues#index'
       get 'jira_issues/:id', to: 'jira_issues#show'
-
-      get 'oauth2/callback', to: 'jira_sessions#callback'
     end
   end
 

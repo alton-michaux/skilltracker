@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # JIRA.configure do |config|
 #   config.oauth = {
 #     consumer_key: ENV["CLIENT_ID"],
