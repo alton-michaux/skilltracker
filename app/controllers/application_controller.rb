@@ -15,42 +15,54 @@ class ApplicationController < ActionController::Base
   private
 
   def oauth2_client
-    # client_id = ENV['CLIENT_ID']
-    # client_secret = ENV['CLIENT_SECRET']
-
+    client_id = ENV['CLIENT_ID']
+    client_secret = ENV['CLIENT_SECRET']
+  
     options = {
-      consumer_key: 'test',
-      private_key_file: Rails.root.join('private_key.pem').to_s,
-      site: 'http://localhost:3000',
-      context_path: '',
-      signature_method: 'RSA-SHA1'
+      site: 'https://auth.atlassian.com',
+      authorize_url: '/authorize',
+      token_url: '/oauth/token',
+      redirect_uri: 'http://localhost:3000/callback',
+      client_id: client_id,
+      client_secret: client_secret
     }
-
-    OAuth2::Client.new(options)
-  end
+  
+    OAuth2::Client.new(client_id, client_secret, options)
+  end  
 
   def handle_auth
-    state = request.headers["action_dispatch.request.unsigned_session_cookie"]["session_id"]
+    csrf_token = form_authenticity_token
 
-    # # Step 1: Redirect the user to the authorization URL
-    auth_url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{ENV['CLIENT_ID']}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent"
+    request.headers['X-CSRF-Token'] = csrf_token
 
-    # CURRENT PROBLEM AREA (TOO MANY REDIRECTS)
-    redirect_to auth_url
+    if verified_request?
+      # Step 1: Build headers and redirect to authorization url
+      state = request.headers["action_dispatch.request.unsigned_session_cookie"]["session_id"]
+    
+      auth_url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{ENV['CLIENT_ID']}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{csrf_token}"
+
+      redirect_to auth_url
+    else
+      render json: { error: 'Request unverified' }, status: 401
+    end
   end
 
   def handle_login
     # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
+    
+    client = oauth2_client
 
     # Step 3: Exchange the authorization code for an access token
     access_token = client.auth_code.get_token(params[:code], redirect_uri: 'http://localhost:3000/callback')
 
     # Step 4: Configure JIRA client with OAuth2 access token
     options = {
-      access_token: access_token.token,
+      username: access_token.token,
+      password: '', # Leave it empty as JIRA doesn't require a password for token-based authentication
       site: 'http://localhost:3000' # Replace with your JIRA instance URL
     }
+ 
     @jira_client = JIRA::Client.new(options)
   end
 
@@ -70,9 +82,3 @@ class ApplicationController < ActionController::Base
     @session = params[:jira_session]
   end
 end
-
-
-# consumer_key: ENV["CLIENT_ID"],
-# private_key_file: Rails.root.join('private_key.pem').to_s,
-# signature_method: 'RSA-SHA1',
-# site: 'http://localhost:3000' # Replace with your JIRA instance URL

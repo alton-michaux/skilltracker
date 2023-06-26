@@ -15,7 +15,5 @@ module FormAuth
   def form_auth_token
     csrf_token = form_authenticity_token
     response.headers['X-CSRF-Token'] = csrf_token
-
-    # ...
   end
 end

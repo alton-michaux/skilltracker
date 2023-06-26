@@ -6,9 +6,10 @@ module Api
     class JiraSessionsController < ApplicationController
       include FormAuth
 
-      before_action :handle_auth, only: %i[authorize]
+      skip_before_action :verify_authenticity_token, only: %i[callback authorize]
+      before_action :form_auth_token, only: [:callback]
+      before_action :handle_auth, only: :authorize
       before_action :handle_login, only: :callback
-      before_action :form_auth_token
       before_action :fetch_session, only: :destroy
 
       def new
@@ -26,17 +27,17 @@ module Api
         if @jira_client
           jira_service = JiraService.new(@jira_client)
           jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
-
+    
           session[:jira_auth] = jira_auth
-
+    
           session.delete(:request_token)
           session.delete(:request_secret)
-
+    
           render json: { success: 'authorization successful' }
         else
           render json: { error: 'Jira client not created' }, status: 500
         end
-      end
+      end      
 
       def destroy
         jira_service = JiraService.new(@jira_client)
