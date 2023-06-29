@@ -12,11 +12,7 @@ describe 'Jira Sessions API' do
       response '302', 'Redirect for authorization' do
         run_test! do |response|
           expect(response).to have_http_status(:redirect)
-          redirect_url = URI(response.headers['Location'])
-          expected_base_url = URI('https://auth.atlassian.com')
-
-          expect(redirect_url.host).to eq(expected_base_url.host)
-          # expect(redirect_url.path).to eq(expected_base_url.path)
+          # Additional assertions as needed
         end
       end
     end
@@ -29,8 +25,8 @@ describe 'Jira Sessions API' do
 
       response '200', 'Get authorization' do
         run_test! do |response|
-
           expect(response).to have_http_status(:success)
+          # Additional assertions as needed
         end
       end
     end

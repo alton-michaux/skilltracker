@@ -289,6 +289,7 @@ GEM
     ruby2_keywords (0.0.5)
     ruby_dep (1.5.0)
     ruby_http_client (3.5.5)
+    rubyzip (2.3.2)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -300,6 +301,10 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (4.9.0)
+      rexml (~> 3.2, >= 3.2.5)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
     sendgrid-actionmailer (3.2.0)
       mail (~> 2.7)
       sendgrid-ruby (~> 6.4)
@@ -345,6 +350,11 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    webdrivers (5.2.0)
+      nokogiri (~> 1.6)
+      rubyzip (>= 1.3.0)
+      selenium-webdriver (~> 4.0)
+    websocket (1.2.9)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -382,6 +392,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sass-rails (~> 5.0)
+  selenium-webdriver
   sendgrid-actionmailer
   sendgrid-ruby
   simplecov
@@ -391,6 +402,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
+  webdrivers (~> 5.0)
   will_paginate (~> 3.1.7)
 
 RUBY VERSION
