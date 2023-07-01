@@ -9,7 +9,6 @@ module Api
       before_action :set_issue, only: :show
 
       def index
-        byebug
         # @issues = @jira_client.Issue.all
         render json: { success: 'Welcome to your issues' }, status: 200
       end

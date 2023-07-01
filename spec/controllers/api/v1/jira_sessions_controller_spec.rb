@@ -8,7 +8,7 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
       it 'authorizes Jira session and redirects to authorization' do
         # Perform the authorization request
         post 'authorize'
-  
+
         # Assert the response
         expect(response).to have_http_status(:redirect)
         redirect_url = URI(response.headers['Location'])
@@ -16,7 +16,7 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
         expect(redirect_url.host).to eq(expected_base_url.host)
       end
     end
-  
+
     # describe 'GET #callback' do
     #   it 'redirects Jira authentication and creates a Jira client' do
     #     # Simulate the authorization flow
@@ -27,10 +27,10 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
     #     expected_base_url = URI('https://auth.atlassian.com')
     #     expect(redirect_url.host).to eq(expected_base_url.host)
     #     code = Rack::Utils.parse_query(redirect_url.query)['code']
-  
+
     #     # Make the callback request with the extracted code
     #     get 'callback', params: { code: code }
-  
+
     #     # Assert the response
     #     expect(response).to have_http_status(:success)
     #     # Additional assertions as needed

@@ -21,7 +21,7 @@ module Api
         redirect_to request_token.authorize_url
       end
 
-      def authorize;end
+      def authorize; end
 
       def callback
         if @jira_client
@@ -32,23 +32,23 @@ module Api
           jira_service.access_token_set(session, params)
 
           jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
-          
+
           session[:jira_auth] = jira_auth
 
           # session[:jira_auth] = {
           #   :access_token => access_token.token,
           #   :access_key => access_token.secret
           # }
- 
+
           session.delete(:request_token)
           session.delete(:request_secret)
-          
+
           render json: { session: session }, status: 200
           # redirect_to api_v1_jira_issues_path
         else
           render json: { error: 'Jira client not created' }, status: 500
         end
-      end      
+      end
 
       def destroy
         jira_service = JiraService.new(@jira_client)
@@ -56,7 +56,7 @@ module Api
 
         redirect_to skills_path
 
-        return
+        nil
       end
     end
   end

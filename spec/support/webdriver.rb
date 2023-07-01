@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'capybara/rspec'
 require 'webdrivers/chromedriver'
 require 'selenium/webdriver'
@@ -22,10 +24,10 @@ RSpec.configure do
 
   # see webdriver_info.md for help if chrome is not located in binary location
   options = Selenium::WebDriver::Chrome::Options.new
-  options.binary = "/usr/bin/chromedriver"
+  options.binary = '/usr/bin/chromedriver'
 
   # this checks whether tests are currently running locally or in heroku and assigns a binary if running locally
-  chrome_opts = chrome_bin ? {} : { "chromeOptions" => { "binary" => options.binary } }
+  chrome_bin ? {} : { 'chromeOptions' => { 'binary' => options.binary } }
   # this stores specific driver arguments depending on whether or not in headless mode
 
   args = %w[disable-gpu window-size=1280,1024 headless]

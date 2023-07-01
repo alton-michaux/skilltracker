@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def oauth2_client
     client_id = ENV['CLIENT_ID']
     client_secret = ENV['CLIENT_SECRET']
-  
+
     options = {
       site: 'https://auth.atlassian.com',
       authorize_url: '/authorize',
@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
 
     if verified_request?
       # Step 1: Build headers and redirect to authorization url
-      state = request.headers["HTTP_X_CSRF_TOKEN"]
+      state = request.headers['HTTP_X_CSRF_TOKEN']
 
       auth_url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{ENV['CLIENT_ID']}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{csrf_token}"
 
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   def handle_login
     # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
-    
+
     client = oauth2_client
 
     # Step 3: Exchange the authorization code for an access token
@@ -64,9 +64,9 @@ class ApplicationController < ActionController::Base
       private_key_file: Rails.root.join('private_key.pem').to_s,
       site: 'http://localhost:3000' # Replace with your JIRA instance URL
     }
- 
+
     @jira_client = JIRA::Client.new(options)
- 
+
     # Add AccessToken if authorised previously.
     @jira_client.set_access_token(
       access_token.token,
