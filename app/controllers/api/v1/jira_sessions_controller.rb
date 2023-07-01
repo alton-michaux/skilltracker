@@ -46,7 +46,7 @@ module Api
           render json: { session: session }, status: 200
           # redirect_to api_v1_jira_issues_path
         else
-          render json: { error: 'Jira client not created' }, status: 500
+          render json: { error: 'Jira client invalid' }, status: 500
         end
       end
 

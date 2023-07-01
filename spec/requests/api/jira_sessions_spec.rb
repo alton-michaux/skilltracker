@@ -18,19 +18,19 @@ describe 'Jira Sessions API' do
     end
   end
 
-  path '/callback' do
-    get 'Redirect Jira authentication' do
-      tags 'Jira'
-      produces 'application/json'
+  # path '/callback' do
+  #   get 'Redirect Jira authentication' do
+  #     tags 'Jira'
+  #     produces 'application/json'
 
-      response '200', 'Get authorization' do
-        run_test! do |response|
-          expect(response).to have_http_status(:success)
-          # Additional assertions as needed
-        end
-      end
-    end
-  end
+  #     response '200', 'Get authorization' do
+  #       run_test! do |response|
+  #         expect(response).to have_http_status(:success)
+  #         # Additional assertions as needed
+  #       end
+  #     end
+  #   end
+  # end
 
   # path '/api/v1/jira_sessions/{id}' do
   #   delete 'Destroy Jira session' do
