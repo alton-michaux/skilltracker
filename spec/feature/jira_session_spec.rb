@@ -11,12 +11,13 @@ RSpec.describe 'Jira session tests', type: :feature, js: true do
     end
   end
 
-  describe 'GET #callback' do
-    it 'redirects Jira authentication and creates a Jira client' do
-      byebug
+  describe 'GET #authorize' do
+    it 'fetches Jira authentication url with proper payload' do
       # Extract the code parameter from the callback URL
-      callback_url = URI.parse(page.current_url)
-      code = Rack::Utils.parse_query(callback_url.query)['code']
+      auth_url = URI(page.current_url)
+      byebug
+      client_id = Rack::Utils.parse_query(auth_url.query)['client_id']
+      csrf_token = Rack::Utils.parse_query(auth_url.query)['_csrf']
 
       # Make the callback request with the extracted code
       visit "callback?code=#{code}"
