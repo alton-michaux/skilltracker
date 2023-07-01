@@ -21,6 +21,7 @@ gem 'active_model_serializers', '~>0.10.10'
 gem 'devise', '~> 4.7.1'
 gem 'rswag', '~>2.0.5'
 
+gem 'jira-ruby', require: 'jira-ruby'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -70,9 +71,8 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  # gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  # gem 'chromedriver-helper'
+  gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 5.0', require: false
   # simplecov to check test coverage
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
@@ -82,3 +82,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem 'oauth2', '~> 2.0'

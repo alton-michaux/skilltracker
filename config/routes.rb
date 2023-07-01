@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
+  root 'pages#home'
+
+  # get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
+  # get 'callback', to: 'api/v1/jira_sessions#callback'
+
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -26,6 +31,14 @@ Rails.application.routes.draw do
       get 'skills', to: 'skills#index'
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
+
+      resources :jira_sessions, only: [] do
+        post :authorize, on: :collection
+        get :callback, on: :collection
+      end
+
+      get 'jira_issues', to: 'jira_issues#index'
+      get 'jira_issues/:id', to: 'jira_issues#show'
     end
   end
 

@@ -4,6 +4,8 @@ require_relative 'support/factory_bot'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+# require 'rspec/rails'
+
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
@@ -65,10 +67,10 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.backtrace_exclusion_patterns = [
-    /\/lib\d*\/ruby\//,
-    /bin\//,
+    %r{/lib\d*/ruby/},
+    %r{bin/},
     /gems/,
-    /spec\/spec_helper\.rb/,
-    /lib\/rspec\/(core|expectations|matchers|mocks)/
+    %r{spec/spec_helper\.rb},
+    %r{lib/rspec/(core|expectations|matchers|mocks)}
   ]
 end

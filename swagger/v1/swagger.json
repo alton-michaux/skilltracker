@@ -5,6 +5,38 @@
     "version": "v1"
   },
   "paths": {
+    "/api/v1/jira_sessions/oauth/authorize": {
+      "post": {
+        "summary": "Authorize Jira session",
+        "tags": [
+          "Jira"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect for authorization"
+          }
+        }
+      }
+    },
+    "/callback": {
+      "get": {
+        "summary": "Redirect Jira authentication",
+        "tags": [
+          "Jira"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Get authorization"
+          }
+        }
+      }
+    },
     "/api/v1/skills": {
       "get": {
         "summary": "Query skill data",

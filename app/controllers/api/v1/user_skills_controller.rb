@@ -3,7 +3,10 @@
 module Api
   module V1
     class UserSkillsController < ApplicationController
-      before_action :get_current_user
+      include FormAuth
+
+      before_action :form_auth_token
+      before_action :fetch_current_user
 
       attr_accessor :user_skills
 
