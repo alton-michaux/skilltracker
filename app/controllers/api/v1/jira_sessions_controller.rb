@@ -25,7 +25,6 @@ module Api
 
       def callback
         if @jira_client
-          # byebug
           jira_service = JiraService.new(@jira_client)
 
           jira_service.request_token_set(session)

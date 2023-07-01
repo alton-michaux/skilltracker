@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
-  get 'callback', to: 'api/v1/jira_sessions#callback'
+  # get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
+  # get 'callback', to: 'api/v1/jira_sessions#callback'
 
   namespace :api do
     namespace :v1 do
@@ -32,8 +32,9 @@ Rails.application.routes.draw do
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
 
-      resources :jira_sessions, only: %i[new destroy] do
-        post 'oauth/authorize', on: :collection, action: :authorize
+      resources :jira_sessions, only: [] do
+        post :authorize, on: :collection
+        get :callback, on: :collection
       end
 
       get 'jira_issues', to: 'jira_issues#index'

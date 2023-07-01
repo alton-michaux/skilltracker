@@ -4,7 +4,7 @@ require 'swagger_helper'
 require 'uri'
 
 describe 'Jira Sessions API' do
-  path '/api/v1/jira_sessions/oauth/authorize' do
+  path '/api/v1/jira_sessions/authorize' do
     post 'Authorize Jira session' do
       tags 'Jira'
       consumes 'application/json'
@@ -18,19 +18,26 @@ describe 'Jira Sessions API' do
     end
   end
 
-  # path '/callback' do
-  #   get 'Redirect Jira authentication' do
-  #     tags 'Jira'
-  #     produces 'application/json'
+  path 'api/v1/jira_sessions/callback' do
+    get 'Redirect Jira authentication' do
+      tags 'Jira'
+      produces 'application/json'
 
-  #     response '200', 'Get authorization' do
-  #       run_test! do |response|
-  #         expect(response).to have_http_status(:success)
-  #         # Additional assertions as needed
-  #       end
-  #     end
-  #   end
-  # end
+      before do
+        # Simulate a successful authentication by setting the required parameters
+        # For example, assuming the code parameter is required, you can set it directly
+        parameters = { code: '8f323rhjeighighhiweh81938r8249' }
+        allow_any_instance_of(JiraSessionsController).to receive(:session_params).and_return(parameters)
+      end
+
+      response '200', 'Get authorization' do
+        run_test! do |response|
+          expect(response).to have_http_status(:success)
+          # Additional assertions as needed
+        end
+      end
+    end
+  end
 
   # path '/api/v1/jira_sessions/{id}' do
   #   delete 'Destroy Jira session' do
