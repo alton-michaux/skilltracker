@@ -14,7 +14,6 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
         redirect_url = URI(response.headers['Location'])
         expected_base_url = URI('https://auth.atlassian.com')
         expect(redirect_url.host).to eq(expected_base_url.host)
-        # Additional assertions as needed
       end
     end
   

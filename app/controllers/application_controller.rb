@@ -26,12 +26,8 @@ class ApplicationController < ActionController::Base
       client_id: client_id,
       client_secret: client_secret
     }
-  
-    OAuth2::Client.new(client_id, client_secret, options)
-  end
 
-  def state?(string)
-    string ? string : "test"
+    OAuth2::Client.new(client_id, client_secret, options)
   end
 
   def handle_auth
@@ -41,7 +37,7 @@ class ApplicationController < ActionController::Base
 
     if verified_request?
       # Step 1: Build headers and redirect to authorization url
-      state = state?(request.headers["action_dispatch.request.unsigned_session_cookie"]["session_id"])
+      state = request.headers["HTTP_X_CSRF_TOKEN"]
 
       auth_url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{ENV['CLIENT_ID']}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{csrf_token}"
 
