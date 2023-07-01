@@ -13,7 +13,7 @@ RSpec.describe 'Jira session tests', type: :feature, js: true do
 
   # describe 'GET #authorize' do
   #   it 'fetches Jira authentication url with proper payload' do
-  #     byebug
+  #     # byebug
   #     # Extract the code parameter from the callback URL
   #     auth_url = URI(page.current_url)
 
