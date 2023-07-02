@@ -44,8 +44,12 @@ gem 'will_paginate', '~> 3.1.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'sendgrid-actionmailer'
-gem 'sendgrid-ruby'
+
+gem 'bootstrap', '>= 4.0.0', require: false
+gem 'jquery-rails'
+gem 'sprockets-rails'
+
+gem 'webpacker', '~> 5.4.4'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'
