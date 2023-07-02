@@ -26,7 +26,7 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
 
       it 'redirects Jira authentication and creates a Jira client' do
         # Make the callback request with the extracted code
-        get 'callback', params: { authorization_code: @params["authorization_code"] }
+        get 'callback', params: { authorization_code: @params['authorization_code'] }
 
         # Assert the response
         expect(response).to have_http_status(:success)
