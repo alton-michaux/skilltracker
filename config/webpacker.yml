@@ -51,6 +51,13 @@ development:
   <<: *default
   compile: true
 
+  # Set the type option to 'module' for the entry file
+  entry:
+    application:
+      - './app/javascript/application.js'
+      - './app/javascript/packs/application.js'
+  type: module
+
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false

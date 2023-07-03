@@ -34,7 +34,8 @@ module.exports = function(api) {
           modules: false,
           exclude: ['transform-typeof-symbol']
         }
-      ]
+      ],
+      '@babel/preset-react' // Add this line to enable JSX parsing
     ].filter(Boolean),
     plugins: [
       'babel-plugin-macros',
