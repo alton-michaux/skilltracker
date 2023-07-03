@@ -1,9 +1,12 @@
 import React from "react"
 import Button from 'react-bootstrap/Button';
 
-const SkillTrackerButton = ({variant, children}) => {
+const SkillTrackerButton = ({variant, action, children}) => {
   return (
-    <Button variant={variant}>{children}</Button>
+    <Button 
+      variant={variant}
+      onClick={action}
+    >{children}</Button>
   );
 }
 
