@@ -5,12 +5,14 @@ const Home = () => {
   return (
     <div>
       <p className="text-center">Welcome to SkillTracker!</p>
-      <SkillTrackerButton
-        variant={"primary"}
-      >Log In</SkillTrackerButton>
-      <SkillTrackerButton
-        variant={"secondary"}
-      >sign Up</SkillTrackerButton>
+      <div className="container-sm">
+        <SkillTrackerButton
+          variant={"primary"}
+        >Log In</SkillTrackerButton>
+        <SkillTrackerButton
+          variant={"secondary"}
+        >Sign Up</SkillTrackerButton>
+      </div>
     </div>
   );
 }
