@@ -14,3 +14,13 @@
 // Import Bootstrap styles
 @import "bootstrap/scss/bootstrap";
 
+.login-card {
+  display: flex;
+  max-width: 25%;
+  margin: 0 auto;
+}
+
+.login-card button {
+  margin: 10px;
+}
+

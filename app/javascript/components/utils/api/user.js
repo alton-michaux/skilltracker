@@ -1,5 +1,5 @@
 import {
-  post, destroy, get,
+  destroy, get,
 } from './index';
 
 export const userLogin = (formData) => get('/api/v1/login', formData)

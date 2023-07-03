@@ -7,14 +7,16 @@ const Home = () => {
     <div>
       <p className="text-center">Welcome to SkillTracker!</p>
       <div className="container-sm">
-        <SkillTrackerButton
-          variant={"primary"}
-          action={userLogin}
-        >Log In</SkillTrackerButton>
-        <SkillTrackerButton
-          variant={"secondary"}
-          action={userRegister}
-        >Sign Up</SkillTrackerButton>
+        <div className="row login-card">
+          <SkillTrackerButton
+            variant={"primary"}
+            action={userLogin}
+          >Log In</SkillTrackerButton>
+          <SkillTrackerButton
+            variant={"secondary"}
+            action={userRegister}
+          >Sign Up</SkillTrackerButton>
+        </div>
       </div>
     </div>
   );
