@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  def home; end
+  def home
+    render component: 'Home', props: {}
+  end
 end

@@ -1,9 +1,16 @@
 import React from "react"
+import SkillTrackerButton from "./elements/button";
 
 const Home = () => {
   return (
-    <div className="text-center">
-      <p>Welcome to SkillTracker</p>
+    <div>
+      <p className="text-center">Welcome to SkillTracker!</p>
+      <SkillTrackerButton
+        variant={"primary"}
+      >Log In</SkillTrackerButton>
+      <SkillTrackerButton
+        variant={"secondary"}
+      >sign Up</SkillTrackerButton>
     </div>
   );
 }
