@@ -11,7 +11,12 @@ module Api
         before_action :configure_account_update_params, only: [:update]
 
         def create
-          render component: 'Registration', props: {}
+          parameters = {
+            sign_up: params[:sign_up],
+            keys: params["keys"][:attribute]
+          }
+
+          @params = parameters
         end
         # GET /resource/sign_up
 
