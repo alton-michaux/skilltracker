@@ -1,3 +1,7 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from '../components/App';
+
 /* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
@@ -6,14 +10,6 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from '../components/App';
-
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.createRoot(<App />, document.getElementById('root'));
-});
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -27,3 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
+
+document.addEventListener('DOMContentLoaded', () => {
+  createRoot(document.getElementById('root')).render(<App />);
+});
