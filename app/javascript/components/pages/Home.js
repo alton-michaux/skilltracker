@@ -49,11 +49,11 @@ const Home = () => {
         <div className="row login-card">
           <SkillTrackerButton
             variant={"primary"}
-            destination={"login"}
+            destination={"/login"}
           >Log In</SkillTrackerButton>
           <SkillTrackerButton
             variant={"secondary"}
-            destination={"sign_up"}
+            destination={"/signup/sign_up"}
           >Sign Up</SkillTrackerButton>
         </div>
 
