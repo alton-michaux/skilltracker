@@ -2,6 +2,6 @@
 
 class PagesController < ApplicationController
   def home
-    render component: 'Home', props: {}
+    render component: 'App', props: {}
   end
 end

@@ -10,7 +10,7 @@ default: &default
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
-  additional_paths: []
+  additional_paths: ['app/javascript']
 
   # Reload manifest.json on all requests so we reload latest compiled packs
   cache_manifest: false
@@ -33,6 +33,7 @@ default: &default
     - .woff2
 
   extensions:
+    - .jsx
     - .mjs
     - .js
     - .sass
@@ -54,7 +55,6 @@ development:
   # Set the type option to 'module' for the entry file
   entry:
     application:
-      - './app/javascript/application.js'
       - './app/javascript/packs/application.js'
   type: module
 
