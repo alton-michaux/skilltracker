@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Registration from './pages/Registration'
+import Login from './pages/Login';
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -12,7 +14,8 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* Define other routes here */}
+            <Route path="/sign_up" element={<Registration />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Router>
       )}

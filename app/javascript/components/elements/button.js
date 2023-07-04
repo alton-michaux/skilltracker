@@ -1,12 +1,18 @@
 import React from "react"
+import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 
-const SkillTrackerButton = ({variant, action, children}) => {
+const SkillTrackerButton = ({ variant, action, children, destination }) => {
   return (
-    <Button 
+    <Button
       variant={variant}
-      onClick={action}
-    >{children}</Button>
+      onClick={action ? action : ""}
+    >
+      <Link
+        to={destination}
+      >{children}
+      </Link>
+    </Button>
   );
 }
 
