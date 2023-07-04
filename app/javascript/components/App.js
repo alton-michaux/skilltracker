@@ -8,6 +8,7 @@ import JiraIssues from './pages/JiraIssues';
 import Skills from './pages/Skills';
 import Tickets from './pages/Tickets';
 import UserProfile from './pages/UserProfile';
+import MatchedSkills from './pages/MatchedSkills'
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -19,13 +20,14 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/sign_up" element={<Registration />} />
+            <Route path="/signup/sign_up" element={<Registration />} />
             <Route path="/login" element={<Login />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/jira_issues" element={<JiraIssues />} />
             <Route path="/skills" element={<Skills />} />
-            <Route path="/tickets" element={<Tickets />} />
-            <Route path="/user_profile" element={<UserProfile />} />
+            <Route path="/users/:user_id/tickets" element={<Tickets />} />
+            <Route path="/users/:id" element={<UserProfile />} />
+            <Route path="/users/:user_id/matched_skills" element={<MatchedSkills />} />
           </Routes>
         </Router>
       )}
