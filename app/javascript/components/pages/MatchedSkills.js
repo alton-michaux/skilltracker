@@ -1,12 +1,17 @@
 import React from "react"
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const UserProfile = () => {
+const MatchedSkills = () => {
   const { user_id } = useParams();
 
   return(
-    <div className="text-center">User Profile</div>
+    <div className="text-center">Mathed Skills</div>
   )
 }
 
-export default UserProfile
+MatchedSkills.PropTypes = {
+  id: PropTypes.number.isRequired
+}
+
+export default MatchedSkills

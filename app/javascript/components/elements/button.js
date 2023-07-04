@@ -15,10 +15,10 @@ const SkillTrackerButton = ({ variant, action, children, destination }) => {
   return (
     <Button
       variant={variant}
-      onClick={action ? action : ""}
+      onClick={action}
     >
       <StyledLink
-        to={destination ? destination : "/"}
+        to={destination}
       >{children}
       </StyledLink>
     </Button>
