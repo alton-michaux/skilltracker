@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import App from '../components/App';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<App />, document.getElementById('root'));
+  ReactDOM.createRoot(<App />, document.getElementById('root'));
 });
 
 // Uncomment to copy all static images under ../images to the output folder and reference

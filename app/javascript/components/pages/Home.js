@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import SkillTrackerButton from "./elements/button";
-import { userLogin, userRegister } from "./utils/api/user";
+import SkillTrackerButton from "../elements/button";
+import { userLogin, userRegister } from "../utils/api/user";
 
 const Home = () => {
   const navigate = useNavigate()
