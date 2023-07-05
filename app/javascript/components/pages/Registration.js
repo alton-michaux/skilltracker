@@ -16,10 +16,11 @@ const Registration = () => {
       data[name] = value;
     }
 
-    await userRegisterSubmit(data)
-      .then((response) => response.json())
-      .then((data) => alert(data))
-      .catch((error) => console.error(error))
+    // Include the CSRF token in the form data
+    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
+
+      await userRegisterSubmit(data)
+      .catch((error) => { throw new Error(error)})
   }
 
   return (

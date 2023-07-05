@@ -5,42 +5,6 @@ const Home = () => {
   const [loginError, setLoginError] = useState('');
   const [signupError, setSignupError] = useState('');
 
-
-  // const handleLogin = () => {
-  //   // Make the login API call
-  //   userLogin(formData)
-  //     .then((response) => {
-  //       // Handle the successful login response
-  //       if (response.status === 200) {
-  //         // Redirect to a different page or update the state
-  //         navigate('/api/v1/login');
-  //       } else {
-  //         setLoginError('Login failed. Please try again.');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Login error:', error);
-  //       setLoginError('An error occurred during login.');
-  //     });
-  // };
-
-  // const handleSignup = () => {
-  //   // Make the sign-up API call
-  //   userRegister(formData)
-  //     .then((response) => {
-  //       // Handle the successful sign-up response
-  //       if (response.status === 200) {
-  //         // Redirect to a different page or update the state
-  //         navigate('api/v1/signup/sign_up');
-  //       } else {
-  //         setSignupError('Sign-up failed. Please try again.');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Sign-up error:', error);
-  //       setSignupError('An error occurred during sign-up.');
-  //     });
-  // };
   return (
     <div>
       <p className="text-center">Welcome to SkillTracker!</p>
@@ -48,11 +12,11 @@ const Home = () => {
         <div className="row login-card">
           <SkillTrackerButton
             variant={"primary"}
-            destination={"/login"}
+            destination={"/api/v1/login"}
           >Log In</SkillTrackerButton>
           <SkillTrackerButton
             variant={"secondary"}
-            destination={"/signup/sign_up"}
+            destination={"/api/v1/signup/sign_up"}
           >Sign Up</SkillTrackerButton>
         </div>
 

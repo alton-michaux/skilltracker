@@ -21,13 +21,19 @@ Rails.application.routes.draw do
         registrations: 'api/v1/users/registrations'
       }
 
+      # Route for the login page
+      get '/api/v1/login', to: 'pages#login'
+
+      # Catch-all route to serve React application
+      get '*path', to: 'pages#home', via: :all
+
       resources :users, only: %i[index show] do
         resources :tickets, only: %i[index show]
         resources :matched_skills, only: [:index]
         resources :user_skills, only: [:index]
       end
 
-      # Add your custom API controller routes here
+      # Add custom API controller routes here
       get 'skills', to: 'skills#index'
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'

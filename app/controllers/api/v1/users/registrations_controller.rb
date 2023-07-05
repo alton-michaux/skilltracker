@@ -11,21 +11,12 @@ module Api
         before_action :configure_account_update_params, only: [:update]
 
         def create
-          # byebug
           build_resource(sign_up_params)
-      
+
           if resource.save
-            if request.xhr?
-              render json: { message: 'Registration successful' }, status: :ok
-            else
-              super
-            end
+            redirect_to new_api_v1_user_session_path # Redirect to the login page
           else
-            if request.xhr?
-              render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
-            else
-              super
-            end
+            render json: { error: "registration unsuccessful" }
           end
         end
         # GET /resource/sign_up
