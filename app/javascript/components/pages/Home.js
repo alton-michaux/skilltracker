@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import SkillTrackerButton from "../elements/button";
-import { userLogin, userRegister } from "../utils/api/user";
 
 const Home = () => {
   const [loginError, setLoginError] = useState('');

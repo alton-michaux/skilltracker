@@ -1,53 +1,59 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
+import { userRegisterSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
 const Registration = () => {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic
-  };
+
+    const formData = new FormData(event.target);
+
+    // Create an object to store the form data
+    const data = {};
+
+    for (let [name, value] of formData.entries()) {
+      data[name] = value;
+    }
+
+    await userRegisterSubmit(data)
+      .then((response) => response.json())
+      .then((data) => alert(data))
+      .catch((error) => console.error(error))
+  }
 
   return (
     <div className="text-center d-flex-inline">
       <h2>Sign up</h2>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         {/* Render form fields */}
-        <Form.Group
-          className="field"
-        >
+        <Form.Group controlId="formFirstname">
+          <Form.Label>First Name</Form.Label>
+          <Form.Control type="name" name="first_name" autoFocus required />
+        </Form.Group>
+
+        <Form.Group controlId="formLastname">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control type="name" name="last_name" autoFocus required />
+        </Form.Group>
+
+        <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            autoFocus
-            required />
+          <Form.Control type="email" name="email" autoFocus required />
         </Form.Group>
 
-        <Form.Group
-          className="field"
-        >
+        <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            required />
+          <Form.Control type="password" name="password" required />
         </Form.Group>
 
-        <Form.Group
-          className="field"
-        >
+        <Form.Group controlId="formPasswordConfirmation">
           <Form.Label>Password Confirmation</Form.Label>
-          <Form.Control
-            type="password"
-            name="password_confirmation"
-            required />
+          <Form.Control type="password" name="password_confirmation" required />
         </Form.Group>
 
-        <SkillTrackerButton
-          className="actions"
-        >
-          <Form.Control type="submit" value="Sign up" />
+        <SkillTrackerButton variant="primary" type="submit">
+          Sign up
         </SkillTrackerButton>
       </Form>
     </div>

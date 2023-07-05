@@ -11,12 +11,22 @@ module Api
         before_action :configure_account_update_params, only: [:update]
 
         def create
-          parameters = {
-            sign_up: params[:sign_up],
-            keys: params["keys"][:attribute]
-          }
-
-          @params = parameters
+          # byebug
+          build_resource(sign_up_params)
+      
+          if resource.save
+            if request.xhr?
+              render json: { message: 'Registration successful' }, status: :ok
+            else
+              super
+            end
+          else
+            if request.xhr?
+              render json: { error: resource.errors.full_messages }, status: :unprocessable_entity
+            else
+              super
+            end
+          end
         end
         # GET /resource/sign_up
 
@@ -35,6 +45,10 @@ module Api
         # removing all OAuth session data.
 
         protected
+
+        def sign_up_params
+          params.require(:registration).permit(:email, :password, :password_confirmation, :first_name, :last_name)
+        end
 
         # If you have extra params to permit, append them to the sanitizer.
         def configure_sign_up_params

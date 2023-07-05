@@ -1,42 +1,46 @@
-import React from "react"
+import React from "react";
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { styled } from "styled-components";
 import PropTypes from 'prop-types';
 
-const SkillTrackerButton = ({ variant, action, children, destination }) => {
+const SkillTrackerButton = ({ variant, action, children, destination, type }) => {
   const StyledLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  margin: 1rem;
-  position: relative;
-`;
+    color: white;
+    text-decoration: none;
+    margin: 1rem;
+    position: relative;
+  `;
 
   return (
     <Button
       variant={variant}
       onClick={action}
+      type={type}
     >
-      <StyledLink
-        to={destination}
-      >{children}
-      </StyledLink>
+      {destination ? (
+        <StyledLink to={destination}>{children}</StyledLink>
+      ) : (
+        children
+      )}
     </Button>
   );
 }
 
-SkillTrackerButton.defaultProp = {
+SkillTrackerButton.defaultProps = {
   variant: "primary",
-  action: "",
+  action: () => {},
   children: "button",
-  destination: ""
+  destination: "",
+  type: "button"
 }
 
 SkillTrackerButton.propTypes = {
   variant: PropTypes.string,
   action: PropTypes.func,
   children: PropTypes.string,
-  destination: PropTypes.string
+  destination: PropTypes.string,
+  type: PropTypes.string
 }
 
 export default SkillTrackerButton;

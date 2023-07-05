@@ -10,7 +10,7 @@ const UserProfile = () => {
   )
 }
 
-UserProfile.PropTypes = {
+UserProfile.propTypes = {
   id: PropTypes.number.isRequired
 }
 
