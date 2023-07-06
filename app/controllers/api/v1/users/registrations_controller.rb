@@ -14,7 +14,7 @@ module Api
           build_resource(sign_up_params)
 
           if resource.save
-            redirect_to new_api_v1_user_session_path # Redirect to the login page
+            render json: { success: true } # Redirect to the login page
           else
             render json: { error: "registration unsuccessful" }
           end
