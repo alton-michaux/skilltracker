@@ -3,6 +3,7 @@ import {
 } from './index';
 
 export const userLogin = () => get('/api/v1/login')
+export const userLoginSubmit = (formData) => post('/api/v1/login', formData)
 export const userLogout = (formData) => destroy('/api/v1/logout', formData)
 export const userRegister = () => get('/api/v1/signup/sign_up')
 export const userRegisterSubmit = (formData) => post('/api/v1/signup', formData)

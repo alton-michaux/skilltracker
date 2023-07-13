@@ -22,7 +22,7 @@ describe 'sessions API' do
         required: %w[email password]
       }
 
-      response '200', 'session created' do
+      response '204', 'session created' do
         let(:user) do
           {
             user: {

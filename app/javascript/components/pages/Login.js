@@ -1,9 +1,11 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import { userLogin } from '../utils/api/user';
+import { useNavigate } from 'react-router-dom';
+import { userLoginSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
 const Login = () => {
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -19,8 +21,17 @@ const Login = () => {
     // Include the CSRF token in the form data
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
 
-    await userLogin(data)
-      .catch((error) => { throw new Error(error) })
+    try {
+      const response = await userLoginSubmit(data)
+      console.log("🚀 ~ file: Login.js:26 ~ handleSubmit ~ response:", response)
+      if (response.ok) {
+        navigate('/api/v1/users/:id')
+      } else {
+        throw new Error(response.statusText)
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
   };
 
   return (

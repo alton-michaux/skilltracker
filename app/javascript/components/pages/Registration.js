@@ -22,8 +22,12 @@ const Registration = () => {
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
 
     try {
-      await userRegisterSubmit(data)
-      navigate('/api/v1/login');
+      const response = await userRegisterSubmit(data)
+      if (response.ok) {
+        navigate('/api/v1/login')
+      } else {
+        throw new Error(response.statusText)
+      }
     } catch (error) {
       throw new Error(error)
     }

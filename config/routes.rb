@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
   # get 'callback', to: 'api/v1/jira_sessions#callback'
 
+  get '/app/*path', to: 'pages#home', via: :all
+
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -20,9 +22,6 @@ Rails.application.routes.draw do
         sessions: 'api/v1/users/sessions',
         registrations: 'api/v1/users/registrations'
       }
-
-      # Catch-all route to serve React application
-      get '*path', to: 'pages#home', via: :all
 
       resources :users, only: %i[index show] do
         resources :tickets, only: %i[index show]

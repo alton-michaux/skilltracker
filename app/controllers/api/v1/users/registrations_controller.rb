@@ -14,9 +14,9 @@ module Api
           build_resource(sign_up_params)
 
           if resource.save
-            render json: { success: true } # Redirect to the login page
+            render json: { success: true }, status: 200 # Redirect to the login page
           else
-            render json: { error: "registration unsuccessful" }
+            render json: { error: "registration unsuccessful" }, status: 500
           end
         end
         # GET /resource/sign_up
