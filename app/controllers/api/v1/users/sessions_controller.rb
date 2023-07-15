@@ -14,13 +14,15 @@ module Api
         end        
 
         def create
-          # self.resource = warden.authenticate!(auth_options)
-          # if resource
-          #   sign_in(resource_name, resource)
-          #   render json: { success: true }
-          # else
-          #   render json: { error: warden.message || 'Authentication failed' }, status: :unauthorized
-          # end
+          user = User.find_by(email: login_params[:email])
+
+          if user
+            flash.success = "Login successful"
+            super
+          else
+            flash.alert = "Invalid Email or password."
+            render json: { error: "Login failed" }, status: 401
+          end
         end
 
         # GET /resource/sign_in

@@ -22,16 +22,20 @@ const Login = () => {
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
 
     try {
-      const response = await userLoginSubmit(data)
-      console.log("🚀 ~ file: Login.js:26 ~ handleSubmit ~ response:", response)
-      if (response.ok) {
-        navigate('/api/v1/users/:id')
+      const response = await userLoginSubmit(data);
+      if (response.status === 200) {
+        // Successful login
+        navigate('/api/v1/users/:id');
+      } else if (response.status === 401) {
+        // Failed login
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error);
       } else {
-        throw new Error(response.statusText)
+        throw new Error(response.statusText);
       }
     } catch (error) {
-      throw new Error(error)
-    }
+      throw new Error(error);
+    }    
   };
 
   return (
