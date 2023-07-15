@@ -25,11 +25,10 @@ module Api
           end
         end
 
-        # GET /resource/sign_in
-
-        # POST /resource/sign_in
-
-        # DELETE /resource/sign_out
+        def destroy
+          super
+          flash.success = "Logged out successfully"
+        end
 
         protected
 
