@@ -11,24 +11,32 @@ module Api
         def create
           user = User.find_by(email: login_params[:email])
 
-          if user&.valid_password?(login_params[:password])
-            # flash.success = "Login successful"
-            super
+          if user&.valid? && user&.valid_password?(login_params[:password])
+            sign_in(user)
+            render json: { success: 'Login successful' }, status: 200
           else
-            # flash.alert = "Invalid Email or password."
-            render json: { error: 'Login failed' }, status: 401
+            render json: { error: user&.errors&.to_a[0] }, status: 401
           end
         end
 
         def destroy
           super
-          flash.success = 'Logged out successfully'
         end
 
         protected
 
         def login_params
-          params.require(:session).permit(:email, :password)
+          if params[:session]
+            params.require(:session).permit(:email, :password)
+          else
+            params.require(:user).permit(:email, :password)
+          end
+        end
+
+        def require_no_authentication
+          return if action_name == 'create'
+        
+          super
         end
       end
     end

@@ -11,12 +11,12 @@ module Api
         before_action :configure_account_update_params, only: [:update]
 
         def create
-          build_resource(sign_up_params)
+          user = build_resource(sign_up_params)
 
-          if resource.save
+          if user.save
             render json: { success: true }, status: 200 # Redirect to the login page
           else
-            render json: { error: 'registration unsuccessful' }, status: 500
+            render json: { error: user&.errors&.to_a[0] }, status: 500
           end
         end
         # GET /resource/sign_up
@@ -49,6 +49,12 @@ module Api
         # If you have extra params to permit, append them to the sanitizer.
         def configure_account_update_params
           devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
+        end
+        
+        def require_no_authentication
+          return if action_name == 'create'
+        
+          super
         end
 
         # The path used after sign up.
