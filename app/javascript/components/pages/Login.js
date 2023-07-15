@@ -42,7 +42,6 @@ const Login = () => {
     <div className="text-center d-flex-inline">
       <h2>Log in</h2>
       <Form onSubmit={handleSubmit}>
-        {/* Render form fields */}
         <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" name="email" autoFocus required />

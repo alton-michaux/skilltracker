@@ -6,21 +6,16 @@ module Api
       class SessionsController < Devise::SessionsController
         include FormAuth
 
-        before_action :form_auth_token, except: [:index]
-        before_action :configure_sign_in_params, only: [:create, :new]
-
-        def new
-         super
-        end        
+        before_action :form_auth_token, except: [:index]     
 
         def create
           user = User.find_by(email: login_params[:email])
-
-          if user
-            flash.success = "Login successful"
+byebug
+          if user && user.valid_password?(login_params[:password])
+            # flash.success = "Login successful"
             super
           else
-            flash.alert = "Invalid Email or password."
+            # flash.alert = "Invalid Email or password."
             render json: { error: "Login failed" }, status: 401
           end
         end
@@ -34,11 +29,6 @@ module Api
 
         def login_params
           params.require(:session).permit(:email, :password)
-        end
-
-        # If you have extra params to permit, append them to the sanitizer.
-        def configure_sign_in_params
-          devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
         end
       end
     end
