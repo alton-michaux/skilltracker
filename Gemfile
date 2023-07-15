@@ -19,8 +19,8 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 gem 'active_model_serializers', '~>0.10.10'
 gem 'devise', '~> 4.7.1'
-gem 'warden'
 gem 'rswag', '~>2.0.5'
+gem 'warden'
 
 gem 'jira-ruby', require: 'jira-ruby'
 # Use CoffeeScript for .coffee assets and views

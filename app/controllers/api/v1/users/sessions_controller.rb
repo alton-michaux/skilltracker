@@ -6,23 +6,23 @@ module Api
       class SessionsController < Devise::SessionsController
         include FormAuth
 
-        before_action :form_auth_token, except: [:index]     
+        before_action :form_auth_token, except: [:index]
 
         def create
           user = User.find_by(email: login_params[:email])
-byebug
-          if user && user.valid_password?(login_params[:password])
+
+          if user&.valid_password?(login_params[:password])
             # flash.success = "Login successful"
             super
           else
             # flash.alert = "Invalid Email or password."
-            render json: { error: "Login failed" }, status: 401
+            render json: { error: 'Login failed' }, status: 401
           end
         end
 
         def destroy
           super
-          flash.success = "Logged out successfully"
+          flash.success = 'Logged out successfully'
         end
 
         protected
