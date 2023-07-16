@@ -2,17 +2,23 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from "react-hot-toast";
 import PropTypes from 'prop-types';
 import { userLogout } from "../utils/api/user";
 import { authorizeJiraSession } from "../utils/api/jiraSessions";
-import { StyleSheetConsumer } from 'styled-components';
+// import { StyleSheetConsumer } from 'styled-components';
 
 const SkillTrackerNav = ({ user, setUser }) => {
-  console.log("🚀 ~ file: navbar.js:14 ~ SkillTrackerNav ~ user:", user)
   const navigate = useNavigate();
+
+  const handleUser = (user) => {
+    setUser(user)
+    toast('Logged out successfully')
+    navigate('/')
+  }
+
   const authorizeJira = async () => {
     try {
       const response = await authorizeJiraSession();
@@ -25,27 +31,27 @@ const SkillTrackerNav = ({ user, setUser }) => {
     try {
       const response = await userLogout();
       if (response.ok) {
-        setUser({})
-        navigate('/')
-        toast('Logged out successfully')
+        handleUser({})
       } else {
-        toast(response.statusText)
+        throw new Error(response.statusText);
       }
     } catch (error) {
-      toast(error)
+      // toast(error)
+      throw new Error(error);
     }
   }
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">SkillTracker</Navbar.Brand>
+        <Navbar.Brand href="/">SkillTracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
             {
               Object.keys(user).length > 0 ? <>
                 <Nav.Link onClick={authorizeJira}>Connect to Jira</Nav.Link>
+                <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </> : <></>
             }
@@ -63,6 +69,7 @@ const SkillTrackerNav = ({ user, setUser }) => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <Toaster />
     </Navbar>
   )
 }

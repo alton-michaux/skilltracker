@@ -10,7 +10,7 @@ const MatchedSkills = () => {
   )
 }
 
-MatchedSkills.PropTypes = {
+MatchedSkills.propTypes = {
   id: PropTypes.number.isRequired
 }
 

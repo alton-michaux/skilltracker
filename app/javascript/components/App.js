@@ -15,6 +15,7 @@ const App = () => {
   // Check if the code is executing in a browser environment
   const isBrowser = typeof window === 'undefined' ? false : true;
   const [user, setUser] = useState({});
+  console.log("🚀 ~ file: App.js:18 ~ App ~ user:", user)
 
   return (
     <>
@@ -22,6 +23,7 @@ const App = () => {
         <Router>
           <SkillTrackerNav
             user={user}
+            setUser={setUser}
           ></SkillTrackerNav>
           <Routes>
             <Route path="/" element={<Home />} />
