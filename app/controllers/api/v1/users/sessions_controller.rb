@@ -13,7 +13,7 @@ module Api
 
           if user&.valid? && user&.valid_password?(login_params[:password])
             sign_in(user)
-            render json: { success: 'Login successful' }, status: 200
+            render json: { user: UserSerializer.new(user) }, status: 200
           elsif user
             render json: { error: user.errors.to_a[0] }, status: 401
           else
