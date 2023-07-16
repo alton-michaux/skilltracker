@@ -11,7 +11,7 @@ module Api
         def create
           user = User.find_by(email: login_params[:email])
 
-          if user && user&.valid? && user&.valid_password?(login_params[:password])
+          if user&.valid? && user&.valid_password?(login_params[:password])
             sign_in(user)
             render json: { success: 'Login successful' }, status: 200
           elsif user
@@ -19,10 +19,6 @@ module Api
           else
             render json: { error: 'User not found' }, status: 404
           end
-        end
-
-        def destroy
-          super
         end
 
         protected

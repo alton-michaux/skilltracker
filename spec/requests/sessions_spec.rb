@@ -51,8 +51,8 @@ describe 'sessions API' do
         let(:user) do
           {
             user: {
-              email: "test_user2@email.com",
-              password: "password12"
+              email: 'test_user2@email.com',
+              password: 'password12'
             }
           }
         end
