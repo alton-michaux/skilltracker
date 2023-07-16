@@ -16,7 +16,7 @@ module Api
           if user.save
             render json: { success: true }, status: 200 # Redirect to the login page
           else
-            render json: { error: user&.errors&.to_a[0] }, status: 500
+            render json: { error: user&.errors&.to_a&.[](0) }, status: 500
           end
         end
         # GET /resource/sign_up
@@ -50,10 +50,10 @@ module Api
         def configure_account_update_params
           devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
         end
-        
+
         def require_no_authentication
           return if action_name == 'create'
-        
+
           super
         end
 

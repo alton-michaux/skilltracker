@@ -28,16 +28,16 @@ module Api
         protected
 
         def login_params
-          if params[:session]
-            params.require(:session).permit(:email, :password)
+          if params[:session][:user]
+            params.require(:session).require(:user).permit(:email, :password)
           else
-            params.require(:user).permit(:email, :password)
+            params.require(:session).permit(:email, :password)
           end
         end
 
         def require_no_authentication
           return if action_name == 'create'
-        
+
           super
         end
       end
