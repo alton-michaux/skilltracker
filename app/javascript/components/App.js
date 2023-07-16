@@ -25,9 +25,9 @@ const App = () => {
             <Route path="/api/v1/callback" element={<Callback />} />
             <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
             <Route path="/api/v1/skills" element={<Skills />} />
-            <Route path="/api/v1/users/:user_id/tickets" element={<Tickets />} />
-            <Route path="/api/v1/users/:id" element={<UserProfile />} />
-            <Route path="/api/v1/users/:user_id/matched_skills" element={<MatchedSkills />} />
+            <Route path="/api/v1/users/:id/tickets" element={<Tickets />} />
+            <Route path="/api/v1/users/:id/:name" element={<UserProfile />} />
+            <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills />} />
           </Routes>
         </Router>
       )}

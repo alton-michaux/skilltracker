@@ -26,9 +26,10 @@ const Login = () => {
       if (response.status === 200) {
         // Successful login
         const data = await response.json();
-        const userId = data.user.id;
+        const id = data.user.id;
+        const name = data.user.full_name;
 
-        navigate(`/api/v1/users/${userId}`);
+        navigate(`/api/v1/users/${id}/${name}`);
       } else if (response.status === 401) {
         // Failed login
         const errorResponse = await response.json();
