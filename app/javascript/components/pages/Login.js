@@ -2,11 +2,16 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import PropTypes from 'prop-types';
 import { userLoginSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const navigate = useNavigate()
+  const handleUser = (data) => {
+    setUser(data)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -30,7 +35,10 @@ const Login = () => {
         const id = data.user.id;
         const name = data.user.full_name;
 
+        handleUser(data.user)
+
         navigate(`/api/v1/users/${id}/${name}`);
+
         toast(`Logged in as ${name}`)
       } else {
         // Failed login
@@ -64,5 +72,9 @@ const Login = () => {
     </div>
   );
 };
+
+Login.propTypes = {
+  setUser: PropTypes.func.isRequired,
+}
 
 export default Login;

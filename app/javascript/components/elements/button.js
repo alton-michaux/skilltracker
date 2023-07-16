@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { styled } from "styled-components";
 import PropTypes from 'prop-types';
-import { Toaster } from 'react-hot-toast';
 
 const SkillTrackerButton = ({ variant, action, children, destination, type }) => {
   const StyledLink = styled(Link)`
@@ -26,7 +25,6 @@ const SkillTrackerButton = ({ variant, action, children, destination, type }) =>
           children
         )}
       </Button>
-      <Toaster />
     </>
   );
 }
