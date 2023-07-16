@@ -24,7 +24,6 @@ const Login = () => {
     try {
       const response = await userLoginSubmit(data);
       if (response.status === 200) {
-        console.log("🚀 ~ file: Login.js:27 ~ handleSubmit ~ response:", response)
         // Successful login
         navigate('/api/v1/users/:id');
       } else if (response.status === 401) {
