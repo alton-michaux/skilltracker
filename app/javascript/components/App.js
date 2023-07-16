@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SkillTrackerNav from './elements/navbar';
 import Home from './pages/Home';
 import Registration from './pages/Registration'
 import Login from './pages/Login';
@@ -18,6 +19,7 @@ const App = () => {
     <>
       {isBrowser && (
         <Router>
+          <SkillTrackerNav></SkillTrackerNav>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/api/v1/signup/sign_up" element={<Registration />} />
