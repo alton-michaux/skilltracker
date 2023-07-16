@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import { styled } from "styled-components";
 import PropTypes from 'prop-types';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SkillTrackerButton = ({ variant, action, children, destination, type }) => {
   const StyledLink = styled(Link)`
@@ -13,23 +14,26 @@ const SkillTrackerButton = ({ variant, action, children, destination, type }) =>
   `;
 
   return (
-    <Button
-      variant={variant}
-      onClick={action}
-      type={type}
-    >
-      {destination ? (
-        <StyledLink to={destination}>{children}</StyledLink>
-      ) : (
-        children
-      )}
-    </Button>
+    <>
+      <Button
+        variant={variant}
+        onClick={action}
+        type={type}
+      >
+        {destination ? (
+          <StyledLink to={destination}>{children}</StyledLink>
+        ) : (
+          children
+        )}
+      </Button>
+      <Toaster />
+    </>
   );
 }
 
 SkillTrackerButton.defaultProps = {
   variant: "primary",
-  action: () => {},
+  action: () => { },
   children: "button",
   destination: "",
   type: "button"

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SkillTrackerButton from '../elements/button';
 import { userLogout } from "../utils/api/user";
+import { toast } from "react-hot-toast";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -13,11 +14,12 @@ const UserProfile = () => {
       const response = await userLogout();
       if (response.ok) {
         navigate('/')
+        toast('Logged out successfully')
       } else {
-        throw new Error(response.statusText)
+        toast(response.statusText)
       }
     } catch (error) {
-      throw new Error(error)
+      toast(error)
     }
   }
 

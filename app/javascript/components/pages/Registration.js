@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import { userRegisterSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
@@ -25,11 +26,12 @@ const Registration = () => {
       const response = await userRegisterSubmit(data)
       if (response.ok) {
         navigate('/api/v1/login')
+        toast('Successfully registered')
       } else {
-        throw new Error(response.statusText)
+        toast(response.statusText)
       }
     } catch (error) {
-      throw new Error(error)
+      toast(error)
     }
   }
 
@@ -66,6 +68,7 @@ const Registration = () => {
         <SkillTrackerButton variant="primary" type="submit">
           Sign up
         </SkillTrackerButton>
+        <Toaster />
       </Form>
     </div>
   );

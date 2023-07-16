@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import { userLoginSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
@@ -30,16 +31,15 @@ const Login = () => {
         const name = data.user.full_name;
 
         navigate(`/api/v1/users/${id}/${name}`);
-      } else if (response.status === 401) {
+        toast(`Logged in as ${name}`)
+      } else {
         // Failed login
         const errorResponse = await response.json();
-        throw new Error(errorResponse.error);
-      } else {
-        throw new Error(response.statusText);
+        toast(errorResponse.error);
       }
     } catch (error) {
-      throw new Error(error);
-    }    
+      toast(error);
+    }
   };
 
   return (
@@ -59,6 +59,7 @@ const Login = () => {
         <SkillTrackerButton variant="primary" type="submit">
           Log in
         </SkillTrackerButton>
+        <Toaster />
       </Form>
     </div>
   );
