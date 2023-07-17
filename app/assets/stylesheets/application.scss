@@ -14,13 +14,26 @@
 // Import Bootstrap styles
 @import "bootstrap/scss/bootstrap";
 
-.login-card {
+.main-div {
   display: flex;
-  max-width: 25%;
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+.secondary-div {
+
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  padding: 1%;
   margin: 0 auto;
 }
 
-.login-card button {
+.button-div button {
+  min-width: 30%;
   margin: 10px;
 }
-

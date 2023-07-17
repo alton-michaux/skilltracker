@@ -13,7 +13,7 @@ const SkillTrackerButton = ({ variant, action, children, destination, type }) =>
   `;
 
   return (
-    <>
+    <div className="button-div">
       <Button
         variant={variant}
         onClick={action}
@@ -25,7 +25,7 @@ const SkillTrackerButton = ({ variant, action, children, destination, type }) =>
           children
         )}
       </Button>
-    </>
+    </div>
   );
 }
 

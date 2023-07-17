@@ -5,7 +5,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import { userLoginSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
-import '../../styles/App'
 
 const Login = ({ setUser }) => {
   const navigate = useNavigate()
@@ -39,9 +38,7 @@ const Login = ({ setUser }) => {
 
         toast(`Logged in as ${name}`)
       } else {
-        // Failed login
-        const errorResponse = await response.json();
-        toast(errorResponse.error);
+        throw new Error(response.statusText)
       }
     } catch (error) {
       toast(error);
@@ -52,12 +49,12 @@ const Login = ({ setUser }) => {
     <div className="text-center d-flex-inline main-div">
       <h2>Log in</h2>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail">
+        <Form.Group controlId="formEmail" className='p-2'>
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" name="email" className="text-center" autoFocus required />
         </Form.Group>
 
-        <Form.Group controlId="formPassword">
+        <Form.Group controlId="formPassword" className='p-2'>
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" name="password" className="text-center" required />
         </Form.Group>

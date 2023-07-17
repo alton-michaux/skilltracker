@@ -10,7 +10,7 @@ const Home = ({user}) => {
     <div>
       <p className="text-center">Welcome to SkillTracker{user.full_name ? user.full_name: ""}!</p>
       <div className="container-sm">
-        <div className="row login-card">
+        <div className="row main-div">
           <SkillTrackerButton
             variant={"primary"}
             destination={"/api/v1/login"}

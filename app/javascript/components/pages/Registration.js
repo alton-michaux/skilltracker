@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { userRegisterSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
-import '../../styles/App'
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -29,7 +28,9 @@ const Registration = () => {
         toast('Successfully registered')
         navigate('/api/v1/login')
       } else {
-        toast(response.statusText)
+        // Failed login
+        const errorResponse = await response.json();
+        toast(errorResponse.error);
       }
     } catch (error) {
       toast(error)
