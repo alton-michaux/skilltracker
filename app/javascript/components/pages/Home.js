@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import SkillTrackerButton from "../elements/button";
 
-const Home = () => {
+const Home = ({user}) => {
   const [loginError, setLoginError] = useState('');
   const [signupError, setSignupError] = useState('');
 
   return (
     <div>
-      <p className="text-center">Welcome to SkillTracker!</p>
+      <p className="text-center">Welcome to SkillTracker{user.full_name ? user.full_name: ""}!</p>
       <div className="container-sm">
         <div className="row login-card">
           <SkillTrackerButton
@@ -26,6 +27,14 @@ const Home = () => {
       </div>
     </div>
   );
+}
+
+Home.defaultProps = {
+  user: {}
+}
+
+Home.propTypes = {
+  user: PropTypes.object,
 }
 
 export default Home

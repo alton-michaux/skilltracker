@@ -8,9 +8,6 @@ import SkillTrackerButton from '../elements/button';
 
 const Login = ({ setUser }) => {
   const navigate = useNavigate()
-  const handleUser = (data) => {
-    setUser(data)
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +32,7 @@ const Login = ({ setUser }) => {
         const id = data.user.id;
         const name = data.user.full_name;
 
-        handleUser(data.user)
+        setUser(data.user)
 
         navigate(`/api/v1/users/${id}/${name}`);
 

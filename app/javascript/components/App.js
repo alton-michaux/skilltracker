@@ -15,20 +15,22 @@ const App = () => {
   // Check if the code is executing in a browser environment
   const isBrowser = typeof window === 'undefined' ? false : true;
   const [user, setUser] = useState({});
-  console.log("🚀 ~ file: App.js:18 ~ App ~ user:", user)
 
+  const handleUser = (data) => {
+    setUser(data)
+  }
   return (
     <>
       {isBrowser && (
         <Router>
           <SkillTrackerNav
             user={user}
-            setUser={setUser}
+            setUser={handleUser}
           ></SkillTrackerNav>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home user={user} />} />
             <Route path="/api/v1/signup/sign_up" element={<Registration />} />
-            <Route path="/api/v1/login" element={<Login setUser={setUser} />} />
+            <Route path="/api/v1/login" element={<Login setUser={handleUser} />} />
             <Route path="/api/v1/callback" element={<Callback />} />
             <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
             <Route path="/api/v1/skills" element={<Skills />} />

@@ -3,25 +3,19 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
+// import { StyleSheetConsumer } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from "react-hot-toast";
 import PropTypes from 'prop-types';
 import { userLogout } from "../utils/api/user";
 import { authorizeJiraSession } from "../utils/api/jiraSessions";
-// import { StyleSheetConsumer } from 'styled-components';
 
 const SkillTrackerNav = ({ user, setUser }) => {
   const navigate = useNavigate();
 
-  const handleUser = (user) => {
-    setUser(user)
-    toast('Logged out successfully')
-    navigate('/')
-  }
-
   const authorizeJira = async () => {
     try {
-      const response = await authorizeJiraSession();
+      await authorizeJiraSession();
     } catch (error) {
       toast(error)
     }
@@ -36,21 +30,30 @@ const SkillTrackerNav = ({ user, setUser }) => {
         throw new Error(response.statusText);
       }
     } catch (error) {
-      // toast(error)
-      throw new Error(error);
+      toast(error)
     }
+  }
+
+  const handleUser = (user) => {
+    setUser(user)
+    toast('Logged out successfully')
+    navigate('/')
+  }
+
+  const goHome = () => {
+    navigate('/')
   }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/">SkillTracker</Navbar.Brand>
+        <Navbar.Brand onClick={() => { goHome() }}>SkillTracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {
               Object.keys(user).length > 0 ? <>
-                <Nav.Link onClick={authorizeJira}>Connect to Jira</Nav.Link>
+                <Nav.Link onClick={() => { authorizeJira() }}>Connect to Jira</Nav.Link>
                 <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </> : <></>
