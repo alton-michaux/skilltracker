@@ -14,6 +14,10 @@
 // Import Bootstrap styles
 @import "bootstrap/scss/bootstrap";
 
+.navbar-brand {
+  cursor: pointer;
+}
+
 .main-div {
   display: flex;
   flex-direction: column;
@@ -23,7 +27,8 @@
 }
 
 .secondary-div {
-
+  border: 1px solid green;
+  margin: 2%;
 }
 
 .button-div {

@@ -47,7 +47,7 @@ const SkillTrackerNav = ({ user, setUser }) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand onClick={() => { goHome() }}>SkillTracker</Navbar.Brand>
+        <Navbar.Brand onClick={() => { goHome() }} className='navbar-brand'>SkillTracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

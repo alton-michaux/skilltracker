@@ -5,17 +5,19 @@ import PropTypes from 'prop-types';
 const UserProfile = () => {
   const { id, name } = useParams();
   return (
-    <div className="text-center main-div">
-      <p>
+    <>
+      <p className="text-center mt-2">
         Welcome {name}!
       </p>
-      <div className="secondary-div">
-        <p>Your Skills</p>
+      <div className="text-center main-div">
+        <div className="secondary-div">
+          <p>Your Skills</p>
+        </div>
+        <div className="secondary-div">
+          <p>Your Work</p>
+        </div>
       </div>
-      <div className="secondary-div">
-        <p>Your Work</p>
-      </div>
-    </div>
+    </>
   )
 }
 
