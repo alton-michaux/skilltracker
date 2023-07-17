@@ -3,10 +3,10 @@
 require 'swagger_helper'
 
 describe 'sessions API' do
+  let!(:user1) { FactoryBot.create(:user) }
   # Creates swagger for documentaion for login
   path '/api/v1/login' do
     post 'Creates a session' do
-      let(:user1) { create(:user) }
       tags 'sessions'
       consumes 'application/json'
       parameter name: :user, in: :body, required: true, schema: {
@@ -22,29 +22,42 @@ describe 'sessions API' do
         required: %w[email password]
       }
 
+      let!(:user) do
+        {
+          user: {
+            email: user1.email,
+            password: user1.password
+          }
+        }
+      end
+
       response '200', 'session created' do
+        run_test!
+      end
+
+      response '401', 'Unauthorized' do
         let(:user) do
           {
             user: {
               email: user1.email,
-              password: user1.password
+              password: ''
             }
           }
         end
         run_test!
       end
 
-      # response '401', 'Unauthorized' do
-      #   let(:user) do
-      #     {
-      #       user: {
-      #         email: user1.email,
-      #         password: ''
-      #       }
-      #     }
-      #   end
-      #   run_test!
-      # end
+      response '404', 'Not found' do
+        let(:user) do
+          {
+            user: {
+              email: 'test_user2@email.com',
+              password: 'password12'
+            }
+          }
+        end
+        run_test!
+      end
     end
   end
 

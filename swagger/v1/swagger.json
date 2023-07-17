@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/v1/jira_sessions/oauth/authorize": {
+    "/api/v1/jira_sessions/authorize": {
       "post": {
         "summary": "Authorize Jira session",
         "tags": [
@@ -21,7 +21,7 @@
         }
       }
     },
-    "/callback": {
+    "api/v1/jira_sessions/callback": {
       "get": {
         "summary": "Redirect Jira authentication",
         "tags": [
@@ -371,7 +371,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "session created"
           }
         }

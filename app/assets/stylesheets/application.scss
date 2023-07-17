@@ -10,6 +10,35 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+// Import Bootstrap styles
+@import "bootstrap/scss/bootstrap";
+
+.navbar-brand {
+  cursor: pointer;
+}
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 2%;
+}
+
+.secondary-div {
+  border: 1px solid green;
+  margin: 2%;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  padding: 1%;
+  margin: 0 auto;
+}
+
+.button-div button {
+  min-width: 30%;
+  margin: 10px;
+}

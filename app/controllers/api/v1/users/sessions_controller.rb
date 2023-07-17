@@ -7,19 +7,34 @@ module Api
         include FormAuth
 
         before_action :form_auth_token, except: [:index]
-        before_action :configure_sign_in_params, only: [:create]
 
-        # GET /resource/sign_in
+        def create
+          user = User.find_by(email: login_params[:email])
 
-        # POST /resource/sign_in
-
-        # DELETE /resource/sign_out
+          if user&.valid? && user&.valid_password?(login_params[:password])
+            sign_in(user)
+            render json: { user: UserSerializer.new(user) }, status: 200
+          elsif user
+            render json: { error: user.errors.to_a[0] || 'Password invalid' }, status: 401
+          else
+            render json: { error: 'User not found' }, status: 404
+          end
+        end
 
         protected
 
-        # If you have extra params to permit, append them to the sanitizer.
-        def configure_sign_in_params
-          devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+        def login_params
+          if params[:session][:user]
+            params.require(:session).require(:user).permit(:email, :password)
+          else
+            params.require(:session).permit(:email, :password)
+          end
+        end
+
+        def require_no_authentication
+          return if action_name == 'create'
+
+          super
         end
       end
     end

@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'active_model_serializers', '~>0.10.10'
 gem 'devise', '~> 4.7.1'
 gem 'rswag', '~>2.0.5'
+gem 'warden'
 
 gem 'jira-ruby', require: 'jira-ruby'
 # Use CoffeeScript for .coffee assets and views
@@ -44,8 +45,12 @@ gem 'will_paginate', '~> 3.1.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'sendgrid-actionmailer'
-gem 'sendgrid-ruby'
+
+gem 'bootstrap', '>= 4.0.0', require: false
+gem 'jquery-rails'
+gem 'sprockets-rails'
+
+gem 'webpacker', '~> 5.4.4'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'

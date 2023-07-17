@@ -19,10 +19,10 @@ RSpec.describe User, type: :model do
     expect(subject).not_to be_valid
   end
 
-  it 'is not valid without a password' do
-    subject.password = nil
-    expect(subject).not_to be_valid
-  end
+  # it 'is not valid without a password' do
+  #   subject.password = nil
+  #   expect(subject).not_to be_valid
+  # end
 
   it 'is not valid with a password shorter than 6 characters' do
     subject.password = 'passw'

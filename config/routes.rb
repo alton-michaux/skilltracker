@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
   # get 'callback', to: 'api/v1/jira_sessions#callback'
 
+  get '/app/*path', to: 'pages#home', via: :all
+
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -27,7 +29,7 @@ Rails.application.routes.draw do
         resources :user_skills, only: [:index]
       end
 
-      # Add your custom API controller routes here
+      # Add custom API controller routes here
       get 'skills', to: 'skills#index'
       post 'skills', to: 'skills#create'
       delete 'skills/:id', to: 'skills#delete'
