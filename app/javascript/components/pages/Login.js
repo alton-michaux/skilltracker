@@ -38,10 +38,12 @@ const Login = ({ setUser }) => {
 
         toast(`Logged in as ${name}`)
       } else {
-        throw new Error(response.statusText)
+        // Failed login
+        const errorResponse = await response.json();
+        toast(errorResponse.error);
       }
-    } catch (error) {
-      toast(error);
+    } catch (error) {      
+      throw new Error(error)
     }
   };
 
