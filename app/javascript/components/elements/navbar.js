@@ -15,9 +15,14 @@ const SkillTrackerNav = ({ user, setUser }) => {
 
   const authorizeJira = async () => {
     try {
-      await authorizeJiraSession();
+      const response = await authorizeJiraSession();
+      if (!response.ok) {
+        // Failed login
+        const errorResponse = await response.json();
+        toast(errorResponse.error);
+      }
     } catch (error) {
-      toast(error)
+      throw new Error(error)
     }
   }
 
