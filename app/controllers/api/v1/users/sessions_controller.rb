@@ -15,7 +15,7 @@ module Api
             sign_in(user)
             render json: { user: UserSerializer.new(user) }, status: 200
           elsif user
-            render json: { error: user.errors.to_a[0] || "Password invalid" }, status: 401
+            render json: { error: user.errors.to_a[0] || 'Password invalid' }, status: 401
           else
             render json: { error: 'User not found' }, status: 404
           end
