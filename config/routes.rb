@@ -6,8 +6,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  # get 'oauth/authorize', to: 'api/v1/jira_sessions#authorize'
-  # get 'callback', to: 'api/v1/jira_sessions#callback'
+  get 'callback', to: 'api/v1/jira_sessions#callback'
 
   get '/app/*path', to: 'pages#home', via: :all
 
@@ -36,7 +35,6 @@ Rails.application.routes.draw do
 
       resources :jira_sessions, only: [] do
         get :authorize, on: :collection
-        get :callback, on: :collection
       end
 
       get 'jira_issues', to: 'jira_issues#index'

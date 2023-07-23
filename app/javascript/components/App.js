@@ -23,7 +23,6 @@ const App = () => {
     authorizeJiraSession()
       .then(async (response) => {
         const data = await response.json()
-        console.log("🚀 ~ file: App.js:26 ~ .then ~ data:", data.auth)
         setAuthString(data.auth)
       }).catch((error) => {
         toast(error);

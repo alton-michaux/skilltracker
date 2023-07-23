@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
 
   def session_params
-    params.permit(:code)
+    params.permit(:code, :state)
   end
 
   def user_params
