@@ -30,21 +30,16 @@ class ApplicationController < ActionController::Base
     OAuth2::Client.new(client_id, client_secret, options)
   end
 
-  def handle_auth
-    csrf_token = form_authenticity_token
+  def auth_string(client_id, state, token)
+    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
+  end
 
-    request.headers['X-CSRF-Token'] = csrf_token
+  def handle_csrf
+    @csrf_token = form_authenticity_token
 
-    if verified_request?
-      # Step 1: Build headers and redirect to authorization url
-      state = request.headers['HTTP_X_CSRF_TOKEN']
+    request.headers['X-CSRF-Token'] = @csrf_token
 
-      auth_url = "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{ENV['CLIENT_ID']}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{csrf_token}"
-
-      redirect_to auth_url
-    else
-      render json: { error: 'Request unverified' }, status: 401
-    end
+    @csrf_token
   end
 
   def handle_login

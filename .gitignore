@@ -38,3 +38,5 @@ private_key.pem
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+./cookies.txt

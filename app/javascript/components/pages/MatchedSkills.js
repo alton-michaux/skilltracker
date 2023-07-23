@@ -10,6 +10,10 @@ const MatchedSkills = () => {
   )
 }
 
+MatchedSkills.defaultProps = {
+  id: 0
+}
+
 MatchedSkills.propTypes = {
   id: PropTypes.number.isRequired
 }

@@ -8,7 +8,7 @@ module Api
 
       skip_before_action :verify_authenticity_token, only: %i[callback authorize]
       before_action :form_auth_token, only: [:callback]
-      before_action :handle_auth, only: :authorize
+      before_action :handle_csrf, only: :authorize
       before_action :handle_login, only: :callback
       before_action :fetch_session, only: :destroy
 
@@ -21,7 +21,17 @@ module Api
         redirect_to request_token.authorize_url
       end
 
-      def authorize; end
+      def authorize
+        if verified_request?
+          state = request.headers['HTTP_X_CSRF_TOKEN']
+      
+          auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token)
+      
+          render json: { auth: auth_url }, status: 200
+        else
+          render json: { error: 'Request unverified' }, status: 401
+        end
+      end
 
       def callback
         if @jira_client

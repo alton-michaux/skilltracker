@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       delete 'skills/:id', to: 'skills#delete'
 
       resources :jira_sessions, only: [] do
-        post :authorize, on: :collection
+        get :authorize, on: :collection
         get :callback, on: :collection
       end
 

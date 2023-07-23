@@ -8,23 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from "react-hot-toast";
 import PropTypes from 'prop-types';
 import { userLogout } from "../utils/api/user";
-import { authorizeJiraSession } from "../utils/api/jiraSessions";
 
-const SkillTrackerNav = ({ user, setUser }) => {
+const SkillTrackerNav = ({ user, setUser, authString }) => {
+  console.log("🚀 ~ file: navbar.js:13 ~ SkillTrackerNav ~ authString:", authString)
   const navigate = useNavigate();
-
-  const authorizeJira = async () => {
-    try {
-      const response = await authorizeJiraSession();
-      if (!response.ok) {
-        // Failed login
-        const errorResponse = await response.json();
-        toast(errorResponse.error);
-      }
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
 
   const handleLogout = async () => {
     try {
@@ -58,7 +45,7 @@ const SkillTrackerNav = ({ user, setUser }) => {
           <Nav className="me-auto">
             {
               Object.keys(user).length > 0 ? <>
-                <Nav.Link onClick={() => { authorizeJira() }}>Connect to Jira</Nav.Link>
+                <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                 <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </> : <></>
@@ -78,17 +65,19 @@ const SkillTrackerNav = ({ user, setUser }) => {
         </Navbar.Collapse>
       </Container>
       <Toaster />
-    </Navbar>
+    </Navbar >
   )
 }
 
 SkillTrackerNav.defaultProps = {
-  user: {}
+  user: {},
+  authString: "/"
 }
 
 SkillTrackerNav.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func.isRequired,
+  authString: PropTypes.string,
 }
 
 export default SkillTrackerNav
