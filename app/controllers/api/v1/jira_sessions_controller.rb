@@ -24,9 +24,9 @@ module Api
       def authorize
         if verified_request?
           state = request.headers['HTTP_X_CSRF_TOKEN']
-      
+
           auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token)
-      
+
           render json: { auth: auth_url }, status: 200
         else
           render json: { error: 'Request unverified' }, status: 401
