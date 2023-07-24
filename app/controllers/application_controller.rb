@@ -57,8 +57,10 @@ class ApplicationController < ActionController::Base
       consumer_key: ENV['CLIENT_ID'],
       consumer_secret: ENV['CLIENT_SECRET'],
       private_key_file: Rails.root.join('private_key.pem').to_s,
-      site: 'http://localhost:3000' # Replace with your JIRA instance URL
+      site: 'http://localhost:3000',
     }
+
+    # byebug
 
     @jira_client = JIRA::Client.new(options)
 

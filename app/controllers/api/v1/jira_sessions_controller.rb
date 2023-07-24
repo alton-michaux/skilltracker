@@ -38,22 +38,22 @@ module Api
           jira_service = JiraService.new(@jira_client)
 
           jira_service.request_token_set(session)
+ 
           jira_service.access_token_set(session, params)
 
           jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
 
           session[:jira_auth] = jira_auth
 
-          # session[:jira_auth] = {
-          #   :access_token => access_token.token,
-          #   :access_key => access_token.secret
-          # }
+          session[:jira_auth] = {
+            :access_token => access_token.token,
+            :access_key => access_token.secret
+          }
 
           session.delete(:request_token)
           session.delete(:request_secret)
 
           render json: { session: session }, status: 200
-          # redirect_to api_v1_jira_issues_path
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end
