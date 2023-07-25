@@ -9,7 +9,7 @@ module Api
       skip_before_action :verify_authenticity_token, only: %i[callback authorize]
       before_action :form_auth_token, only: [:callback]
       before_action :handle_csrf, only: :authorize
-      before_action :handle_login, only: :callback
+      before_action :fetch_jira_client, only: :callback
       before_action :fetch_session, only: :destroy
 
       def new
@@ -38,22 +38,23 @@ module Api
           jira_service = JiraService.new(@jira_client)
 
           jira_service.request_token_set(session)
- 
-          jira_service.access_token_set(session, params)
+
+          # jira_service.access_token_set(session, params)
 
           jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
 
           session[:jira_auth] = jira_auth
 
-          session[:jira_auth] = {
-            :access_token => access_token.token,
-            :access_key => access_token.secret
-          }
+          @jira_client.set_access_token(
+            session[:jira_auth]['access_token'],
+            session[:jira_auth]['access_key']
+          )
 
           session.delete(:request_token)
           session.delete(:request_secret)
 
-          render json: { session: session }, status: 200
+          # render json: { client: @jira_client }, status: 200
+          render component: 'pages/Callback', props: { client: @jira_client }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end

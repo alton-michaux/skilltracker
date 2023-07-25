@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     @csrf_token
   end
 
-  def handle_login
+  def fetch_jira_client
     # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
 
@@ -57,12 +57,12 @@ class ApplicationController < ActionController::Base
       consumer_key: ENV['CLIENT_ID'],
       consumer_secret: ENV['CLIENT_SECRET'],
       private_key_file: Rails.root.join('private_key.pem').to_s,
-      site: 'http://localhost:3000',
+      site: 'http://localhost:3000'
     }
 
-    # byebug
-
     @jira_client = JIRA::Client.new(options)
+
+    return unless session[:jira_auth]
 
     # Add AccessToken if authorised previously.
     @jira_client.set_access_token(
