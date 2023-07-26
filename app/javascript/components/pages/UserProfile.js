@@ -21,9 +21,14 @@ const UserProfile = () => {
   )
 }
 
+UserProfile.defaultProps = {
+  id: 0,
+  name: ""
+}
+
 UserProfile.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired
+  id: PropTypes.number,
+  name: PropTypes.string
 }
 
 export default UserProfile

@@ -2,29 +2,13 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
-// import { StyleSheetConsumer } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from "react-hot-toast";
 import PropTypes from 'prop-types';
 import { userLogout } from "../utils/api/user";
-import { authorizeJiraSession } from "../utils/api/jiraSessions";
 
-const SkillTrackerNav = ({ user, setUser }) => {
+const SkillTrackerNav = ({ user, setUser, authString }) => {
   const navigate = useNavigate();
-
-  const authorizeJira = async () => {
-    try {
-      const response = await authorizeJiraSession();
-      if (!response.ok) {
-        // Failed login
-        const errorResponse = await response.json();
-        toast(errorResponse.error);
-      }
-    } catch (error) {
-      throw new Error(error)
-    }
-  }
 
   const handleLogout = async () => {
     try {
@@ -58,37 +42,28 @@ const SkillTrackerNav = ({ user, setUser }) => {
           <Nav className="me-auto">
             {
               Object.keys(user).length > 0 ? <>
-                <Nav.Link onClick={() => { authorizeJira() }}>Connect to Jira</Nav.Link>
+                <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                 <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </> : <></>
             }
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
       <Toaster />
-    </Navbar>
+    </Navbar >
   )
 }
 
 SkillTrackerNav.defaultProps = {
-  user: {}
+  user: {},
+  authString: "/"
 }
 
 SkillTrackerNav.propTypes = {
   user: PropTypes.object,
   setUser: PropTypes.func.isRequired,
+  authString: PropTypes.string,
 }
 
 export default SkillTrackerNav

@@ -1,9 +1,14 @@
 import React from "react"
+import PropTypes from 'prop-types';
 
-const Callback = () => {
-  return(
-    <div className="text-center">Callback</div>
+const Callback = ({ client }) => {
+  return (
+    <div className="text-center">Jira Authentication Successful</div>
   )
+}
+
+Callback.propTypes = {
+  client: PropTypes.object.isRequired
 }
 
 export default Callback

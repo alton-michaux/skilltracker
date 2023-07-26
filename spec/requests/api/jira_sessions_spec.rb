@@ -5,39 +5,40 @@ require 'uri'
 
 describe 'Jira Sessions API' do
   path '/api/v1/jira_sessions/authorize' do
-    post 'Authorize Jira session' do
-      tags 'Jira'
-      consumes 'application/json'
-
-      response '302', 'Redirect for authorization' do
-        run_test! do |response|
-          expect(response).to have_http_status(:redirect)
-          # Additional assertions as needed
-        end
-      end
-    end
-  end
-
-  path 'api/v1/jira_sessions/callback' do
-    get 'Redirect Jira authentication' do
+    get 'Authorize Jira session' do
       tags 'Jira'
       produces 'application/json'
 
-      before do
-        # Simulate a successful authentication by setting the required parameters
-        # For example, assuming the code parameter is required, you can set it directly
-        parameters = { code: '8f323rhjeighighhiweh81938r8249' }
-        allow_any_instance_of(JiraSessionsController).to receive(:session_params).and_return(parameters)
-      end
-
-      response '200', 'Get authorization' do
+      response '200', 'Return auth string' do
         run_test! do |response|
+          data = JSON.parse(response.body)
           expect(response).to have_http_status(:success)
-          # Additional assertions as needed
+          expect(data['auth']).to_not be_nil
         end
       end
     end
   end
+
+  # path 'api/v1/jira_sessions/callback' do
+  #   get 'Redirect Jira authentication' do
+  #     tags 'Jira'
+  #     produces 'application/json'
+
+  #     before do
+  #       # Simulate a successful authentication by setting the required parameters
+  #       # For example, assuming the code parameter is required, you can set it directly
+  #       parameters = { code: '8f323rhjeighighhiweh81938r8249' }
+  #       allow_any_instance_of(JiraSessionsController).to receive(:session_params).and_return(parameters)
+  #     end
+
+  #     response '200', 'Get authorization' do
+  #       run_test! do |response|
+  #         expect(response).to have_http_status(:success)
+  #         # Additional assertions as needed
+  #       end
+  #     end
+  #   end
+  # end
 
   # path '/api/v1/jira_sessions/{id}' do
   #   delete 'Destroy Jira session' do
