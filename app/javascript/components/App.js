@@ -47,7 +47,7 @@ const App = () => {
             <Route path="/" element={<Home user={user} />} />
             <Route path="/api/v1/signup/sign_up" element={<Registration />} />
             <Route path="/api/v1/login" element={<Login setUser={handleUser} />} />
-            <Route path="/api/v1/callback" element={<Callback />} />
+            <Route path="/callback" element={<Callback />} />
             <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
             <Route path="/api/v1/skills" element={<Skills />} />
             <Route path="/api/v1/users/:id/tickets" element={<Tickets user={user} />} />
