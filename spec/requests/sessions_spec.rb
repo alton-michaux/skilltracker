@@ -4,6 +4,12 @@ require 'swagger_helper'
 
 describe 'sessions API' do
   let!(:user1) { FactoryBot.create(:user) }
+
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user1.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
   # Creates swagger for documentaion for login
   path '/api/v1/login' do
     post 'Creates a session' do
@@ -64,21 +70,16 @@ describe 'sessions API' do
   # Swagger documentation for logout.
   path '/api/v1/logout' do
     delete 'Destroy session' do
-      let(:user) { create(:user) }
       tags 'sessions'
       consumes 'application/json'
+      security [Bearer: {}]
 
-      # This includes a valid auth token header
-      # response '200', 'blacklist token' do
-      #   run_test! do |response|
-      #     data = JSON.parse(response.body)
-      #     data['success'].should eq('successfully logged out')
-      #   end
-      # end
-      # # This does not include anything in the header so it fails
-      # response '400', 'no token to blacklist' do
-      #   run_test!
-      # end
+      response '204', 'blacklist token' do
+        # Set the authorization header with a valid token for the logout request
+        let(:Authorization) { auth_headers['Authorization'] }
+
+        run_test!
+      end
     end
   end
 end

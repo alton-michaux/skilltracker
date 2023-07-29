@@ -38,7 +38,7 @@ module Api
         protected
 
         def sign_up_params
-          params.require(:registration).permit(:email, :password, :password_confirmation, :first_name, :last_name)
+          params.require(:registration).permit(:email, :password, :password_confirmation, :first_name, :last_name, :password_digest)
         end
 
         # If you have extra params to permit, append them to the sanitizer.
