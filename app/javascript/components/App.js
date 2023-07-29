@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Axios from 'axios';
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import SkillTrackerNav from './elements/navbar';
 import Home from './pages/Home';
 import Registration from './pages/Registration'
@@ -32,19 +32,7 @@ const App = () => {
     }
   }, []);
 
-  async function authorizeJira() {
-    authorizeJiraSession()
-      .then(async (response) => {
-        const data = await response.json()
-        setAuthString(data.auth)
-      }).catch((error) => {
-        console.log("🚀 ~ file: App.js:41 ~ .then ~ error:", error)
-        toast(error);
-      })
-  }
-
   const handleLogin = (data) => {
-    console.log("🚀 ~ file: App.js:47 ~ handleLogin ~ data:", data)
     // Store the token in local storage and set isAuthenticated to true
     localStorage.setItem('token', JSON.stringify(data.token));
     Axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
@@ -59,11 +47,12 @@ const App = () => {
     setIsAuthenticated(false);
   };
 
-  const handleUser = (data) => {
+  const handleUser = async (data) => {
     setUser(data)
-    // authorizeJira()
+    const authNav = await authorizeJiraSession()
+    setAuthString(authNav.auth)
   }
-  console.log('user', user)
+
   return (
     <>
       {isBrowser && (

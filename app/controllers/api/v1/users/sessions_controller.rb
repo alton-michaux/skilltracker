@@ -7,7 +7,7 @@ module Api
         include FormAuth
 
         before_action :form_auth_token, except: [:index]
-        before_action :authorize_request, except: :create
+        before_action :authorize_request, except: [:create]
         
         def create
           @user = User.find_by_email(login_params[:email])

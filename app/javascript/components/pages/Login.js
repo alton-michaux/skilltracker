@@ -26,24 +26,16 @@ const Login = ({ setLogin }) => {
 
     try {
       const response = await userLoginSubmit(data);
-      if (response.status === 200) {
-        // Successful login
-        const data = await response.json();
-        const id = data.user.id;
-        const name = data.user.full_name;
+      const id = response.user.id;
+      const name = response.user.full_name;
 
-        setLogin(data)
+      setLogin(response)
 
-        navigate(`/api/v1/users/${id}/${name}`);
+      navigate(`/api/v1/users/${id}/${name}`);
 
-        toast(`Logged in as ${name}`)
-      } else {
-        console.log('response', response)
-        // Failed login
-        toast(response.statusText);
-      }
-    } catch (error) {      
-      throw new Error(error)
+      toast(`Logged in as ${name}`)
+    } catch (error) {
+      toast(error)
     }
   };
 

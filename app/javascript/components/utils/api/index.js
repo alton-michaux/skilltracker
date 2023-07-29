@@ -1,18 +1,68 @@
-const formatRequestOptions = (data, method = 'GET') => ({
-  method,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: data ? JSON.stringify(data) : null,
-});
+import axios from 'axios';
+import { toast } from "react-hot-toast";
 
-const returnFetchPromise = (url, data, method) => {
-  const requestOptions = formatRequestOptions(data, method);
-  return fetch(url, requestOptions);
+// Function to set default headers
+const setDefaultHeaders = (token) => {
+  axios.defaults.headers.common['Content-Type'] = 'application/json';
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
 };
 
-export const get = (url) => returnFetchPromise(url);
-export const put = (url, data) => returnFetchPromise(url, data, 'PUT');
-export const patch = (url, data) => returnFetchPromise(url, data, 'PATCH');
-export const post = (url, data) => returnFetchPromise(url, data, 'POST');
-export const destroy = (url, data) => returnFetchPromise(url, data, 'DELETE');
+// Function to handle API requests
+const handleRequest = (method, url, data) => {
+  return axios({
+    method,
+    url,
+    data,
+  });
+};
+
+export const get = async (url) => {
+  try {
+    const response = await handleRequest('get', url);
+    return response.data;
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+export const put = async (url, data) => {
+  try {
+    const response = await handleRequest('put', url, data);
+    return response.data;
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+export const patch = async (url, data) => {
+  try {
+    const response = await handleRequest('patch', url, data);
+    return response.data;
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+export const post = async (url, data) => {
+  try {
+    const response = await handleRequest('post', url, data);
+    return response.data;
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+export const destroy = async (url, data) => {
+  try {
+    const response = await handleRequest('delete', url, data);
+    return response.data;
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+export default setDefaultHeaders;

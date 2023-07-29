@@ -13,7 +13,7 @@ module Api
         def create
           user = build_resource(sign_up_params)
 
-          if user
+          if user.save
             render json: { success: true }, status: 200 # Redirect to the login page
           else
             render json: { error: user&.errors&.to_a&.[](0) }, status: 500
