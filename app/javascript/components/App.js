@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Axios from 'axios';
-import { Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import SkillTrackerNav from './elements/navbar';
 import Home from './pages/Home';
 import Registration from './pages/Registration'
@@ -16,6 +15,14 @@ import PrivateRoute from './pages/PrivateRoute';
 import { authorizeJiraSession } from './utils/api/jiraSessions'
 import setDefaultHeaders from './utils/api';
 
+const getUserDataFromLocalStorage = () => {
+  const userDataString = localStorage.getItem('userData');
+  if (userDataString) {
+    return JSON.parse(userDataString);
+  }
+  return null;
+};
+
 const App = () => {
   // Check if the code is executing in a browser environment
   const isBrowser = typeof window === 'undefined' ? false : true;
@@ -27,25 +34,31 @@ const App = () => {
     // Check if the user has an existing valid token in local storage on app load
     const tokenString = localStorage.getItem('token')
     if (tokenString) {
-      const token = JSON.parse(tokenString)
-      setDefaultHeaders(token)
+      const token = JSON.parse(tokenString);
+      setDefaultHeaders(token);
       setIsAuthenticated(true);
+      const userData = getUserDataFromLocalStorage();
+      if (userData) {
+        handleUser(userData);
+      }
     }
   }, []);
 
   const handleLogin = (data) => {
-    // Store the token in local storage and set isAuthenticated to true
+    // Store the token in local storage and set isAuthenticated to true    
     localStorage.setItem('token', JSON.stringify(data.token));
-    setDefaultHeaders(data.token)
-    setIsAuthenticated(true);
+    localStorage.setItem('userData', JSON.stringify(data.user));
     handleUser(data.user)
+    setDefaultHeaders(data.token);
+    setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    // Clear the token from local storage and set isAuthenticated to false
     localStorage.removeItem('token');
-    setDefaultHeaders()
+    setDefaultHeaders();
     setIsAuthenticated(false);
+    toast('Logged out successfully')
+    navigate('/')
   };
 
   const handleUser = async (data) => {
@@ -61,6 +74,7 @@ const App = () => {
           <SkillTrackerNav
             user={user}
             setUser={handleUser}
+            onLogout={handleLogout}
             authString={authString}
           ></SkillTrackerNav>
           <Toaster />

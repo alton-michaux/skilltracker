@@ -23,6 +23,10 @@ module Api
           end
         end
 
+        def destroy
+          super
+        end
+
         protected
 
         def login_params

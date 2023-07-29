@@ -26,7 +26,6 @@ const Login = ({ setLogin }) => {
 
     try {
       const response = await userLoginSubmit(data);
-      console.log("🚀 ~ file: Login.js:29 ~ handleSubmit ~ response:", response)
       if (response) {
         const id = response.user.id;
         const name = response.user.full_name;
