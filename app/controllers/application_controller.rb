@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     redirect_to new_jira_session_url
   end
 
+  def not_found
+    render json: { error: "Not Found" }, status: 404
+  end
+
   private
 
   def oauth2_client

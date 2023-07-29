@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'callback', to: 'api/v1/jira_sessions#callback'
 
   get '/app/*path', to: 'pages#home', via: :all
+  get '/*a', to: 'application#not_found'
 
   namespace :api do
     namespace :v1 do
