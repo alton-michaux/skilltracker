@@ -14,6 +14,7 @@ import UserProfile from './pages/UserProfile';
 import MatchedSkills from './pages/MatchedSkills'
 import PrivateRoute from './pages/PrivateRoute';
 import { authorizeJiraSession } from './utils/api/jiraSessions'
+import setDefaultHeaders from './utils/api';
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -27,7 +28,7 @@ const App = () => {
     const tokenString = localStorage.getItem('token')
     if (tokenString) {
       const token = JSON.parse(tokenString)
-      Axios.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`;
+      setDefaultHeaders(token)
       setIsAuthenticated(true);
     }
   }, []);
@@ -35,7 +36,7 @@ const App = () => {
   const handleLogin = (data) => {
     // Store the token in local storage and set isAuthenticated to true
     localStorage.setItem('token', JSON.stringify(data.token));
-    Axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    setDefaultHeaders(data.token)
     setIsAuthenticated(true);
     handleUser(data.user)
   };
@@ -43,7 +44,7 @@ const App = () => {
   const handleLogout = () => {
     // Clear the token from local storage and set isAuthenticated to false
     localStorage.removeItem('token');
-    Axios.defaults.headers.common['Authorization'] = undefined;
+    setDefaultHeaders()
     setIsAuthenticated(false);
   };
 
