@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'swagger_helper'
 
 describe 'sessions API' do
@@ -64,21 +63,25 @@ describe 'sessions API' do
   # Swagger documentation for logout.
   path '/api/v1/logout' do
     delete 'Destroy session' do
-      let(:user) { create(:user) }
       tags 'sessions'
       consumes 'application/json'
+      security [Bearer: {}]
 
-      # This includes a valid auth token header
-      # response '200', 'blacklist token' do
-      #   run_test! do |response|
-      #     data = JSON.parse(response.body)
-      #     data['success'].should eq('successfully logged out')
-      #   end
-      # end
-      # # This does not include anything in the header so it fails
-      # response '400', 'no token to blacklist' do
-      #   run_test!
-      # end
+      # Use an it block to define the behavior of the logout action
+      it 'destroys the session and logs out the user' do
+        # Login the user to simulate authentication
+        login_as(user1, scope: :user)
+        
+        # Make the request to the logout endpoint
+        delete '/api/v1/logout'
+        
+        # Add your expectations here based on the logout response
+        expect(response).to have_http_status(:ok)
+      end
+      # This does not include anything in the header so it fails
+      response '400', 'no token to blacklist' do
+        run_test!
+      end
     end
   end
 end

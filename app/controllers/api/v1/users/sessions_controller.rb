@@ -19,6 +19,8 @@ module Api
             time = Time.now + 24.hours.to_i
             render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
                            user: UserSerializer.new(@user) }, status: :ok
+          elsif !@user
+            render json: { error: 'Not Found' }, status: :not_found
           else
             render json: { error: 'unauthorized' }, status: :unauthorized
           end
