@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { userLoginSubmit } from '../utils/api/user';
 import SkillTrackerButton from '../elements/button';
 
-const Login = ({ setUser }) => {
+const Login = ({ setLogin }) => {
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
@@ -32,15 +32,15 @@ const Login = ({ setUser }) => {
         const id = data.user.id;
         const name = data.user.full_name;
 
-        setUser(data.user)
+        setLogin(data)
 
         navigate(`/api/v1/users/${id}/${name}`);
 
         toast(`Logged in as ${name}`)
       } else {
+        console.log('response', response)
         // Failed login
-        const errorResponse = await response.json();
-        toast(errorResponse.error);
+        toast(response.statusText);
       }
     } catch (error) {      
       throw new Error(error)
@@ -71,7 +71,7 @@ const Login = ({ setUser }) => {
 };
 
 Login.propTypes = {
-  setUser: PropTypes.func.isRequired,
+  setLogin: PropTypes.func.isRequired,
 }
 
 export default Login;

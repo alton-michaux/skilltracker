@@ -13,7 +13,7 @@ module Api
         def create
           user = build_resource(sign_up_params)
 
-          if user.save
+          if user
             render json: { success: true }, status: 200 # Redirect to the login page
           else
             render json: { error: user&.errors&.to_a&.[](0) }, status: 500
@@ -38,7 +38,7 @@ module Api
         protected
 
         def sign_up_params
-          params.require(:registration).permit(:email, :password, :password_confirmation, :first_name, :last_name)
+          params.require(:registration).permit(:email, :password, :password_confirmation, :first_name, :last_name, :password_digest)
         end
 
         # If you have extra params to permit, append them to the sanitizer.

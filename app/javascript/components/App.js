@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Axios from 'axios';
 import { toast, Toaster } from "react-hot-toast";
 import SkillTrackerNav from './elements/navbar';
 import Home from './pages/Home';
@@ -11,6 +12,7 @@ import Skills from './pages/Skills';
 import Tickets from './pages/Tickets';
 import UserProfile from './pages/UserProfile';
 import MatchedSkills from './pages/MatchedSkills'
+import PrivateRoute from './pages/PrivateRoute';
 import { authorizeJiraSession } from './utils/api/jiraSessions'
 
 const App = () => {
@@ -18,6 +20,17 @@ const App = () => {
   const isBrowser = typeof window === 'undefined' ? false : true;
   const [user, setUser] = useState({});
   const [authString, setAuthString] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if the user has an existing valid token in local storage on app load
+    const tokenString = localStorage.getItem('token')
+    if (tokenString) {
+      const token = JSON.parse(tokenString)
+      Axios.defaults.headers.common['Authorization'] = `Bearer ${token.accessToken}`;
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   async function authorizeJira() {
     authorizeJiraSession()
@@ -25,14 +38,32 @@ const App = () => {
         const data = await response.json()
         setAuthString(data.auth)
       }).catch((error) => {
+        console.log("🚀 ~ file: App.js:41 ~ .then ~ error:", error)
         toast(error);
       })
   }
 
+  const handleLogin = (data) => {
+    console.log("🚀 ~ file: App.js:47 ~ handleLogin ~ data:", data)
+    // Store the token in local storage and set isAuthenticated to true
+    localStorage.setItem('token', JSON.stringify(data.token));
+    Axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    setIsAuthenticated(true);
+    handleUser(data.user)
+  };
+
+  const handleLogout = () => {
+    // Clear the token from local storage and set isAuthenticated to false
+    localStorage.removeItem('token');
+    Axios.defaults.headers.common['Authorization'] = undefined;
+    setIsAuthenticated(false);
+  };
+
   const handleUser = (data) => {
     setUser(data)
-    authorizeJira()
+    // authorizeJira()
   }
+  console.log('user', user)
   return (
     <>
       {isBrowser && (
@@ -44,9 +75,15 @@ const App = () => {
           ></SkillTrackerNav>
           <Toaster />
           <Routes>
+            <Route path="/home" element={
+              <PrivateRoute
+                isAuthenticated={isAuthenticated}
+                onLogout={handleLogout}
+              ></PrivateRoute>
+            } />
             <Route path="/" element={<Home user={user} />} />
             <Route path="/api/v1/signup/sign_up" element={<Registration />} />
-            <Route path="/api/v1/login" element={<Login setUser={handleUser} />} />
+            <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
             <Route path="/api/v1/skills" element={<Skills />} />
@@ -54,7 +91,7 @@ const App = () => {
             <Route path="/api/v1/users/:id/:name" element={<UserProfile user={user} />} />
             <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={user} />} />
           </Routes>
-        </Router>
+        </Router >
       )}
     </>
   );

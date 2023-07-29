@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import SkillTrackerButton from "../elements/button";
 
 const Home = ({user}) => {
-  const [loginError, setLoginError] = useState('');
-  const [signupError, setSignupError] = useState('');
-
   return (
     <div>
       <p className="text-center">Welcome to SkillTracker{user.full_name ? ` ${user.full_name}`: ""}!</p>
@@ -20,10 +17,6 @@ const Home = ({user}) => {
             destination={"/api/v1/signup/sign_up"}
           >Sign Up</SkillTrackerButton>
         </div>
-
-        {/* Display any login or sign-up errors */}
-        {loginError && <p>{loginError}</p>}
-        {signupError && <p>{signupError}</p>}
       </div>
     </div>
   );
