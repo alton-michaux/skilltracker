@@ -8,7 +8,7 @@ module Api
 
         before_action :form_auth_token, except: [:index]
         before_action :authorize_request, except: [:create]
-        
+
         def create
           @user = User.find_by_email(login_params[:email])
 
@@ -16,8 +16,8 @@ module Api
             sign_in(@user)
             token = JsonWebToken.encode(user_id: @user.id)
             time = Time.now + 24.hours.to_i
-            render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                          user: UserSerializer.new(@user) }, status: :ok
+            render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
+                           user: UserSerializer.new(@user) }, status: :ok
           else
             render json: { error: 'unauthorized' }, status: :unauthorized
           end
