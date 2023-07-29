@@ -23,9 +23,11 @@ const Registration = () => {
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
 
     try {
-      userRegisterSubmit(data)
-      toast('Successfully registered')
-      navigate('/api/v1/login')
+      const response = await userRegisterSubmit(data)
+      if (response) {
+        toast('Successfully registered')
+        navigate('/api/v1/login')
+      }
     } catch (error) {
       toast(error)
     }
@@ -35,7 +37,6 @@ const Registration = () => {
     <div className="text-center d-flex-inline main-div">
       <h2>Sign up</h2>
       <Form onSubmit={handleSubmit}>
-        {/* Render form fields */}
         <Form.Group controlId="formFirstname">
           <Form.Label>First Name</Form.Label>
           <Form.Control type="name" name="first_name" className="text-center" autoFocus required />
