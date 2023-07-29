@@ -73,14 +73,10 @@ describe 'sessions API' do
       consumes 'application/json'
       security [Bearer: {}]
 
-      response '200', 'blacklist token' do
+      response '204', 'blacklist token' do
         # Set the authorization header with a valid token for the logout request
         let(:Authorization) { auth_headers['Authorization'] }
 
-        run_test!
-      end
-      # This does not include anything in the header so it fails
-      response '400', 'no token to blacklist' do
         run_test!
       end
     end

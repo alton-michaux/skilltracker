@@ -366,6 +366,28 @@
           }
         }
       }
+    },
+    "/api/v1/logout": {
+      "delete": {
+        "summary": "Destroy session",
+        "tags": [
+          "sessions"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": {
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "blacklist token"
+          }
+        }
+      }
     }
   }
 }
