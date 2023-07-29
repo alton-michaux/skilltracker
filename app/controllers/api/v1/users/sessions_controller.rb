@@ -8,6 +8,7 @@ module Api
 
         before_action :form_auth_token, except: [:index]
         before_action :authorize_request, except: [:create]
+        before_action :set_user, except: [:create]
 
         def create
           @user = User.find_by_email(login_params[:email])
@@ -24,10 +25,15 @@ module Api
         end
 
         def destroy
-          super
+          sign_out(@user) # This will clear the user session
+          render json: { message: 'Logout successful' }, status: :ok
         end
 
         protected
+
+        def set_user
+          @user = current_user
+        end
 
         def login_params
           if params[:session][:user]

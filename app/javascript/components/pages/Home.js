@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SkillTrackerButton from "../elements/button";
 
@@ -9,7 +9,7 @@ const Home = ({ user }) => {
       <div className="container-sm">
         <div className="row main-div">
           {
-            user ? <>
+            Object.keys(user).length > 0 ? <>
             </> : <>
               <SkillTrackerButton
                 variant={"primary"}
