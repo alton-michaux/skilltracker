@@ -14,8 +14,8 @@ module Skilltracker
     config.load_defaults 5.2
 
     # Autoload paths
-    config.autoload_paths << Rails.root.join('app', 'controllers', 'lib')
-    config.eager_load_paths << Rails.root.join('app', 'controllers', 'lib')
+    config.autoload_paths << Rails.root.join('app', 'controllers')
+    config.eager_load_paths << Rails.root.join('app', 'controllers')
     config.autoload_paths << Rails.root.join('lib')
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

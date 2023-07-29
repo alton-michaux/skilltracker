@@ -6,11 +6,6 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  get 'callback', to: 'api/v1/jira_sessions#callback'
-
-  get '/app/*path', to: 'pages#home', via: :all
-  # get '/*a', to: 'application#not_found'
-
   namespace :api do
     namespace :v1 do
       # Devise routes for authentication
@@ -43,5 +38,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'callback', to: 'api/v1/jira_sessions#callback'
+
+  get '/app/*path', to: 'pages#home', via: :all
+  get '/*a', to: 'application#not_found'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
