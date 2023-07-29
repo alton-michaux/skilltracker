@@ -1,6 +1,8 @@
 import React from "react"
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import TicketComponent from "../comps/Tickets";
+import SkillComponent from "../comps/Skills";
 
 const UserProfile = ({ user }) => {
   const { id, name } = useParams();
@@ -12,28 +14,15 @@ const UserProfile = ({ user }) => {
       <div className="text-center main-div">
         <div className="secondary-div">
           <h2>Your Skills</h2>
-          {
-            user?.skills?.map((data) => {
-              return (
-                <div id={data.skill.id}>
-                  <h4>{data.skill.name}</h4>
-                  <p>{data.skill.description}</p>
-                </div>
-              )
-            })}
+          <SkillComponent
+            user={user}
+          ></SkillComponent>
         </div>
         <div className="secondary-div">
           <h2>Your Work</h2>
-          {
-            user?.tickets?.map((ticket) => {
-              return (
-                <div id={ticket.id}>
-                  <h4>{ticket.title}</h4>
-                  <p>{ticket.status}</p>
-                  <p>{ticket.description}</p>
-                </div>
-              )
-            })}
+          <TicketComponent
+            user={user}
+          ></TicketComponent>
         </div>
       </div>
     </>
