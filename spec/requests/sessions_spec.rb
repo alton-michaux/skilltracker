@@ -3,6 +3,12 @@ require 'swagger_helper'
 
 describe 'sessions API' do
   let!(:user1) { FactoryBot.create(:user) }
+
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user1.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
   # Creates swagger for documentaion for login
   path '/api/v1/login' do
     post 'Creates a session' do
@@ -67,16 +73,11 @@ describe 'sessions API' do
       consumes 'application/json'
       security [Bearer: {}]
 
-      # Use an it block to define the behavior of the logout action
-      it 'destroys the session and logs out the user' do
-        # Login the user to simulate authentication
-        login_as(user1, scope: :user)
-        
-        # Make the request to the logout endpoint
-        delete '/api/v1/logout'
-        
-        # Add your expectations here based on the logout response
-        expect(response).to have_http_status(:ok)
+      response '200', 'blacklist token' do
+        # Set the authorization header with a valid token for the logout request
+        let(:Authorization) { auth_headers['Authorization'] }
+
+        run_test!
       end
       # This does not include anything in the header so it fails
       response '400', 'no token to blacklist' do
