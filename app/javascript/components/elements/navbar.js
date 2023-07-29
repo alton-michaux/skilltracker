@@ -13,12 +13,13 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const removeUser = async () => {
     try {
       const response = await userLogout();
-      if (response.message = 'Logout successful') {
+      if (response.message == 'Logout successful') {
         onLogout()
         toast('Logged out successfully')
         navigate('/')
       }
     } catch (error) {
+      console.log("🚀 ~ file: navbar.js:22 ~ removeUser ~ error:", error)
       toast(error)
     }
   }
