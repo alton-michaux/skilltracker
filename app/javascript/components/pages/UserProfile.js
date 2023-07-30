@@ -8,17 +8,17 @@ const UserProfile = ({ user }) => {
   const { id, name } = useParams();
   return (
     <>
-      <p className="text-center mt-2">
+      <h2 className="text-center">
         Welcome {name}!
-      </p>
-      <div className="text-center main-div">
-        <div className="secondary-div">
+      </h2>
+      <div className="text-center main-div user-profile-div">
+        <div className="secondary-div user-skills-div">
           <h2>Your Skills</h2>
           <SkillComponent
             user={user}
           ></SkillComponent>
         </div>
-        <div className="secondary-div">
+        <div className="secondary-div user-tickets-div">
           <h2>Your Work</h2>
           <TicketComponent
             user={user}

@@ -5,7 +5,7 @@ const SkillComponent = ({ user }) => {
   return (
     user?.skills?.map((data) => {
       return (
-        <div id={data.skill.id}>
+        <div class="skill-div" id={data.skill.id}>
           <h4>{data.skill.name}</h4>
           <p>{data.skill.description}</p>
         </div>

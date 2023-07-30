@@ -5,7 +5,7 @@ const TicketComponent = ({user}) => {
   return (
     user?.tickets?.map((ticket) => {
       return (
-        <div id={ticket.id}>
+        <div class="ticket-div" id={ticket.id}>
           <h4>{ticket.title}</h4>
           <p>{ticket.status}</p>
           <p>{ticket.description}</p>

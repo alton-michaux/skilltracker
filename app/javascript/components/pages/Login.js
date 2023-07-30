@@ -43,7 +43,7 @@ const Login = ({ setLogin }) => {
 
   return (
     <div className="text-center d-flex-inline main-div">
-      <h2>Log in</h2>
+      <h2 className="main-headers">Log in</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formEmail" className='p-2'>
           <Form.Label>Email</Form.Label>

@@ -35,8 +35,8 @@ const Registration = () => {
 
   return (
     <div className="text-center d-flex-inline main-div">
-      <h2>Sign up</h2>
-      <Form onSubmit={handleSubmit}>
+      <h2 className="main-headers">Sign up</h2>
+      <Form onSubmit={handleSubmit} className="main-headers">
         <Form.Group controlId="formFirstname">
           <Form.Label>First Name</Form.Label>
           <Form.Control type="name" name="first_name" className="text-center" autoFocus required />

@@ -5,7 +5,7 @@ import SkillTrackerButton from "../elements/button";
 const Home = ({ user }) => {
   return (
     <div>
-      <p className="text-center">Welcome to SkillTracker{user.full_name ? ` ${user.full_name}` : ""}!</p>
+      <h5 className="text-center">Welcome to SkillTracker{user.full_name ? ` ${user.full_name}` : ""}!</h5>
       <div className="container-sm">
         <div className="row main-div">
           {
