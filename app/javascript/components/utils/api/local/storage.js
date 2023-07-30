@@ -5,7 +5,7 @@ export const retrieveFromStorage = (item) => {
 
 export const sendToStorage = (data, type) => {
   if (type === 'user') {
-    localStorage.setItem('userData', JSON.stringify(data?.user))
+    localStorage.setItem('userData', JSON.stringify(data?.user_data))
     localStorage.setItem('token', JSON.stringify(data?.token))
   }
   if (type === 'client') {

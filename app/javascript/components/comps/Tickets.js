@@ -20,8 +20,12 @@ const TicketComponent = ({ user }) => {
   )
 }
 
+TicketComponent.defaultProps = {
+  user: {}
+}
+
 TicketComponent.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object
 }
 
 export default TicketComponent

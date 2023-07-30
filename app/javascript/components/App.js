@@ -42,7 +42,7 @@ const App = () => {
 
   const handleLogin = (data) => {
     sendToStorage(data, 'user')
-    handleUser(data.user)
+    handleUser(data.user_data)
     setDefaultHeaders(data.token)
     setIsAuthenticated(true)
   }

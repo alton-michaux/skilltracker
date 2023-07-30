@@ -19,8 +19,12 @@ const SkillComponent = ({ user }) => {
   )
 }
 
+SkillComponent.defaultProps = {
+  user: {}
+}
+
 SkillComponent.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object
 }
 
 export default SkillComponent

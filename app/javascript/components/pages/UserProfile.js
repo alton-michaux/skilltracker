@@ -30,13 +30,12 @@ const UserProfile = ({ user }) => {
 }
 
 UserProfile.defaultProps = {
-  id: 0,
+  user: {},
   name: ''
 }
 
 UserProfile.propTypes = {
-  user: PropTypes.object.isRequired,
-  id: PropTypes.number,
+  user: PropTypes.object,
   name: PropTypes.string
 }
 

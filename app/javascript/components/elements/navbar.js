@@ -20,7 +20,6 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
         navigate('/')
       }
     } catch (error) {
-      console.log('🚀 ~ file: navbar.js:22 ~ removeUser ~ error:', error)
       toast(error)
     }
   }
