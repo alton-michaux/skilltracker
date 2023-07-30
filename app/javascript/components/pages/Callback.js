@@ -8,8 +8,12 @@ const Callback = ({ client }) => {
   )
 }
 
+Callback.defaultProps = {
+  client: {}
+}
+
 Callback.propTypes = {
-  client: PropTypes.object.isRequired
+  client: PropTypes.object
 }
 
 export default Callback

@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const TicketComponent = ({user}) => {
+const TicketComponent = ({ user }) => {
   return (
-    user?.tickets?.map((ticket) => {
-      return (
-        <div class="ticket-div" id={ticket.id}>
-          <h4>{ticket.title}</h4>
-          <p>{ticket.status}</p>
-          <p>{ticket.description}</p>
-        </div>
-      )
-    })
+    <ul> {
+      user?.tickets?.map((ticket) => {
+        return (
+          <li key={ticket.id}>
+            <div className="ticket-div">
+              <h4>{ticket.title}</h4>
+              <p>{ticket.status}</p>
+              <p>{ticket.description}</p>
+            </div>
+          </li>
+        )
+      })
+    }
+    </ul>
   )
 }
 

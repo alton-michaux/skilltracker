@@ -28,6 +28,16 @@ body {
   padding: 1.5%;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  min-height: 100%;
+}
+
 @media screen and (max-width: 1000px) {
   html {
     font-size: 40px;
@@ -107,10 +117,10 @@ body {
     margin: 10px;
   }
 
-  // .user-skills-div,
-  // .user-tickets-div {
-
-  // }
+  .user-skills-div,
+  .user-tickets-div {
+    margin: 0 auto;
+  }
 
   // .ticket-div {
   //   border: 1px solid white;
