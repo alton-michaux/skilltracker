@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { sendToStorage } from '../utils/api/local/storage'
 
 const Callback = ({ client }) => {
-  console.log('🚀 ~ file: Callback.js:6 ~ Callback ~ client:', client)
+  const [jiraClient, setJiraClient] = useState({})
+
+  useEffect(() => {
+    if (Object.keys(client).length > 0) {
+      setJiraClient(client)
+      sendToStorage(client, 'client')
+    }
+  }, [client])
+
   return (
-    <div className="text-center">Jira Authentication Successful</div>
+    <div className="text-center">Jira Auth Succesful</div>
   )
 }
 

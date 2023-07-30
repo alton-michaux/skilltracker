@@ -1,0 +1,18 @@
+
+export const retrieveFromStorage = (item) => {
+  return JSON.parse(localStorage.getItem(item))
+}
+
+export const sendToStorage = (data, type) => {
+  if (type === 'user') {
+    localStorage.setItem('userData', JSON.stringify(data?.user))
+    localStorage.setItem('token', JSON.stringify(data?.token))
+  }
+  if (type === 'client') {
+    localStorage.setItem('jiraClient', JSON.stringify(data?.consumer))
+  }
+}
+
+export const removeFromStorage = () => {
+  localStorage.clear()
+}

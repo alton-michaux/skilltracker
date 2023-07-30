@@ -24,11 +24,16 @@ const PrivateRoute = ({ component: Component, isAuthenticated, onLogout, ...rest
   )
 }
 
+PrivateRoute.defaultProps = {
+  component: undefined,
+  rest: undefined
+}
+
 PrivateRoute.propTypes = {
-  component: PropTypes.object.isRequired,
+  component: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
-  rest: PropTypes.object.isRequired
+  rest: PropTypes.object
 }
 
 export default PrivateRoute

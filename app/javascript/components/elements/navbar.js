@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
 import { userLogout } from '../utils/api/user'
+import { retrieveFromStorage } from '../utils/api/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
@@ -24,6 +25,8 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
     }
   }
 
+  const jiraClient = retrieveFromStorage('jiraClient')
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -34,10 +37,10 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
             {
               Object.keys(user).length > 0
                 ? <>
-                <Nav.Link href={authString}>Connect to Jira</Nav.Link>
-                <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
-                <Nav.Link onClick={removeUser}>Logout</Nav.Link>
-              </>
+                  {jiraClient ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
+                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
+                  <Nav.Link onClick={removeUser}>Logout</Nav.Link>
+                </>
                 : <></>
             }
           </Nav>

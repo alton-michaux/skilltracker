@@ -18,21 +18,7 @@ import MatchedSkills from './pages/MatchedSkills'
 import PrivateRoute from './pages/PrivateRoute'
 import { authorizeJiraSession } from './utils/api/jiraSessions'
 import setDefaultHeaders from './utils/api'
-
-const retrieveFromStorage = (item) => {
-  return JSON.parse(localStorage.getItem(item))
-}
-
-const sendToStorage = (data) => {
-  // Store the token in local storage and set isAuthenticated to true
-  localStorage.setItem('token', JSON.stringify(data.token))
-  localStorage.setItem('userData', JSON.stringify(data.user))
-}
-
-const removeFromStorage = () => {
-  localStorage.removeItem('token')
-  localStorage.removeItem('userData')
-}
+import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/api/local/storage'
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -55,7 +41,7 @@ const App = () => {
   }, [])
 
   const handleLogin = (data) => {
-    sendToStorage(data)
+    sendToStorage(data, 'user')
     handleUser(data.user)
     setDefaultHeaders(data.token)
     setIsAuthenticated(true)
