@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "lint:js": "eslint ./app/javascript",
-    "dev": "./bin/webpack-dev-server"
+    "dev": "./bin/webpack-dev-server",
+    "clear-dev": "webpacker:clobber"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

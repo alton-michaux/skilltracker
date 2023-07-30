@@ -21,6 +21,7 @@ import setDefaultHeaders from './utils/api'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import StateHandler from './reducers/stateHandler'
 import initialState from './initialState'
+import { AppProvider } from './AppContext';
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -71,32 +72,34 @@ const App = () => {
   return (
     <>
       {isBrowser && (
-        <Router>
-          <SkillTrackerNav
-            user={state.user}
-            setUser={handleUser}
-            onLogout={handleLogout}
-            authString={state.authString}
-          ></SkillTrackerNav>
-          <Toaster />
-          <Routes>
-            <Route path="/home" element={
-              <PrivateRoute
-                isAuthenticated={state.isAuthenticated}
-                onLogout={handleLogout}
-              ></PrivateRoute>
-            } />
-            <Route path="/" element={<Home user={state.user} />} />
-            <Route path="/api/v1/signup/sign_up" element={<Registration />} />
-            <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
-            <Route path="/api/v1/skills" element={<Skills />} />
-            <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
-            <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
-            <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
-          </Routes>
-        </Router >
+        <AppProvider>
+          <Router>
+            <SkillTrackerNav
+              user={state.user}
+              setUser={handleUser}
+              onLogout={handleLogout}
+              authString={state.authString}
+            ></SkillTrackerNav>
+            <Toaster />
+            <Routes>
+              <Route path="/home" element={
+                <PrivateRoute
+                  isAuthenticated={state.isAuthenticated}
+                  onLogout={handleLogout}
+                ></PrivateRoute>
+              } />
+              <Route path="/" element={<Home user={state.user} />} />
+              <Route path="/api/v1/signup/sign_up" element={<Registration />} />
+              <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
+              <Route path="/callback" element={<Callback />} />
+              <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
+              <Route path="/api/v1/skills" element={<Skills />} />
+              <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
+              <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
+              <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
+            </Routes>
+          </Router >
+        </AppProvider>
       )}
     </>
   )
