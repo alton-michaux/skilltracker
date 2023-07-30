@@ -32,8 +32,7 @@ const App = () => {
   useEffect(() => {
     const client = localStorage.getItem('jiraClient')
     if (client) {
-      console.log("🚀 ~ file: App.js:35 ~ useEffect ~ client:", client)
-      dispatch({type: 'jiraClient', payload: client })
+      dispatch({type: 'jiraClient', payload: JSON.parse(client) })
     }
   }, [localStorage])
 
@@ -60,10 +59,7 @@ const App = () => {
   const handleLogout = () => {
     removeFromStorage()
     setDefaultHeaders()
-    dispatch({ type: 'isAuthenticated', payload: false })
-    dispatch({ type: 'user', payload: {} })
-    dispatch({ type: 'authString', payload: "" })
-    dispatch({ type: 'jiraClient', payload: {} })
+    dispatch({type: 'default'})
   }
 
   const handleUser = async (data) => {

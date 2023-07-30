@@ -1,3 +1,5 @@
+import initialState from "../initialState";
+
 const StateHandler = (state, action) => {
   switch (action.type) {
     case 'loading':
@@ -38,6 +40,8 @@ const StateHandler = (state, action) => {
         ...state,
         jiraClient: action.payload
       };
+    default:
+      return initialState
   }
 }
 
