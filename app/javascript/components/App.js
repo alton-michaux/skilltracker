@@ -21,7 +21,7 @@ import setDefaultHeaders from './utils/api'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import StateHandler from './reducers/stateHandler'
 import initialState from './initialState'
-import { AppProvider } from './AppContext';
+import { AppProvider } from './AppContext'
 
 const App = () => {
   // Check if the code is executing in a browser environment

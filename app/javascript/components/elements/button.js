@@ -1,18 +1,18 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import { green, grey, red } from '@mui/material/colors';
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import { green, grey, red } from '@mui/material/colors'
 import Button from '@mui/material/Button'
 import { styled } from 'styled-components'
 import PropTypes from 'prop-types'
-import { useAppContext } from '../AppContext';
+import { useAppContext } from '../AppContext'
 
 const SkillTrackerButton = ({ variant, action, children, destination, type, color }) => {
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext()
 
-  const loading = state.isLoading;
-  const error = state.isError;
+  const loading = state.isLoading
+  const error = state.isError
   const success = !loading && !error
 
   const StyledLink = styled(Link)`
@@ -23,21 +23,21 @@ const SkillTrackerButton = ({ variant, action, children, destination, type, colo
   `
 
   const buttonSx = {
-    ...(success && {
+    ...((success && {
       bgcolor: green[500],
       '&:hover': {
-        bgcolor: green[700],
-      },
-    } || error && {
+        bgcolor: green[700]
+      }
+    }) || (error && {
       bgcolor: red[500],
       '&:hover': {
-        bgcolor: red[700],
-      },
-    } || loading && {
-      bgcolor: grey[500],
-    }
-    ),
-  };
+        bgcolor: red[700]
+      }
+    }) || (loading && {
+      bgcolor: grey[500]
+    })
+    )
+  }
 
   return (
     <div className="button-div">
@@ -53,10 +53,10 @@ const SkillTrackerButton = ({ variant, action, children, destination, type, colo
           {destination
             ? (
               <StyledLink to={destination}>{children}</StyledLink>
-            )
+              )
             : (
-              children
-            )}
+                children
+              )}
         </Button>
         {loading && (
           <CircularProgress
@@ -67,7 +67,7 @@ const SkillTrackerButton = ({ variant, action, children, destination, type, colo
               top: '50%',
               left: '50%',
               marginTop: '-12px',
-              marginLeft: '-12px',
+              marginLeft: '-12px'
             }}
           />
         )}
