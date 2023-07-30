@@ -1,25 +1,25 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { useNavigate } from 'react-router-dom';
-import { toast, Toaster } from "react-hot-toast";
-import PropTypes from 'prop-types';
-import { userLogout } from "../utils/api/user";
+import React from 'react'
+import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar'
+import { useNavigate } from 'react-router-dom'
+import { toast, Toaster } from 'react-hot-toast'
+import PropTypes from 'prop-types'
+import { userLogout } from '../utils/api/user'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const removeUser = async () => {
     try {
-      const response = await userLogout();
-      if (response.message == 'Logout successful') {
+      const response = await userLogout()
+      if (response.message === 'Logout successful') {
         onLogout()
         toast('Logged out successfully')
         navigate('/')
       }
     } catch (error) {
-      console.log("🚀 ~ file: navbar.js:22 ~ removeUser ~ error:", error)
+      console.log('🚀 ~ file: navbar.js:22 ~ removeUser ~ error:', error)
       toast(error)
     }
   }
@@ -32,11 +32,13 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {
-              Object.keys(user).length > 0 ? <>
+              Object.keys(user).length > 0
+                ? <>
                 <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                 <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                 <Nav.Link onClick={removeUser}>Logout</Nav.Link>
-              </> : <></>
+              </>
+                : <></>
             }
           </Nav>
         </Navbar.Collapse>
@@ -48,13 +50,13 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
 
 SkillTrackerNav.defaultProps = {
   user: {},
-  authString: "/"
+  authString: '/'
 }
 
 SkillTrackerNav.propTypes = {
   user: PropTypes.object,
   authString: PropTypes.string,
-  onLogout: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired
 }
 
 export default SkillTrackerNav

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Route, useNavigate } from 'react-router-dom';
+import React from 'react'
+import { Route, useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const PrivateRoute = ({ component: Component, isAuthenticated, onLogout, ...rest }) => {
   const navigate = useNavigate()
@@ -8,9 +9,11 @@ const PrivateRoute = ({ component: Component, isAuthenticated, onLogout, ...rest
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? (
+        isAuthenticated
+          ? (
           <Component {...props} onLogout={onLogout} />
-        ) : <>
+            )
+          : <>
           <p>Not authenticated!</p>
           <button
             onClick={navigate('/api/v1/login')}
@@ -18,7 +21,14 @@ const PrivateRoute = ({ component: Component, isAuthenticated, onLogout, ...rest
         </>
       }
     />
-  );
-};
+  )
+}
 
-export default PrivateRoute;
+PrivateRoute.propTypes = {
+  component: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  rest: PropTypes.object.isRequired
+}
+
+export default PrivateRoute

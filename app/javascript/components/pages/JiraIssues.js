@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
 const JiraIssues = () => {
-  return(
+  return (
     <div className="text-center">Jira Issues</div>
   )
 }

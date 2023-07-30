@@ -1,6 +1,6 @@
 import {
-  post, destroy, get,
-} from './index';
+  post, destroy, get
+} from './index'
 
 export const userLogin = () => get('/api/v1/login')
 export const userLoginSubmit = (formData) => post('/api/v1/login', formData)

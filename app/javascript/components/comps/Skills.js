@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const SkillComponent = ({ user }) => {
   return (
@@ -20,7 +20,7 @@ const SkillComponent = ({ user }) => {
 }
 
 SkillComponent.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default SkillComponent
