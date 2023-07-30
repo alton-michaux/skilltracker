@@ -14,11 +14,13 @@ const Home = ({ user }) => {
             </>
               : <>
               <SkillTrackerButton
-                variant={'primary'}
+                variant={'contained'}
+                color={'success'}
                 destination={'/api/v1/login'}
               >Log In</SkillTrackerButton>
               <SkillTrackerButton
-                variant={'secondary'}
+                variant={'contained'}
+                color={'primary'}
                 destination={'/api/v1/signup/sign_up'}
               >Sign Up</SkillTrackerButton>
             </>

@@ -62,7 +62,7 @@ const Registration = () => {
           <Form.Control type="password" name="password_confirmation" className="text-center" required />
         </Form.Group>
 
-        <SkillTrackerButton variant="primary" type="submit">
+        <SkillTrackerButton variant="contained" color="success" type="submit">
           Sign up
         </SkillTrackerButton>
         <Toaster />

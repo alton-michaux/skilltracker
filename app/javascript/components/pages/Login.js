@@ -55,7 +55,7 @@ const Login = ({ setLogin }) => {
           <Form.Control type="password" name="password" className="text-center" required />
         </Form.Group>
 
-        <SkillTrackerButton variant="primary" type="submit">
+        <SkillTrackerButton variant="contained" color="success" type="submit">
           Log in
         </SkillTrackerButton>
         <Toaster />
