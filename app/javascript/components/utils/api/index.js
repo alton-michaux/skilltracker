@@ -15,7 +15,7 @@ const setDefaultHeaders = (token) => {
 }
 
 export const URLFunctions = () => {
-  const [state, dispatch] = useReducer(StateHandler, initialState)
+  const [, dispatch] = useReducer(StateHandler, initialState)
 
   // Function to handle API requests
   const handleRequest = (method, url, data) => {
@@ -101,8 +101,8 @@ export const URLFunctions = () => {
     put,
     patch,
     post,
-    destroy,
-  };
+    destroy
+  }
 }
 
 export default setDefaultHeaders

@@ -11,7 +11,7 @@ import { retrieveFromStorage } from '../utils/local/storage'
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
 
-  const { userLogout } = userAPI();
+  const { userLogout } = userAPI()
 
   const removeUser = async () => {
     try {

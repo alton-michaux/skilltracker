@@ -8,7 +8,7 @@ import SkillTrackerButton from '../elements/button'
 const Registration = () => {
   const navigate = useNavigate()
 
-  const { userRegisterSubmit } = userAPI();
+  const { userRegisterSubmit } = userAPI()
   const handleSubmit = async (event) => {
     event.preventDefault()
 

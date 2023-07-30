@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { sendToStorage } from '../utils/local/storage'
 
 const Callback = ({ client }) => {
-
   useEffect(() => {
     if (Object.keys(client).length > 0) {
       sendToStorage(client, 'client')

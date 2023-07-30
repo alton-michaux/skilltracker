@@ -1,4 +1,4 @@
-import initialState from "../initialState";
+import initialState from '../initialState'
 
 const StateHandler = (state, action) => {
   switch (action.type) {
@@ -6,43 +6,43 @@ const StateHandler = (state, action) => {
       return {
         ...state,
         isLoading: true,
-        isError: false,
-      };
+        isError: false
+      }
     case 'success':
       return {
         ...state,
         isLoading: false,
-        isError: false,
-      };
+        isError: false
+      }
     case 'error':
       return {
         ...state,
         isLoading: false,
-        isError: true,
-      };
+        isError: true
+      }
     case 'authString':
       return {
         ...state,
-        authString: action.payload,
-      };
+        authString: action.payload
+      }
     case 'user':
       return {
         ...state,
-        user: action.payload,
-      };
+        user: action.payload
+      }
     case 'isAuthenticated':
       return {
         ...state,
-        isAuthenticated: action.payload,
-      };
+        isAuthenticated: action.payload
+      }
     case 'jiraClient':
       return {
         ...state,
         jiraClient: action.payload
-      };
+      }
     default:
       return initialState
   }
 }
 
-export default StateHandler;
+export default StateHandler

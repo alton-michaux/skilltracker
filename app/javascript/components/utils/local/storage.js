@@ -1,4 +1,3 @@
-
 export const retrieveFromStorage = (item) => {
   return JSON.parse(localStorage.getItem(item))
 }

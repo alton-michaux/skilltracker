@@ -1,7 +1,7 @@
-import { URLFunctions } from "."
+import { URLFunctions } from '.'
 
 const userAPI = () => {
-  const { get, post, destroy } = URLFunctions();
+  const { get, post, destroy } = URLFunctions()
 
   const userLogin = () => get('/api/v1/login')
   const userLoginSubmit = (formData) => post('/api/v1/login', formData)
@@ -20,4 +20,4 @@ const userAPI = () => {
   }
 }
 
-export default userAPI;
+export default userAPI

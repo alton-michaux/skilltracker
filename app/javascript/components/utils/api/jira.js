@@ -1,8 +1,8 @@
-import { URLFunctions } from "."
+import { URLFunctions } from '.'
 
 const jiraAPI = () => {
-  const { get } = URLFunctions();
-  
+  const { get } = URLFunctions()
+
   const authorizeJiraSession = () => get('/api/v1/jira_sessions/authorize')
   const callbackJiraSession = () => get('/api/v1/jira_sessions/callback')
   const getJiraIssues = () => get('/api/v1/jira_issues')
@@ -16,4 +16,4 @@ const jiraAPI = () => {
   }
 }
 
-export default jiraAPI;
+export default jiraAPI

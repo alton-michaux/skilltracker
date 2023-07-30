@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -27,12 +27,12 @@ const App = () => {
   const isBrowser = typeof window !== 'undefined'
   const [state, dispatch] = useReducer(StateHandler, initialState)
 
-  const { authorizeJiraSession } = jiraAPI();
+  const { authorizeJiraSession } = jiraAPI()
 
   useEffect(() => {
     const client = localStorage.getItem('jiraClient')
     if (client) {
-      dispatch({type: 'jiraClient', payload: JSON.parse(client) })
+      dispatch({ type: 'jiraClient', payload: JSON.parse(client) })
     }
   }, [localStorage])
 
@@ -59,15 +59,15 @@ const App = () => {
   const handleLogout = () => {
     removeFromStorage()
     setDefaultHeaders()
-    dispatch({type: 'default'})
+    dispatch({ type: 'default' })
   }
 
   const handleUser = async (data) => {
-    dispatch({type: 'user', payload: data})
+    dispatch({ type: 'user', payload: data })
     const authNav = await authorizeJiraSession()
-    dispatch({type: 'authString', payload: authNav.auth})
+    dispatch({ type: 'authString', payload: authNav.auth })
   }
-console.log('state', state)
+
   return (
     <>
       {isBrowser && (
