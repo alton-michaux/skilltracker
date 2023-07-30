@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { sendToStorage } from '../utils/api/local/storage'
+import { sendToStorage } from '../utils/local/storage'
 
 const Callback = ({ client }) => {
-  const [jiraClient, setJiraClient] = useState({})
 
   useEffect(() => {
     if (Object.keys(client).length > 0) {
-      setJiraClient(client)
       sendToStorage(client, 'client')
     }
   }, [client])

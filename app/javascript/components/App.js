@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -18,21 +18,28 @@ import MatchedSkills from './pages/MatchedSkills'
 import PrivateRoute from './pages/PrivateRoute'
 import { authorizeJiraSession } from './utils/api/jiraSessions'
 import setDefaultHeaders from './utils/api'
-import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/api/local/storage'
+import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
+import StateHandler from './reducers/stateHandler'
+import initialState from './initialState'
 
 const App = () => {
   // Check if the code is executing in a browser environment
   const isBrowser = typeof window !== 'undefined'
-  const [user, setUser] = useState({})
-  const [authString, setAuthString] = useState('')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [state, dispatch] = useReducer(StateHandler, initialState)
+
+  useEffect(() => {
+    const client = localStorage.getItem('jiraClient')
+    if (client) {
+      dispatch({type: 'jiraClient', payload: client })
+    }
+  }, [localStorage])
 
   useEffect(() => {
     // Check if the user has an existing valid token in local storage on app load
     const token = retrieveFromStorage('token')
     if (token) {
       setDefaultHeaders(token)
-      setIsAuthenticated(true)
+      dispatch({ type: 'isAuthenticated', payload: true })
       const userData = retrieveFromStorage('userData')
       if (userData) {
         handleUser(userData)
@@ -44,21 +51,22 @@ const App = () => {
     sendToStorage(data, 'user')
     handleUser(data.user_data)
     setDefaultHeaders(data.token)
-    setIsAuthenticated(true)
+    dispatch({ type: 'isAuthenticated', payload: true })
   }
 
   const handleLogout = () => {
     removeFromStorage()
     setDefaultHeaders()
-    setIsAuthenticated(false)
-    setUser({})
-    setAuthString('')
+    dispatch({ type: 'isAuthenticated', payload: false })
+    dispatch({ type: 'user', payload: {} })
+    dispatch({ type: 'authString', payload: "" })
+    dispatch({ type: 'jiraClient', payload: {} })
   }
 
   const handleUser = async (data) => {
-    setUser(data)
+    dispatch({type: 'user', payload: data})
     const authNav = await authorizeJiraSession()
-    setAuthString(authNav.auth)
+    dispatch({type: 'authString', payload: authNav.auth})
   }
 
   return (
@@ -66,28 +74,28 @@ const App = () => {
       {isBrowser && (
         <Router>
           <SkillTrackerNav
-            user={user}
+            user={state.user}
             setUser={handleUser}
             onLogout={handleLogout}
-            authString={authString}
+            authString={state.authString}
           ></SkillTrackerNav>
           <Toaster />
           <Routes>
             <Route path="/home" element={
               <PrivateRoute
-                isAuthenticated={isAuthenticated}
+                isAuthenticated={state.isAuthenticated}
                 onLogout={handleLogout}
               ></PrivateRoute>
             } />
-            <Route path="/" element={<Home user={user} />} />
+            <Route path="/" element={<Home user={state.user} />} />
             <Route path="/api/v1/signup/sign_up" element={<Registration />} />
             <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
             <Route path="/callback" element={<Callback />} />
             <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
             <Route path="/api/v1/skills" element={<Skills />} />
-            <Route path="/api/v1/users/:id/tickets" element={<Tickets user={user} />} />
-            <Route path="/api/v1/users/:id/:name" element={<UserProfile user={user} />} />
-            <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={user} />} />
+            <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
+            <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
+            <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
           </Routes>
         </Router >
       )}

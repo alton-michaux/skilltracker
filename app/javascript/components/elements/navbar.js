@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
 import { userLogout } from '../utils/api/user'
-import { retrieveFromStorage } from '../utils/api/local/storage'
+import { retrieveFromStorage } from '../utils/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
