@@ -3,11 +3,13 @@ import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
-import { userLoginSubmit } from '../utils/api/user'
+import userAPI from '../utils/api/user'
 import SkillTrackerButton from '../elements/button'
 
 const Login = ({ setLogin }) => {
   const navigate = useNavigate()
+
+  const { userLoginSubmit } = userAPI()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -37,7 +39,7 @@ const Login = ({ setLogin }) => {
         toast(`Logged in as ${name}`)
       }
     } catch (error) {
-      toast(error)
+      toast(error.message)
     }
   }
 

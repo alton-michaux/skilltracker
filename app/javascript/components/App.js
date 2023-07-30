@@ -16,7 +16,7 @@ import Tickets from './pages/Tickets'
 import UserProfile from './pages/UserProfile'
 import MatchedSkills from './pages/MatchedSkills'
 import PrivateRoute from './pages/PrivateRoute'
-import { authorizeJiraSession } from './utils/api/jiraSessions'
+import jiraAPI from './utils/api/jira'
 import setDefaultHeaders from './utils/api'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import StateHandler from './reducers/stateHandler'
@@ -27,9 +27,12 @@ const App = () => {
   const isBrowser = typeof window !== 'undefined'
   const [state, dispatch] = useReducer(StateHandler, initialState)
 
+  const { authorizeJiraSession } = jiraAPI();
+
   useEffect(() => {
     const client = localStorage.getItem('jiraClient')
     if (client) {
+      console.log("🚀 ~ file: App.js:35 ~ useEffect ~ client:", client)
       dispatch({type: 'jiraClient', payload: client })
     }
   }, [localStorage])
@@ -68,7 +71,7 @@ const App = () => {
     const authNav = await authorizeJiraSession()
     dispatch({type: 'authString', payload: authNav.auth})
   }
-
+console.log('state', state)
   return (
     <>
       {isBrowser && (

@@ -1,10 +1,23 @@
-import {
-  post, destroy, get
-} from './index'
+import { URLFunctions } from "."
 
-export const userLogin = () => get('/api/v1/login')
-export const userLoginSubmit = (formData) => post('/api/v1/login', formData)
-export const userLogout = (formData) => destroy('/api/v1/logout', formData)
-export const userRegister = () => get('/api/v1/signup/sign_up')
-export const userRegisterSubmit = (formData) => post('/api/v1/signup', formData)
-export const cancelUserRegister = (formData) => get('/api/v1/signup/cancel', formData)
+const userAPI = () => {
+  const { get, post, destroy } = URLFunctions();
+
+  const userLogin = () => get('/api/v1/login')
+  const userLoginSubmit = (formData) => post('/api/v1/login', formData)
+  const userLogout = (formData) => destroy('/api/v1/logout', formData)
+  const userRegister = () => get('/api/v1/signup/sign_up')
+  const userRegisterSubmit = (formData) => post('/api/v1/signup', formData)
+  const cancelUserRegister = (formData) => get('/api/v1/signup/cancel', formData)
+
+  return {
+    userLogin,
+    userLoginSubmit,
+    userLogout,
+    userRegister,
+    userRegisterSubmit,
+    cancelUserRegister
+  }
+}
+
+export default userAPI;

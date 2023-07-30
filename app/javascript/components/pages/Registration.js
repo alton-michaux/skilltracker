@@ -2,11 +2,13 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
-import { userRegisterSubmit } from '../utils/api/user'
+import userAPI from '../utils/api/user'
 import SkillTrackerButton from '../elements/button'
 
 const Registration = () => {
   const navigate = useNavigate()
+
+  const { userRegisterSubmit } = userAPI();
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -29,7 +31,7 @@ const Registration = () => {
         navigate('/api/v1/login')
       }
     } catch (error) {
-      toast(error)
+      toast(error.message)
     }
   }
 
