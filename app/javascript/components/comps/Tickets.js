@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const TicketComponent = ({ user }) => {
   return (
@@ -21,7 +21,7 @@ const TicketComponent = ({ user }) => {
 }
 
 TicketComponent.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default TicketComponent

@@ -1,11 +1,11 @@
-import React from "react"
-import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import TicketComponent from "../comps/Tickets";
-import SkillComponent from "../comps/Skills";
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import TicketComponent from '../comps/Tickets'
+import SkillComponent from '../comps/Skills'
 
 const UserProfile = ({ user }) => {
-  const { id, name } = useParams();
+  const { name } = useParams()
   return (
     <>
       <h2 className="text-center">
@@ -31,7 +31,7 @@ const UserProfile = ({ user }) => {
 
 UserProfile.defaultProps = {
   id: 0,
-  name: ""
+  name: ''
 }
 
 UserProfile.propTypes = {

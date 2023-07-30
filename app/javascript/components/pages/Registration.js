@@ -1,26 +1,26 @@
-import React from 'react';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
-import { userRegisterSubmit } from '../utils/api/user';
-import SkillTrackerButton from '../elements/button';
+import React from 'react'
+import Form from 'react-bootstrap/Form'
+import { useNavigate } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
+import { userRegisterSubmit } from '../utils/api/user'
+import SkillTrackerButton from '../elements/button'
 
 const Registration = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.target)
 
     // Create an object to store the form data
-    const data = {};
+    const data = {}
 
-    for (let [name, value] of formData.entries()) {
-      data[name] = value;
+    for (const [name, value] of formData.entries()) {
+      data[name] = value
     }
 
     // Include the CSRF token in the form data
-    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content;
+    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
 
     try {
       const response = await userRegisterSubmit(data)
@@ -68,7 +68,7 @@ const Registration = () => {
         <Toaster />
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default Registration;
+export default Registration

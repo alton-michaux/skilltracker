@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
 const Skills = () => {
-  return(
+  return (
     <div className="text-center">Skills</div>
   )
 }
