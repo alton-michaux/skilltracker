@@ -1,108 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Toaster } from "react-hot-toast";
-import SkillTrackerNav from './elements/navbar';
-import Home from './pages/Home';
-import Registration from './pages/Registration'
-import Login from './pages/Login';
-import Callback from './pages/Callback';
-import JiraIssues from './pages/JiraIssues';
-import Skills from './pages/Skills';
-import Tickets from './pages/Tickets';
-import UserProfile from './pages/UserProfile';
-import MatchedSkills from './pages/MatchedSkills'
-import PrivateRoute from './pages/PrivateRoute';
-import { authorizeJiraSession } from './utils/api/jiraSessions'
-import setDefaultHeaders from './utils/api';
-
-const retrieveFromStorage = (item) => {
-  return JSON.parse(localStorage.getItem(item))
-}
-
-const sendToStorage = (data) => {
-  // Store the token in local storage and set isAuthenticated to true    
-  localStorage.setItem('token', JSON.stringify(data.token));
-  localStorage.setItem('userData', JSON.stringify(data.user));
-}
-
-const removeFromStorage = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('userData')
-}
+import React, { useEffect, useReducer } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
+import { Toaster } from 'react-hot-toast'
+import SkillTrackerNav from './elements/navbar'
+import Home from './routes/Home'
+import Registration from './routes/Registration'
+import Login from './routes/Login'
+import Callback from './routes/Callback'
+import Skills from './routes/Skills'
+import Tickets from './routes/Tickets'
+import TicketShow from './routes/TicketShow'
+import UserProfile from './routes/UserProfile'
+import MatchedSkills from './routes/MatchedSkills'
+import PrivateRoute from './routes/PrivateRoute'
+import jiraAPI from './utils/api/jira'
+import setDefaultHeaders, { URLFunctions } from './utils/api'
+import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
+import StateHandler from './reducers/stateHandler'
+import initialState from './initialState'
+import { AppProvider } from './AppContext'
+import Loader from './comps/Loader'
 
 const App = () => {
   // Check if the code is executing in a browser environment
-  const isBrowser = typeof window === 'undefined' ? false : true;
-  const [user, setUser] = useState({});
-  const [authString, setAuthString] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isBrowser = typeof window !== 'undefined'
+  const [state, dispatch] = useReducer(StateHandler, initialState)
+
+  const { authorizeJiraSession } = jiraAPI()
+
+  useEffect(() => {
+    const client = localStorage.getItem('jiraClient')
+    if (client) {
+      dispatch({ type: 'jiraClient', payload: JSON.parse(client) })
+    }
+  }, [localStorage])
 
   useEffect(() => {
     // Check if the user has an existing valid token in local storage on app load
     const token = retrieveFromStorage('token')
     if (token) {
-      setDefaultHeaders(token);
-      setIsAuthenticated(true);
-      const userData = retrieveFromStorage('userData');
+      setDefaultHeaders(token)
+      dispatch({ type: 'isAuthenticated', payload: true })
+      const userData = retrieveFromStorage('userData')
       if (userData) {
-        handleUser(userData);
+        handleUser(userData)
       }
     }
-  }, []);
+  }, [])
 
   const handleLogin = (data) => {
-    sendToStorage(data)
-    handleUser(data.user)
-    setDefaultHeaders(data.token);
-    setIsAuthenticated(true);
-  };
+    sendToStorage(data, 'user')
+    handleUser(data.user_data)
+    setDefaultHeaders(data.token)
+    dispatch({ type: 'isAuthenticated', payload: true })
+  }
 
   const handleLogout = () => {
-    removeFromStorage();
-    setDefaultHeaders();
-    setIsAuthenticated(false);
-    setUser({})
-    setAuthString("")
-  };
+    removeFromStorage()
+    setDefaultHeaders()
+    dispatch({ type: 'default' })
+  }
 
   const handleUser = async (data) => {
-    setUser(data)
+    dispatch({ type: 'user', payload: data })
     const authNav = await authorizeJiraSession()
-    setAuthString(authNav.auth)
+    dispatch({ type: 'authString', payload: authNav.auth })
   }
 
   return (
     <>
       {isBrowser && (
-        <Router>
-          <SkillTrackerNav
-            user={user}
-            setUser={handleUser}
-            onLogout={handleLogout}
-            authString={authString}
-          ></SkillTrackerNav>
-          <Toaster />
-          <Routes>
-            <Route path="/home" element={
-              <PrivateRoute
-                isAuthenticated={isAuthenticated}
-                onLogout={handleLogout}
-              ></PrivateRoute>
-            } />
-            <Route path="/" element={<Home user={user} />} />
-            <Route path="/api/v1/signup/sign_up" element={<Registration />} />
-            <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
-            <Route path="/callback" element={<Callback />} />
-            <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
-            <Route path="/api/v1/skills" element={<Skills />} />
-            <Route path="/api/v1/users/:id/tickets" element={<Tickets user={user} />} />
-            <Route path="/api/v1/users/:id/:name" element={<UserProfile user={user} />} />
-            <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={user} />} />
-          </Routes>
-        </Router >
+        <AppProvider>
+          <Router>
+            <SkillTrackerNav
+              user={state.user}
+              setUser={handleUser}
+              onLogout={handleLogout}
+              authString={state.authString}
+            ></SkillTrackerNav>
+            <Toaster />
+            <Loader />
+            <Routes>
+              <Route path="/home" element={
+                <PrivateRoute
+                  isAuthenticated={state.isAuthenticated}
+                  onLogout={handleLogout}
+                ></PrivateRoute>
+              } />
+              <Route path="/" element={<Home user={state.user} />} />
+              <Route path="/api/v1/signup/sign_up" element={<Registration />} />
+              <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
+              <Route path="/callback" element={<Callback />} />
+              <Route path="/api/v1/skills" element={<Skills />} />
+              <Route path="/api/v1/users/:id/tickets" element={<Tickets />} />
+              <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow />} />
+              <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
+              <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
+              <Route element={<URLFunctions />}
+              />
+            </Routes>
+          </Router >
+        </AppProvider>
       )}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

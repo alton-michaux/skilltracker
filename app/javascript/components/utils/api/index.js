@@ -1,68 +1,108 @@
-import axios from 'axios';
-import { toast } from "react-hot-toast";
+import { useReducer } from 'react'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
+import initialState from '../../initialState'
+import StateHandler from '../../reducers/stateHandler'
 
 // Function to set default headers
 const setDefaultHeaders = (token) => {
-  axios.defaults.headers.common['Content-Type'] = 'application/json';
+  axios.defaults.headers.common['Content-Type'] = 'application/json'
   if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`
   } else {
-    delete axios.defaults.headers.common['Authorization'];
+    delete axios.defaults.headers.common.Authorization
   }
-};
+}
 
-// Function to handle API requests
-const handleRequest = (method, url, data) => {
-  return axios({
-    method,
-    url,
-    data,
-  });
-};
+export const URLFunctions = () => {
+  const [, dispatch] = useReducer(StateHandler, initialState)
 
-export const get = async (url) => {
-  try {
-    const response = await handleRequest('get', url);
-    return response.data;
-  } catch (error) {
-    toast(error.message);
+  // Function to handle API requests
+  const handleRequest = (method, url, data) => {
+    return axios({
+      method,
+      url,
+      data
+    })
   }
-};
 
-export const put = async (url, data) => {
-  try {
-    const response = await handleRequest('put', url, data);
-    return response.data;
-  } catch (error) {
-    toast(error.message);
+  const get = async (url) => {
+    try {
+      const response = await handleRequest('get', url)
+      dispatch({ type: 'loading' })
+      if (response.data) {
+        dispatch({ type: 'success' })
+        return response.data
+      }
+    } catch (error) {
+      dispatch({ type: 'error' })
+      toast(error.message)
+    }
   }
-};
 
-export const patch = async (url, data) => {
-  try {
-    const response = await handleRequest('patch', url, data);
-    return response.data;
-  } catch (error) {
-    toast(error.message);
+  const put = async (url, data) => {
+    try {
+      const response = await handleRequest('put', url, data)
+      if (response.data) {
+        dispatch({ type: 'loading' })
+        return response.data
+      }
+    } catch (error) {
+      dispatch({ type: 'error' })
+      toast(error.message)
+    }
   }
-};
 
-export const post = async (url, data) => {
-  try {
-    const response = await handleRequest('post', url, data);
-    return response.data;
-  } catch (error) {
-    toast(error.message);
+  const patch = async (url, data) => {
+    try {
+      const response = await handleRequest('patch', url, data)
+      dispatch({ type: 'loading' })
+      if (response.data) {
+        dispatch({ type: 'success' })
+        return response.data
+      }
+    } catch (error) {
+      dispatch({ type: 'error' })
+      toast(error.message)
+    }
   }
-};
 
-export const destroy = async (url, data) => {
-  try {
-    const response = await handleRequest('delete', url, data);
-    return response.data;
-  } catch (error) {
-    toast(error.message);
+  const post = async (url, data) => {
+    try {
+      const response = await handleRequest('post', url, data)
+      dispatch({ type: 'loading' })
+      if (response.data) {
+        dispatch({ type: 'success' })
+        return response.data
+      }
+    } catch (error) {
+      dispatch({ type: 'error' })
+      toast(error.message)
+    }
   }
-};
 
-export default setDefaultHeaders;
+  const destroy = async (url, data) => {
+    try {
+      const response = await handleRequest('delete', url, data)
+      dispatch({ type: 'loading' })
+      if (response.data) {
+        dispatch({ type: 'success' })
+        return response.data
+      }
+    } catch (error) {
+      dispatch({ type: 'error' })
+      toast(error.message)
+    }
+  }
+
+  // Return the URL methods as an object
+  return {
+    get,
+    put,
+    patch,
+    post,
+    destroy
+  }
+}
+
+export default setDefaultHeaders

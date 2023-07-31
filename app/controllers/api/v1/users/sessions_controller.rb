@@ -18,7 +18,7 @@ module Api
             token = JsonWebToken.encode(user_id: @user.id)
             time = Time.now + 24.hours.to_i
             render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
-                           user: UserSerializer.new(@user) }, status: :ok
+                           user_data: UserSerializer.new(@user) }, status: :ok
           elsif !@user
             render json: { error: 'Not Found' }, status: :not_found
           else

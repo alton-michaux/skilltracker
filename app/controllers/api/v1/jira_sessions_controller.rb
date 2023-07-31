@@ -53,9 +53,7 @@ module Api
           session.delete(:request_token)
           session.delete(:request_secret)
 
-          # byebug
-
-          render component: 'pages/Callback', props: { client: @jira_client }, status: 200
+          render component: 'routes/Callback', props: { client: @jira_client }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end

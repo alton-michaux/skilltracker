@@ -1,5 +1,17 @@
-import { get, post, destroy } from './index';
+import { URLFunctions } from '.'
 
-export const getSkills = () => get('/api/v1/skills');
-export const createSkill = (formData) => post('/api/v1/skills', formData);
-export const deleteSkill = (skillId) => destroy(`/api/v1/skills/${skillId}`);
+const SkillAPI = () => {
+  const { get, post, destroy } = URLFunctions()
+
+  const getSkills = () => get('/api/v1/skills')
+  const createSkill = (formData) => post('/api/v1/skills', formData)
+  const deleteSkill = (skillId) => destroy(`/api/v1/skills/${skillId}`)
+
+  return {
+    getSkills,
+    createSkill,
+    deleteSkill
+  }
+}
+
+export default SkillAPI

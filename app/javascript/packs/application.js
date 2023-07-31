@@ -1,6 +1,6 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from '../components/App';
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import App from '../components/App'
 
 /* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
@@ -20,10 +20,10 @@ import App from '../components/App';
 
 // console.log('Hello World from Webpacker')
 // Support component names relative to this directory:
-var componentRequireContext = require.context("components", true);
-var ReactRailsUJS = require("react_ujs");
-ReactRailsUJS.useContext(componentRequireContext);
+const componentRequireContext = require.context('components', true)
+const ReactRailsUJS = require('react_ujs')
+ReactRailsUJS.useContext(componentRequireContext)
 
 document.addEventListener('DOMContentLoaded', () => {
-  createRoot(document.getElementById('root')).render(<App />);
-});
+  createRoot(document.getElementById('root')).render(<App />)
+})

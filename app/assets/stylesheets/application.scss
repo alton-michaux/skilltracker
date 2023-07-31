@@ -14,31 +14,117 @@
 // Import Bootstrap styles
 @import "bootstrap/scss/bootstrap";
 
-.navbar-brand {
-  cursor: pointer;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.main-div {
+html,
+body {
+  min-height: 100%;
+}
+
+.text-center {
+  padding: 1.5%;
+}
+
+ul {
   display: flex;
   flex-direction: column;
-  max-width: 50%;
-  margin: 0 auto;
-  padding: 2%;
-}
-
-.secondary-div {
-  border: 1px solid green;
-  margin: 2%;
-}
-
-.button-div {
-  display: flex;
   justify-content: center;
-  padding: 1%;
   margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  min-height: 100%;
 }
 
-.button-div button {
-  min-width: 30%;
-  margin: 10px;
+@media screen and (max-width: 1000px) {
+  html {
+    font-size: 35px;
+  }
+
+  .main-div {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 2%;
+    justify-content: center;
+  }
+
+  .main-headers {
+    padding-bottom: 5%;
+  }
+
+  .button-div {
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+  }
+
+  .button-div button {
+    min-width: 300px;
+    min-height: 150px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .navbar-brand {
+    cursor: pointer;
+  }
+
+  .main-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    margin: 0 auto;
+    padding: 1.5%;
+    justify-content: space-between;
+    min-width: 75vw;
+  }
+
+  .main-headers {
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+  }
+
+  .user-profile-div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .secondary-div {
+    border: 1px solid blue;
+    margin: 2%;
+    min-width: 35vw;
+    max-height: 70vh;
+    overflow-y: scroll;
+    padding: 2%;
+  }
+
+  .button-div {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+    margin: 0 auto;
+    max-height: 150px;
+  }
+
+  .button-div button {
+    min-width: 30%;
+    max-height: 100%;
+    margin: 10px;
+  }
+
+  .user-skills-div,
+  .user-tickets-div {
+    margin: 0 auto;
+  }
+
+  // .ticket-div {
+  //   border: 1px solid white;
+  // }
 }
