@@ -40,6 +40,16 @@ const StateHandler = (state, action) => {
         ...state,
         jiraClient: action.payload
       }
+    case 'skills':
+      return {
+        ...state,
+        skills: action.payload
+      }
+    case 'tickets':
+      return {
+        ...state,
+        tickets: action.payload
+      }
     default:
       return initialState
   }

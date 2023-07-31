@@ -1,6 +1,6 @@
 import { URLFunctions } from '.'
 
-const ticketAPI = () => {
+const TicketAPI = () => {
   const { get } = URLFunctions()
 
   const getUserTickets = (userId) => get(`/api/v1/users/${userId}/tickets`)
@@ -12,4 +12,4 @@ const ticketAPI = () => {
   }
 }
 
-export default ticketAPI
+export default TicketAPI

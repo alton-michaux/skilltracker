@@ -1,6 +1,6 @@
 import { URLFunctions } from '.'
 
-const skillAPI = () => {
+const SkillAPI = () => {
   const { get, post, destroy } = URLFunctions()
 
   const getSkills = () => get('/api/v1/skills')
@@ -14,4 +14,4 @@ const skillAPI = () => {
   }
 }
 
-export default skillAPI
+export default SkillAPI

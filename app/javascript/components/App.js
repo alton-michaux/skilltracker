@@ -95,8 +95,8 @@ const App = () => {
               <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
               <Route path="/callback" element={<Callback />} />
               <Route path="/api/v1/skills" element={<Skills />} />
-              <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
-              <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow user={state.user} />} />
+              <Route path="/api/v1/users/:id/tickets" element={<Tickets />} />
+              <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow />} />
               <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
               <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
               <Route element={<URLFunctions />}

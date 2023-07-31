@@ -9,6 +9,7 @@ const Registration = () => {
   const navigate = useNavigate()
 
   const { userRegisterSubmit } = userAPI()
+
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -26,12 +27,12 @@ const Registration = () => {
 
     try {
       const response = await userRegisterSubmit(data)
-      if (response.ok) {
+      if (response) {
         toast('Successfully registered')
         navigate('/api/v1/login')
       }
-    } catch (error) {
-      toast(error.message)
+    } catch (response) {
+      toast(response.error)
     }
   }
 

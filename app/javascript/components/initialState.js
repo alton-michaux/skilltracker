@@ -4,7 +4,9 @@ const initialState = {
   isAuthenticated: false,
   isLoading: false,
   isError: false,
-  jiraClient: {}
+  jiraClient: {},
+  skills: {},
+  tickets: {}
 }
 
 export default initialState
