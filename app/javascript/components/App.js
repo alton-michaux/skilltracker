@@ -6,16 +6,16 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { Toaster } from 'react-hot-toast'
 import SkillTrackerNav from './elements/navbar'
-import Home from './pages/Home'
-import Registration from './pages/Registration'
-import Login from './pages/Login'
-import Callback from './pages/Callback'
-import JiraIssues from './pages/JiraIssues'
-import Skills from './pages/Skills'
-import Tickets from './pages/Tickets'
-import UserProfile from './pages/UserProfile'
-import MatchedSkills from './pages/MatchedSkills'
-import PrivateRoute from './pages/PrivateRoute'
+import Home from './routes/Home'
+import Registration from './routes/Registration'
+import Login from './routes/Login'
+import Callback from './routes/Callback'
+import Skills from './routes/Skills'
+import Tickets from './routes/Tickets'
+import TicketShow from './routes/TicketShow'
+import UserProfile from './routes/UserProfile'
+import MatchedSkills from './routes/MatchedSkills'
+import PrivateRoute from './routes/PrivateRoute'
 import jiraAPI from './utils/api/jira'
 import setDefaultHeaders, { URLFunctions } from './utils/api'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
@@ -94,9 +94,9 @@ const App = () => {
               <Route path="/api/v1/signup/sign_up" element={<Registration />} />
               <Route path="/api/v1/login" element={<Login setLogin={handleLogin} />} />
               <Route path="/callback" element={<Callback />} />
-              <Route path="/api/v1/jira_issues" element={<JiraIssues />} />
               <Route path="/api/v1/skills" element={<Skills />} />
               <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
+              <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow user={state.user} />} />
               <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
               <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
               <Route element={<URLFunctions />}
