@@ -21,7 +21,9 @@ import setDefaultHeaders from './utils/api'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import StateHandler from './reducers/stateHandler'
 import initialState from './initialState'
+import { URLFunctions } from './utils/api'
 import { AppProvider } from './AppContext'
+import Loader from './comps/Loader'
 
 const App = () => {
   // Check if the code is executing in a browser environment
@@ -81,6 +83,7 @@ const App = () => {
               authString={state.authString}
             ></SkillTrackerNav>
             <Toaster />
+            <Loader />
             <Routes>
               <Route path="/home" element={
                 <PrivateRoute
@@ -97,6 +100,8 @@ const App = () => {
               <Route path="/api/v1/users/:id/tickets" element={<Tickets user={state.user} />} />
               <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
               <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
+              <Route element={<URLFunctions />}
+              />
             </Routes>
           </Router >
         </AppProvider>

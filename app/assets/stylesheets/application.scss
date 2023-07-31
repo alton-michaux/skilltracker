@@ -78,6 +78,7 @@ ul {
   .main-div {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    position: relative;
     margin: 0 auto;
     padding: 1.5%;
     justify-content: space-between;

@@ -26,7 +26,7 @@ const Registration = () => {
 
     try {
       const response = await userRegisterSubmit(data)
-      if (response) {
+      if (response.ok) {
         toast('Successfully registered')
         navigate('/api/v1/login')
       }
