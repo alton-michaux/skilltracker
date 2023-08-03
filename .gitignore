@@ -30,6 +30,11 @@
 
 private_key.pem
 
+jira_privatekey.pcks8
+jira_privatekey.pem
+jira_publickey.cer
+jira_publickey.pem
+
 .env
 
 /public/packs
