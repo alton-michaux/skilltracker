@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render component: 'pages/NotFound', status: 404
+    render component: 'routes/NotFound', status: 404
   end
 
   def authorize_request
@@ -44,11 +44,13 @@ class ApplicationController < ActionController::Base
       client_secret: client_secret
     }
 
+    @redirect = options[:redirect_uri]
+
     OAuth2::Client.new(client_id, client_secret, options)
   end
 
   def auth_string(client_id, state, token)
-    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
+    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=read%3Ame&redirect_uri=#{@redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
 
   def handle_csrf
@@ -66,26 +68,27 @@ class ApplicationController < ActionController::Base
     client = oauth2_client
 
     # Step 3: Exchange the authorization code for an access token
-    access_token = client.auth_code.get_token(params[:code], redirect_uri: 'http://localhost:3000/callback')
+    access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
 
     # Step 4: Configure JIRA client with OAuth2 access token
     options = {
-      auth_type: :oauth,
-      consumer_key: ENV['CLIENT_ID'],
-      consumer_secret: ENV['CLIENT_SECRET'],
-      private_key_file: Rails.root.join('private_key.pem').to_s,
-      site: 'http://localhost:3000'
+      site: 'https://your-jira-instance-url', # Replace with the base URL of your Jira instance
+      context_path: '/jira',
+      rest_base_path: '/rest/api/2',
+      ssl_verify_mode: 1,
+      use_ssl: true,
+      use_client_cert: false,
+      http_debug: false,
+      default_headers: {}
     }
 
-    @jira_client = JIRA::Client.new(options)
+    @jira_client = OAuth2::AccessToken.new(client, access_token.token)
 
     return unless session[:jira_auth]
 
-    # Add AccessToken if authorised previously.
-    @jira_client.set_access_token(
-      access_token.token,
-      ENV['CLIENT_ID']
-    )
+    # Optionally, you may want to store the access token in the session for future use.
+    # In a real-world application, you might want to persist this securely.
+    session[:access_token] = access_token.token
   end
 
   def session_params

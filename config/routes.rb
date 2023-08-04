@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   get 'callback', to: 'api/v1/jira_sessions#callback'
 
+  post '/jira/plugins/servlet/oauth/access-token', to: 'jira_sessions#access_token'
+
   get '/app/*path', to: 'pages#home', via: :all
   get '/*a', to: 'application#not_found'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

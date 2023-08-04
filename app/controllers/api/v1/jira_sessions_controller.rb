@@ -35,23 +35,7 @@ module Api
 
       def callback
         if @jira_client
-          jira_service = JiraService.new(@jira_client)
-
-          jira_service.request_token_set(session)
-
-          # jira_service.access_token_set(session, params)
-
-          jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
-
-          session[:jira_auth] = jira_auth
-
-          @jira_client.set_access_token(
-            session[:jira_auth]['access_token'],
-            session[:jira_auth]['access_key']
-          )
-
-          session.delete(:request_token)
-          session.delete(:request_secret)
+          base_url = base_url
 
           render component: 'routes/Callback', props: { client: @jira_client }, status: 200
         else
@@ -66,6 +50,16 @@ module Api
         redirect_to skills_path
 
         nil
+      end
+
+      def base_url
+        response = @jira_client.get('https://your-site.atlassian.net/_edge/tenant_info').response
+
+        body = JSON.parse(response.body)
+
+        cloud_id = body["cloudId"]
+
+        "https://#{cloud_id}.atlassian.net"
       end
     end
   end
