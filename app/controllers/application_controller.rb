@@ -41,7 +41,8 @@ class ApplicationController < ActionController::Base
       token_url: '/oauth/token',
       redirect_uri: 'http://localhost:3000/callback',
       client_id: client_id,
-      client_secret: client_secret
+      client_secret: client_secret,
+      scope: 'read:jira-work read:jira-user read:me'
     }
 
     @redirect = options[:redirect_uri]
@@ -49,8 +50,8 @@ class ApplicationController < ActionController::Base
     OAuth2::Client.new(client_id, client_secret, options)
   end
 
-  def auth_string(client_id, state, token)
-    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=read%3Ame&redirect_uri=#{@redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
+  def auth_string(client_id, state, token, scopes)
+    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{@redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
 
   def handle_csrf

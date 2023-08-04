@@ -24,8 +24,9 @@ module Api
       def authorize
         if verified_request?
           state = request.headers['HTTP_X_CSRF_TOKEN']
+          scopes = 'read:jira-work read:jira-user read:issue:jira read:issue-meta:jira read:priority:jira read:issue-type:jira read:issue-status:jira read:project:jira read:issue.time-tracking:jira read:me'
 
-          auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token)
+          auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token, scopes)
 
           render json: { auth: auth_url }, status: 200
         else
@@ -35,7 +36,7 @@ module Api
 
       def callback
         if @jira_client
-          base_url = base_url
+          base_url = get_base_url
 
           render component: 'routes/Callback', props: { client: @jira_client }, status: 200
         else
@@ -52,14 +53,14 @@ module Api
         nil
       end
 
-      def base_url
+      def get_base_url
         response = @jira_client.get('https://your-site.atlassian.net/_edge/tenant_info').response
 
         body = JSON.parse(response.body)
 
         cloud_id = body["cloudId"]
 
-        "https://#{cloud_id}.atlassian.net"
+        "https://api.atlassian.com/ex/jira/#{cloud_id}"
       end
     end
   end
