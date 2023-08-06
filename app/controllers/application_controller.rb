@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
       redirect_uri: 'http://localhost:3000/callback',
       client_id: client_id,
       client_secret: client_secret,
-      scope: 'read:jira-work read:jira-user read:me'
+      scope: @scopes
     }
 
     @redirect = options[:redirect_uri]
