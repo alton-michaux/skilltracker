@@ -9,12 +9,12 @@ module Api
       skip_before_action :verify_authenticity_token, only: %i[callback authorize]
       before_action :form_auth_token, only: [:callback]
       before_action :handle_csrf, only: :authorize
-      before_action :fetch_jira_client, only: :callback
+      before_action :fetch_oauth2_token, only: :callback
       before_action :fetch_session, only: :destroy
 
       def new
         callback_url = 'http://localhost:3000/callback'
-        request_token = @jira_client.request_token(oauth_callback: callback_url)
+        request_token = @oauth_token.request_token(oauth_callback: callback_url)
         session[:request_token] = request_token.token
         session[:request_secret] = request_token.secret
 
@@ -35,32 +35,20 @@ module Api
       end
 
       def callback
-        if @jira_client
-          base_url = get_base_url
-
-          render component: 'routes/Callback', props: { client: @jira_client }, status: 200
+        if @oauth_token
+          render component: 'routes/Callback', props: { client: @oauth_token }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end
       end
 
       def destroy
-        jira_service = JiraService.new(@jira_client)
+        jira_service = JiraService.new(@oauth_token)
         jira_service.delete_session(@session)
 
         redirect_to skills_path
 
         nil
-      end
-
-      def get_base_url
-        response = @jira_client.get('https://your-site.atlassian.net/_edge/tenant_info').response
-
-        body = JSON.parse(response.body)
-
-        cloud_id = body["cloudId"]
-
-        "https://api.atlassian.com/ex/jira/#{cloud_id}"
       end
     end
   end

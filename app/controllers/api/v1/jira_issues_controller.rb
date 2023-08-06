@@ -7,10 +7,16 @@ module Api
 
       before_action :form_auth_token
       before_action :set_issue, only: :show
+      before_action :fetch_jira_client
 
       def index
+        response = @jira_client.get("#{base_url}/rest/api/2/search")
+
+        body = JSON.parse(response.body)
+
+        issues = body["issues"]
         # @issues = @jira_client.Issue.all
-        render json: { success: 'Welcome to your issues' }, status: 200
+        render json: { issues: issues }, status: 200
       end
 
       def show

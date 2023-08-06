@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
     @csrf_token
   end
 
-  def fetch_jira_client
+  def fetch_oauth2_token
     # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
 
@@ -71,9 +71,16 @@ class ApplicationController < ActionController::Base
     # Step 3: Exchange the authorization code for an access token
     access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
 
-    # Step 4: Configure JIRA client with OAuth2 access token
+    # Fetch the cloudId using the access token
+    response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
+    cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
+
+    # Store the cloudId in the session
+    session[:cloud_id] = cloud_id if cloud_id
+
+    # Step 4: Configure OAuth2.0 client with OAuth2 access token
     options = {
-      site: 'https://your-jira-instance-url', # Replace with the base URL of your Jira instance
+      site: 'http://localhost:3000',
       context_path: '/jira',
       rest_base_path: '/rest/api/2',
       ssl_verify_mode: 1,
@@ -83,13 +90,41 @@ class ApplicationController < ActionController::Base
       default_headers: {}
     }
 
-    @jira_client = OAuth2::AccessToken.new(client, access_token.token)
+    @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
 
     return unless session[:jira_auth]
 
     # Optionally, you may want to store the access token in the session for future use.
     # In a real-world application, you might want to persist this securely.
     session[:access_token] = access_token.token
+
+  rescue OAuth2::Error => e
+    render json: { error: e.message }, status: 500
+  end
+
+  def fetch_jira_client
+    access_token = @oauth_token.token
+
+    @jira_client = JIRA::Client.new(
+      username: nil,
+      password: nil,
+      auth_type: :oauth_2legged,
+      site: "https://#{@cloud_id}.atlassian.net",
+      context_path: '/rest/api/2',
+      default_headers: { 'Authorization' => "Bearer #{access_token}" },
+      consumer_key: ENV['CLIENT_ID'],
+      consumer_secret: ENV['CLIENT_SECRET'],
+      private_key_file: Rails.root.join('private_key.pem').to_s
+    )
+
+    @jira_client.set_access_token(
+      access_token,
+      ENV['CLIENT_ID']
+    )
+  end
+  
+  def base_url
+    "https://api.atlassian.com/ex/jira/#{session[:cloud_id]}"
   end
 
   def session_params
