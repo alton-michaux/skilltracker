@@ -8,7 +8,7 @@ export const sendToStorage = (data, type) => {
     localStorage.setItem('token', JSON.stringify(data?.token))
   }
   if (type === 'client') {
-    localStorage.setItem('jiraClient', JSON.stringify(data?.consumer))
+    localStorage.setItem('jiraClient', JSON.stringify(data))
   }
 }
 

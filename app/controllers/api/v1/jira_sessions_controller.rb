@@ -9,12 +9,12 @@ module Api
       skip_before_action :verify_authenticity_token, only: %i[callback authorize]
       before_action :form_auth_token, only: [:callback]
       before_action :handle_csrf, only: :authorize
-      before_action :fetch_jira_client, only: :callback
+      before_action :fetch_oauth2_token, only: :callback
       before_action :fetch_session, only: :destroy
 
       def new
         callback_url = 'http://localhost:3000/callback'
-        request_token = @jira_client.request_token(oauth_callback: callback_url)
+        request_token = @oauth_token.request_token(oauth_callback: callback_url)
         session[:request_token] = request_token.token
         session[:request_secret] = request_token.secret
 
@@ -24,8 +24,9 @@ module Api
       def authorize
         if verified_request?
           state = request.headers['HTTP_X_CSRF_TOKEN']
+          @scopes = 'read:jira-work read:jira-user read:issue:jira read:issue-meta:jira read:priority:jira read:issue-type:jira read:issue-status:jira read:project:jira read:issue.time-tracking:jira read:me'
 
-          auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token)
+          auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token, @scopes)
 
           render json: { auth: auth_url }, status: 200
         else
@@ -34,33 +35,15 @@ module Api
       end
 
       def callback
-        if @jira_client
-          jira_service = JiraService.new(@jira_client)
-
-          jira_service.request_token_set(session)
-
-          # jira_service.access_token_set(session, params)
-
-          jira_auth = jira_service.create_session(session[:request_token], session[:request_secret])
-
-          session[:jira_auth] = jira_auth
-
-          @jira_client.set_access_token(
-            session[:jira_auth]['access_token'],
-            session[:jira_auth]['access_key']
-          )
-
-          session.delete(:request_token)
-          session.delete(:request_secret)
-
-          render component: 'routes/Callback', props: { client: @jira_client }, status: 200
+        if @oauth_token
+          render component: 'routes/Callback', props: { client: @oauth_token }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end
       end
 
       def destroy
-        jira_service = JiraService.new(@jira_client)
+        jira_service = JiraService.new(@oauth_token)
         jira_service.delete_session(@session)
 
         redirect_to skills_path

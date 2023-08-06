@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render component: 'pages/NotFound', status: 404
+    render component: 'routes/NotFound', status: 404
   end
 
   def authorize_request
@@ -41,14 +41,17 @@ class ApplicationController < ActionController::Base
       token_url: '/oauth/token',
       redirect_uri: 'http://localhost:3000/callback',
       client_id: client_id,
-      client_secret: client_secret
+      client_secret: client_secret,
+      scope: @scopes
     }
+
+    @redirect = options[:redirect_uri]
 
     OAuth2::Client.new(client_id, client_secret, options)
   end
 
-  def auth_string(client_id, state, token)
-    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=read%3Ame&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
+  def auth_string(client_id, state, token, scopes)
+    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{@redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
 
   def handle_csrf
@@ -59,33 +62,58 @@ class ApplicationController < ActionController::Base
     @csrf_token
   end
 
-  def fetch_jira_client
+  def fetch_oauth2_token
     # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
 
     client = oauth2_client
 
     # Step 3: Exchange the authorization code for an access token
-    access_token = client.auth_code.get_token(params[:code], redirect_uri: 'http://localhost:3000/callback')
+    access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
 
-    # Step 4: Configure JIRA client with OAuth2 access token
-    options = {
-      auth_type: :oauth,
-      consumer_key: ENV['CLIENT_ID'],
-      consumer_secret: ENV['CLIENT_SECRET'],
-      private_key_file: Rails.root.join('private_key.pem').to_s,
-      site: 'http://localhost:3000'
-    }
+    # Fetch the cloudId using the access token
+    response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
+    cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
 
-    @jira_client = JIRA::Client.new(options)
+    # Store the cloudId in the session
+    session[:cloud_id] = cloud_id if cloud_id
+
+    # Step 4: Configure OAuth2.0 client with OAuth2 access token
+
+    @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
 
     return unless session[:jira_auth]
 
-    # Add AccessToken if authorised previously.
+    # Optionally, you may want to store the access token in the session for future use.
+    # In a real-world application, you might want to persist this securely.
+    session[:access_token] = access_token.token
+  rescue OAuth2::Error => e
+    render json: { error: e.message }, status: 500
+  end
+
+  def fetch_jira_client
+    access_token = @oauth_token.token
+
+    @jira_client = JIRA::Client.new(
+      username: nil,
+      password: nil,
+      auth_type: :oauth_2legged,
+      site: "https://#{@cloud_id}.atlassian.net",
+      context_path: '/rest/api/2',
+      default_headers: { 'Authorization' => "Bearer #{access_token}" },
+      consumer_key: ENV['CLIENT_ID'],
+      consumer_secret: ENV['CLIENT_SECRET'],
+      private_key_file: Rails.root.join('private_key.pem').to_s
+    )
+
     @jira_client.set_access_token(
-      access_token.token,
+      access_token,
       ENV['CLIENT_ID']
     )
+  end
+
+  def base_url
+    "https://api.atlassian.com/ex/jira/#{session[:cloud_id]}"
   end
 
   def session_params
