@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class JiraService
   def initialize(jira_client)
     @jira_client = jira_client

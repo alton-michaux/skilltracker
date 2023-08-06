@@ -14,7 +14,7 @@ module Api
 
         body = JSON.parse(response.body)
 
-        issues = body["issues"]
+        issues = body['issues']
         # @issues = @jira_client.Issue.all
         render json: { issues: issues }, status: 200
       end

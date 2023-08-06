@@ -79,16 +79,6 @@ class ApplicationController < ActionController::Base
     session[:cloud_id] = cloud_id if cloud_id
 
     # Step 4: Configure OAuth2.0 client with OAuth2 access token
-    options = {
-      site: 'http://localhost:3000',
-      context_path: '/jira',
-      rest_base_path: '/rest/api/2',
-      ssl_verify_mode: 1,
-      use_ssl: true,
-      use_client_cert: false,
-      http_debug: false,
-      default_headers: {}
-    }
 
     @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
 
@@ -97,7 +87,6 @@ class ApplicationController < ActionController::Base
     # Optionally, you may want to store the access token in the session for future use.
     # In a real-world application, you might want to persist this securely.
     session[:access_token] = access_token.token
-
   rescue OAuth2::Error => e
     render json: { error: e.message }, status: 500
   end
@@ -122,7 +111,7 @@ class ApplicationController < ActionController::Base
       ENV['CLIENT_ID']
     )
   end
-  
+
   def base_url
     "https://api.atlassian.com/ex/jira/#{session[:cloud_id]}"
   end
