@@ -12,7 +12,7 @@ module Api
         @matched_skills = @current_user.matched_skills
 
         if @matched_skills.empty?
-          render json: { error: 'No matched skills' }, status: 404
+          render json: { message: 'No matched skills' }, status: 204
         else
           render json: @matched_skills, each_serializer: MatchedSkillSerializer, status: 200
         end

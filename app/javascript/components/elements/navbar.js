@@ -10,6 +10,7 @@ import { retrieveFromStorage } from '../utils/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
+  const id = user.id
 
   const { userLogout } = userAPI()
 
@@ -38,8 +39,15 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
             {
               Object.keys(user).length > 0
                 ? <>
-                  {authorized ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
-                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
+                  {
+                    authorized ? <>
+                      <Nav.Link href={`/api/v1/users/${id}/tickets`}>Jira Issues</Nav.Link>
+                      <Nav.Link href={`/api/v1/users/${id}/matched_skills`}>Matched Skills</Nav.Link>
+                    </> :
+                      <Nav.Link href={authString}>Connect to Jira</Nav.Link>
+                  }
+                  <Nav.Link href={`/api/v1/users/${id}/skills`}>Skills</Nav.Link>
+                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>
                 : <></>
