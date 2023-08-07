@@ -27,7 +27,7 @@ module Api
         end
 
         def destroy
-          sign_out(@user) # This will clear the user session
+          sign_out(@user)
           render json: { message: 'Logout successful' }, status: :ok
         end
 

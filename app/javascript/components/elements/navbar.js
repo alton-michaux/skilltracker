@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
 import userAPI from '../utils/api/user'
+import jiraAPI from '../utils/api/jira'
+import SkillAPI from '../utils/api/skills'
 import { retrieveFromStorage } from '../utils/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
@@ -14,14 +16,38 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
 
   const { userLogout } = userAPI()
 
+  const { getJiraIssues } = jiraAPI()
+
+  const { getSkills } = SkillAPI()
+
+  const fetchSkills = async () => {
+    try {
+      const response = await getSkills()
+      if (response) {
+        navigate("api/v1/skills")
+      }
+    } catch(error) {
+      toast(error.message)
+    }
+  }
+
+  const fetchIssues = async () => {
+    try {
+      const response = await getJiraIssues()
+      if (response) {
+        navigate(`/api/v1/users/${id}/tickets`)
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
   const removeUser = async () => {
     try {
-      const response = await userLogout()
-      if (response) {
-        onLogout()
-        toast('Logged out successfully')
-        navigate('/')
-      }
+      await userLogout()
+      onLogout()
+      toast('Logged out successfully')
+      navigate('/')
     } catch (error) {
       toast(error.message)
     }
@@ -41,12 +67,12 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
                 ? <>
                   {
                     authorized ? <>
-                      <Nav.Link href={`/api/v1/users/${id}/tickets`}>Jira Issues</Nav.Link>
+                      <Nav.Link onClick={fetchIssues}>Jira Issues</Nav.Link>
                       <Nav.Link href={`/api/v1/users/${id}/matched_skills`}>Matched Skills</Nav.Link>
                     </> :
                       <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                   }
-                  <Nav.Link href={`/api/v1/users/${id}/skills`}>Skills</Nav.Link>
+                  <Nav.Link onClick={fetchSkills}>Skills</Nav.Link>
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>

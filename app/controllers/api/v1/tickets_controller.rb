@@ -12,11 +12,7 @@ module Api
       def index
         @tickets = @current_user.tickets
 
-        if !@tickets.empty?
-          render json: @tickets, each_serializer: TicketSerializer, status: 200
-        else
-          render json: { error: 'Not found' }, status: 404
-        end
+        render json: @tickets, each_serializer: TicketSerializer, status: 200
       end
 
       def show

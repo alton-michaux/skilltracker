@@ -1,15 +1,20 @@
 import React from 'react'
-// import { useAppContext } from '../AppContext'
-// import TicketAPI from '../utils/api/tickets'
+import PropTypes from 'prop-types'
 
-const Tickets = () => {
-  // const { state, dispatch } = useAppContext()
-
-  // const { getUserTicket, getUserTickets } = TicketAPI()
-
+const Tickets = ({issues}) => {
   return (
-    <div className="text-center">Tickets</div>
+    <>
+      <div className="text-center">Tickets</div>
+    </>
   )
+}
+
+Tickets.defaultProps = {
+  issues: {}
+}
+
+Tickets.propTypes = {
+  issues: PropTypes.object
 }
 
 export default Tickets
