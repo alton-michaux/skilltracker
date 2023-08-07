@@ -63,36 +63,29 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_oauth2_token
-    # Step 2: Handle the callback from the authorization server
     return unless session_params[:code]
 
     client = oauth2_client
 
-    # Step 3: Exchange the authorization code for an access token
+    # Exchange the authorization code for an access token
     access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
 
     # Fetch the cloudId using the access token
     response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
     cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
 
-    # Store the cloudId in the session
     session[:cloud_id] = cloud_id if cloud_id
 
-    # Step 4: Configure OAuth2.0 client with OAuth2 access token
-
+    # Configure OAuth2.0 client with OAuth2 access token
     @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
 
-    return unless session[:jira_auth]
-
-    # Optionally, you may want to store the access token in the session for future use.
-    # In a real-world application, you might want to persist this securely.
     session[:access_token] = access_token.token
   rescue OAuth2::Error => e
     render json: { error: e.message }, status: 500
   end
 
   def fetch_jira_client
-    access_token = @oauth_token.token
+    access_token = session[:access_token] || @oauth_token.token
 
     @jira_client = JIRA::Client.new(
       username: nil,

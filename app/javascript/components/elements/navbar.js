@@ -6,12 +6,27 @@ import { useNavigate } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
 import userAPI from '../utils/api/user'
+import jiraAPI from '../utils/api/jira'
 import { retrieveFromStorage } from '../utils/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
 
   const { userLogout } = userAPI()
+
+  const { getJiraIssues } = jiraAPI()
+
+  const fetchIssues = async () => {
+    try {
+      const response = await getJiraIssues()
+      console.log("🚀 ~ file: navbar.js:22 ~ fetchIssues ~ response:", response)
+      if (response) {
+        navigate('/api/v1/jira_issues')
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
 
   const removeUser = async () => {
     try {
@@ -40,6 +55,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
                 ? <>
                   {jiraClient ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
+                  <Nav.Link onClick={fetchIssues}>Issues</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>
                 : <></>
