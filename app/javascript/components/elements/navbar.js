@@ -18,15 +18,24 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
 
   const { getJiraIssues } = jiraAPI()
 
-  const { getSkills } = SkillAPI()
+  const { getSkills, matchedSkills } = SkillAPI()
+
+  const fetchMatchedSkills = async () => {
+    try {
+      await matchedSkills(id)
+      navigate(`api/v1/users/${id}/matched_skills`)
+    } catch (error) {
+      toast(error.message)
+    }
+  }
 
   const fetchSkills = async () => {
     try {
       const response = await getSkills()
       if (response) {
-        navigate("api/v1/skills")
+        navigate('api/v1/skills')
       }
-    } catch(error) {
+    } catch (error) {
       toast(error.message)
     }
   }
@@ -66,11 +75,12 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
               Object.keys(user).length > 0
                 ? <>
                   {
-                    authorized ? <>
-                      <Nav.Link onClick={fetchIssues}>Jira Issues</Nav.Link>
-                      <Nav.Link href={`/api/v1/users/${id}/matched_skills`}>Matched Skills</Nav.Link>
-                    </> :
-                      <Nav.Link href={authString}>Connect to Jira</Nav.Link>
+                    authorized
+                      ? <>
+                        <Nav.Link onClick={fetchIssues}>Jira Issues</Nav.Link>
+                        <Nav.Link onClick={fetchMatchedSkills}>Matched Skills</Nav.Link>
+                      </>
+                      : <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                   }
                   <Nav.Link onClick={fetchSkills}>Skills</Nav.Link>
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>

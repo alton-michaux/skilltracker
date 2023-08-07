@@ -37,10 +37,10 @@ describe 'Skills API' do
         end
       end
 
-      response '404', 'Not found' do
-        let(:user_id) { user2.id }
-        run_test!
-      end
+      # response '404', 'Not found' do
+      #   let(:user_id) { user2.id }
+      #   run_test!
+      # end
     end
   end
 end

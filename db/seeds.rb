@@ -5,7 +5,7 @@ require 'faker'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
-user1 = User.create(email: 'admin@gmail.com', password: 'password', first_name: 'Alton', last_name: 'Michaux')
+User.create(email: 'admin@gmail.com', password: 'password', first_name: 'Alton', last_name: 'Michaux')
 
 puts "#{User.count} users created"
 
@@ -15,7 +15,7 @@ puts "#{User.count} users created"
 
 puts "#{Skill.count} skills created"
 
-status = [0, 1, 2, 3, 4]
+# status = [0, 1, 2, 3, 4]
 
 # 5.times do |_index|
 #   Ticket.create(title: Faker::ProgrammingLanguage.unique.name, description: Faker::Lorem.sentence(word_count: 3, supplemental: false, random_words_to_add: 4), status: status.sample, assignee: user1.first_name + user1.last_name,

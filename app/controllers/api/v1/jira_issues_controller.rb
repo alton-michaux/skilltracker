@@ -16,7 +16,7 @@ module Api
 
         issues = body['issues']
 
-        issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue ) }
+        issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
         # @issues = @jira_client.Issue.all
         render json: { issues: issues }, status: 200
       end

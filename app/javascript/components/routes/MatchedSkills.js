@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const MatchedSkills = () => {
   return (
-    <div className="text-center">Mathed Skills</div>
+    <div className="text-center">Matched Skills</div>
   )
 }
 

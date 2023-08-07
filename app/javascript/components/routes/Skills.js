@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Skills = ({skills}) => {
-
+const Skills = ({ skills }) => {
   return (
     <div className="text-center">Skills</div>
   )
