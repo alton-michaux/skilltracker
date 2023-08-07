@@ -32,9 +32,9 @@ const App = () => {
   const { authorizeJiraSession } = jiraAPI()
 
   useEffect(() => {
-    const client = localStorage.getItem('jiraClient')
-    if (client) {
-      dispatch({ type: 'jiraClient', payload: JSON.parse(client) })
+    const authorized = retrieveFromStorage('authorized?')
+    if (authorized) {
+      dispatch({ type: 'isAuthorized', payload: authorized })
     }
   }, [localStorage])
 

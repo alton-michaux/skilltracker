@@ -26,7 +26,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
     }
   }
 
-  const jiraClient = retrieveFromStorage('jiraClient')
+  const authorized = retrieveFromStorage('authorized?')
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -38,7 +38,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
             {
               Object.keys(user).length > 0
                 ? <>
-                  {jiraClient ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
+                  {authorized ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>

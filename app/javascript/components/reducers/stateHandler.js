@@ -35,10 +35,10 @@ const StateHandler = (state, action) => {
         ...state,
         isAuthenticated: action.payload
       }
-    case 'jiraClient':
+    case 'isAuthorized':
       return {
         ...state,
-        jiraClient: action.payload
+        isAuthorized: action.payload
       }
     case 'skills':
       return {

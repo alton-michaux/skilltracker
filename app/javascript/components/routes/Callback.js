@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { sendToStorage } from '../utils/local/storage'
 import { toast } from 'react-hot-toast'
 
-const Callback = ({ client }) => {
+const Callback = ({ success }) => {
   useEffect(() => {
-    if (Object.keys(client).length > 0) {
+    if (success) {
       toast('Jira Authorization Successful')
-      sendToStorage(client, 'client')
+      sendToStorage(success, 'auth')
     }
-  }, [client])
+  }, [success])
 
   return (
     <div className="text-center">Jira Auth Succesful</div>
@@ -17,11 +17,11 @@ const Callback = ({ client }) => {
 }
 
 Callback.defaultProps = {
-  client: {}
+  success: false
 }
 
 Callback.propTypes = {
-  client: PropTypes.object
+  success: PropTypes.bool
 }
 
 export default Callback

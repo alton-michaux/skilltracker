@@ -36,7 +36,7 @@ module Api
 
       def callback
         if @oauth_token
-          render component: 'routes/Callback', props: { client: @oauth_token }, status: 200
+          render component: 'routes/Callback', props: { success: true }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end
