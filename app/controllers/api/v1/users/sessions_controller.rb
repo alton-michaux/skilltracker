@@ -16,7 +16,7 @@ module Api
           if @user&.valid_password?(login_params[:password])
             sign_in(@user)
             token = JsonWebToken.encode(user_id: @user.id)
-            time = Time.now + 24.hours.to_i
+            time = Time.now + 1.hours.to_i
             render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
                            user_data: UserSerializer.new(@user) }, status: :ok
           elsif !@user
