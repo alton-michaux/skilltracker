@@ -2,6 +2,8 @@
 
 require 'oauth2'
 require 'jira-ruby'
+require "uri"
+require "net/http"
 
 class ApplicationController < ActionController::Base
   include FormAuth
@@ -103,6 +105,18 @@ class ApplicationController < ActionController::Base
       access_token,
       ENV['CLIENT_ID']
     )
+  end
+
+  def api_layer(url)
+    url = URI(url)
+
+    https = Net::HTTP.new(url.host, url.port);
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request['apikey'] = ENV['SKILLS_API_KEY']
+
+    response = https.request(request)
   end
 
   def base_url

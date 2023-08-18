@@ -9,25 +9,32 @@ module Api
       before_action :set_skill, only: [:delete]
 
       def index
-        render json: Skill.all, each_serializer: SkillSerializer, status: 200
+        skill_query = "ruby"
+        count = 100
+  
+        response = api_layer("https://api.apilayer.com/skills?q=#{skill_query}&count=#{count}")
+
+        skills = JSON.parse(response.body)
+
+        render json: skills, status: 200
       end
 
-      def create
-        @skill = Skill.new(skill_params)
-        if @skill.save
-          render json: { skill: SkillSerializer.new(@skill) }, status: 201
-        else
-          render json: @skill.errors.full_messages, status: 422
-        end
-      end
+      # def create
+      #   @skill = Skill.new(skill_params)
+      #   if @skill.save
+      #     render json: { skill: SkillSerializer.new(@skill) }, status: 201
+      #   else
+      #     render json: @skill.errors.full_messages, status: 422
+      #   end
+      # end
 
-      def delete
-        if @skill.destroy
-          render json: { success: 'Skill destroyed' }, status: 200
-        else
-          render json: { error: 'Skill not found' }, status: 404
-        end
-      end
+      # def delete
+      #   if @skill.destroy
+      #     render json: { success: 'Skill destroyed' }, status: 200
+      #   else
+      #     render json: { error: 'Skill not found' }, status: 404
+      #   end
+      # end
 
       private
 
