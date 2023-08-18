@@ -16,25 +16,27 @@ module Api
 
         skills = JSON.parse(response.body)
 
-        render json: skills, status: 200
+        skills.each { |s| Skill.create(name: s) }
+
+        render json: Skill.all, each_serializer: SkillSerializer, status: 200
       end
 
-      # def create
-      #   @skill = Skill.new(skill_params)
-      #   if @skill.save
-      #     render json: { skill: SkillSerializer.new(@skill) }, status: 201
-      #   else
-      #     render json: @skill.errors.full_messages, status: 422
-      #   end
-      # end
+      def create
+        @skill = Skill.new(skill_params)
+        if @skill.save
+          render json: { skill: SkillSerializer.new(@skill) }, status: 201
+        else
+          render json: @skill.errors.full_messages, status: 422
+        end
+      end
 
-      # def delete
-      #   if @skill.destroy
-      #     render json: { success: 'Skill destroyed' }, status: 200
-      #   else
-      #     render json: { error: 'Skill not found' }, status: 404
-      #   end
-      # end
+      def delete
+        if @skill.destroy
+          render json: { success: 'Skill destroyed' }, status: 200
+        else
+          render json: { error: 'Skill not found' }, status: 404
+        end
+      end
 
       private
 
@@ -46,6 +48,9 @@ module Api
 
       def skill_params
         params.require(:skill).permit(:id, :name, :description)
+      end
+
+      def skill_client
       end
     end
   end
