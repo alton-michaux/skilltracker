@@ -16,16 +16,14 @@ describe 'Skills API' do
         schema type: :array,
                properties: {
                  id: { type: :integer },
-                 name: { type: :string },
-                 description: { type: :string }
+                 name: { type: :string }
                },
-               required: %w[id name description]
+               required: %w[id name]
 
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data[0]['id']).to eq skill.id
           expect(data[1]['name']).to eq skill2.name
-          expect(data[0]['description']).to eq skill.description
         end
       end
     end
@@ -36,12 +34,11 @@ describe 'Skills API' do
       parameter name: :skill, in: :body, schema: {
         type: :object,
         properties: {
-          name: { type: :string },
-          description: { type: :string }
+          name: { type: :string }
         },
-        required: %w[name description]
+        required: %w[name]
       }
-      let!(:skill) { build(:skill, name: 'Python', description: 'AI language') }
+      let!(:skill) { build(:skill, name: 'Python') }
 
       response '201', 'skill created' do
         run_test! do |response|

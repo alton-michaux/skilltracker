@@ -47,7 +47,7 @@ module Api
       end
 
       def skill_params
-        params.require(:skill).permit(:id, :name, :description)
+        params.require(:skill).permit(:id, :name)
       end
 
       def skill_client

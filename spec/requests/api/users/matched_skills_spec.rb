@@ -6,7 +6,7 @@ require 'swagger_helper'
 describe 'Skills API' do
   let!(:user) { create(:user) }
   let!(:user2) { create(:user, email: 'UserTester@email.com') }
-  let!(:skill) { create(:skill, name: 'skill', description: 'Skill description') }
+  let!(:skill) { create(:skill, name: 'skill') }
   let!(:matched_skill) { create(:matched_skill, user_id: user.id, skill_id: skill.id) }
 
   path '/api/v1/users/{user_id}/matched_skills' do

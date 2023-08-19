@@ -6,7 +6,7 @@ require 'swagger_helper'
 describe 'Skills API' do
   let!(:user) { create(:user) }
   let!(:user2) { create(:user, email: 'UserTester@email.com') }
-  let!(:skill) { create(:skill, name: 'skill', description: 'Skill description') }
+  let!(:skill) { create(:skill, name: 'skill') }
   let!(:user_skill) { create(:user_skill, user: user, skill: skill) }
 
   path '/api/v1/users/{user_id}/user_skills' do
@@ -33,7 +33,6 @@ describe 'Skills API' do
           expect(data[0]['id']).to eq user_skill.id
           expect(data[0]['user']['email']).to eq user.email
           expect(data[0]['skill']['name']).to eq skill.name
-          expect(data[0]['skill']['description']).to eq skill.description
         end
       end
 

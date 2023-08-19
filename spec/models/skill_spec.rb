@@ -13,9 +13,4 @@ RSpec.describe Skill, type: :model do
     subject.name = nil
     expect(subject).not_to be_valid
   end
-
-  it 'is not valid without a description' do
-    subject.description = nil
-    expect(subject).not_to be_valid
-  end
 end
