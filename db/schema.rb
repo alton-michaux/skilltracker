@@ -10,21 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_19_003429) do
+ActiveRecord::Schema.define(version: 2023_08_19_004454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "matched_skills", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "skill_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "proficiency"
-    t.integer "endorsements"
-    t.index ["skill_id"], name: "index_matched_skills_on_skill_id"
-    t.index ["user_id"], name: "index_matched_skills_on_user_id"
-  end
 
   create_table "skills", force: :cascade do |t|
     t.string "name"
@@ -68,8 +57,5 @@ ActiveRecord::Schema.define(version: 2023_08_19_003429) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "matched_skills", "skills"
-  add_foreign_key "matched_skills", "users"
   add_foreign_key "tickets", "users"
-  add_foreign_key "user_skills", "matched_skills"
 end

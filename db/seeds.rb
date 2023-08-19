@@ -9,9 +9,9 @@ user1 = User.create(email: 'admin@gmail.com', password: 'password', first_name: 
 
 puts "#{User.count} users created"
 
-10.times do
-  Skill.create(name: Faker::Job.unique.key_skill))
-end
+# 10.times do
+#   Skill.create(name: Faker::Job.unique.key_skill))
+# end
 
 puts "#{Skill.count} skills created"
 
@@ -24,9 +24,9 @@ end
 
 puts "#{Ticket.count} tickets created"
 
-5.times do |index|
-  UserSkill.create(user: user1, skill: Skill.find(index + 1))
-end
+# 5.times do |index|
+#   UserSkill.create(user: user1, skill: Skill.find(index + 1))
+# end
 
 puts "#{UserSkill.count} user skills created"
 

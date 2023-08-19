@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :full_name
 
   has_many :tickets
-  has_many :skills, through: :matched_skills
+  has_many :skills, through: :user_skills
 
   def full_name
     "#{object.first_name} #{object.last_name}"
