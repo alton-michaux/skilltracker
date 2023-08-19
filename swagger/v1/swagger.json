@@ -41,15 +41,11 @@
                 },
                 "name": {
                   "type": "string"
-                },
-                "description": {
-                  "type": "string"
                 }
               },
               "required": [
                 "id",
-                "name",
-                "description"
+                "name"
               ]
             }
           }
@@ -72,14 +68,10 @@
               "properties": {
                 "name": {
                   "type": "string"
-                },
-                "description": {
-                  "type": "string"
                 }
               },
               "required": [
-                "name",
-                "description"
+                "name"
               ]
             }
           }
@@ -114,51 +106,6 @@
           },
           "404": {
             "description": "skill not found"
-          }
-        }
-      }
-    },
-    "/api/v1/users/{user_id}/matched_skills": {
-      "get": {
-        "summary": "Query matched skill data",
-        "tags": [
-          "Skills",
-          "Users"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Return correct information based on query",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "proficiency": {
-                    "type": "integer"
-                  },
-                  "endorsements": {
-                    "type": "integer"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found"
           }
         }
       }
