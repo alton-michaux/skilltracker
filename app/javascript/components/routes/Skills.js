@@ -1,15 +1,18 @@
 import React from 'react'
-// import { useAppContext } from '../AppContext'
-// import SkillAPI from '../utils/api/skills'
+import PropTypes from 'prop-types'
 
-const Skills = () => {
-  // const { state, dispatch } = useAppContext()
-
-  // const { getSkills } = SkillAPI()
-
+const Skills = ({ skills }) => {
   return (
     <div className="text-center">Skills</div>
   )
+}
+
+Skills.defaultProps = {
+  skills: {}
+}
+
+Skills.propTypes = {
+  skills: PropTypes.object
 }
 
 export default Skills
