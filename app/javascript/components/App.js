@@ -98,7 +98,7 @@ const App = () => {
               <Route path="/api/v1/users/:id/tickets" element={<Tickets />} />
               <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow />} />
               <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
-              <Route path="/api/v1/users/:id/matched_skills" element={<MatchedSkills user={state.user} />} />
+              <Route path="/api/v1/users/:id/user_skills" element={<MatchedSkills user={state.user} />} />
               <Route element={<URLFunctions />}
               />
             </Routes>

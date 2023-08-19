@@ -23,7 +23,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const fetchMatchedSkills = async () => {
     try {
       await matchedSkills(id)
-      navigate(`api/v1/users/${id}/matched_skills`)
+      navigate(`api/v1/users/${id}/user_skills`)
     } catch (error) {
       toast(error.message)
     }
