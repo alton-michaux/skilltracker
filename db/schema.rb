@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_19_004454) do
+ActiveRecord::Schema.define(version: 2023_08_19_024741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2023_08_19_004454) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "matched_skill_id"
+    t.integer "proficiency"
+    t.integer "endorsements"
     t.index ["matched_skill_id"], name: "index_user_skills_on_matched_skill_id"
     t.index ["skill_id"], name: "index_user_skills_on_skill_id"
     t.index ["user_id"], name: "index_user_skills_on_user_id"

@@ -22,7 +22,9 @@ describe 'Skills API' do
                  properties: {
                    id: { type: :integer },
                    user: { type: :object },
-                   skill: { type: :object }
+                   skill: { type: :object },
+                   proficiency: { type: :integer },
+                   endorsements: { type: :integer }
                  }
                }
 

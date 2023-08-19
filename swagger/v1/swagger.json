@@ -255,6 +255,12 @@
                   },
                   "skill": {
                     "type": "object"
+                  },
+                  "proficiency": {
+                    "type": "integer"
+                  },
+                  "endorsements": {
+                    "type": "integer"
                   }
                 }
               }
