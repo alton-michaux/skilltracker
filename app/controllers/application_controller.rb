@@ -33,27 +33,12 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def oauth2_client
-    client_id = ENV['CLIENT_ID']
-    client_secret = ENV['CLIENT_SECRET']
-
-    options = {
-      site: 'https://auth.atlassian.com',
-      authorize_url: '/authorize',
-      token_url: '/oauth/token',
-      redirect_uri: 'http://localhost:3000/callback',
-      client_id: client_id,
-      client_secret: client_secret,
-      scope: @scopes
-    }
-
-    @redirect = options[:redirect_uri]
-
-    OAuth2::Client.new(client_id, client_secret, options)
+  def parse_response(response)
+    JSON.parse(response.body)
   end
 
-  def auth_string(client_id, state, token, scopes)
-    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{@redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
+  def auth_string(client_id, state, token, scopes, redirect)
+    "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
 
   def handle_csrf

@@ -7,41 +7,62 @@ import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
 import userAPI from '../utils/api/user'
 import jiraAPI from '../utils/api/jira'
+import SkillAPI from '../utils/api/skills'
 import { retrieveFromStorage } from '../utils/local/storage'
 
 const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const navigate = useNavigate()
+  const id = user.id
 
   const { userLogout } = userAPI()
 
   const { getJiraIssues } = jiraAPI()
 
-  const fetchIssues = async () => {
+  const { getSkills, matchedSkills } = SkillAPI()
+
+  const fetchMatchedSkills = async () => {
     try {
-      const response = await getJiraIssues()
-      console.log("🚀 ~ file: navbar.js:22 ~ fetchIssues ~ response:", response)
-      if (response) {
-        navigate('/api/v1/jira_issues')
-      }
+      await matchedSkills(id)
+      navigate(`api/v1/users/${id}/matched_skills`)
     } catch (error) {
-      throw new Error(error)
+      toast(error.message)
     }
   }
 
-  const removeUser = async () => {
+  const fetchSkills = async () => {
     try {
-      const response = await userLogout()
+      const response = await getSkills()
       if (response) {
-        onLogout()
-        toast('Logged out successfully')
-        navigate('/')
+        navigate('api/v1/skills')
       }
     } catch (error) {
       toast(error.message)
     }
   }
 
-  const jiraClient = retrieveFromStorage('jiraClient')
+  const fetchIssues = async () => {
+    try {
+      const response = await getJiraIssues()
+      if (response) {
+        navigate(`/api/v1/users/${id}/tickets`)
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
+  const removeUser = async () => {
+    try {
+      await userLogout()
+      onLogout()
+      toast('Logged out successfully')
+      navigate('/')
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
+  const authorized = retrieveFromStorage('authorized?')
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -53,9 +74,16 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
             {
               Object.keys(user).length > 0
                 ? <>
-                  {jiraClient ? <></> : <Nav.Link href={authString}>Connect to Jira</Nav.Link>}
-                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${user.id}/${user.full_name}`) }}>Profile</Nav.Link>
-                  <Nav.Link onClick={fetchIssues}>Issues</Nav.Link>
+                  {
+                    authorized
+                      ? <>
+                        <Nav.Link onClick={fetchIssues}>Jira Issues</Nav.Link>
+                        <Nav.Link onClick={fetchMatchedSkills}>Matched Skills</Nav.Link>
+                      </>
+                      : <Nav.Link href={authString}>Connect to Jira</Nav.Link>
+                  }
+                  <Nav.Link onClick={fetchSkills}>Skills</Nav.Link>
+                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>
                 : <></>
