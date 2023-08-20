@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAppContext } from '../AppContext'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -8,10 +9,12 @@ import PropTypes from 'prop-types'
 import userAPI from '../utils/api/user'
 import jiraAPI from '../utils/api/jira'
 import SkillAPI from '../utils/api/skills'
-import { retrieveFromStorage } from '../utils/local/storage'
 
-const SkillTrackerNav = ({ user, authString, onLogout }) => {
+const SkillTrackerNav = ({ user, authString, onLogout, authorized }) => {
+  const { state } = useAppContext()
+
   const navigate = useNavigate()
+
   const id = user.id
 
   const { userLogout } = userAPI()
@@ -29,16 +32,17 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
     }
   }
 
-  const fetchSkills = async () => {
-    try {
-      const response = await getSkills()
-      if (response) {
-        navigate('api/v1/skills')
-      }
-    } catch (error) {
-      toast(error.message)
-    }
-  }
+  // const fetchSkills = async () => {
+  //   try {
+  //     const response = await getSkills()
+  //     if (response) {
+  //       console.log("🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:", state)
+  //       navigate('api/v1/skills')
+  //     }
+  //   } catch (error) {
+  //     toast(error.message)
+  //   }
+  // }
 
   const fetchIssues = async () => {
     try {
@@ -62,8 +66,6 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
     }
   }
 
-  const authorized = retrieveFromStorage('authorized?')
-
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -75,14 +77,14 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
               Object.keys(user).length > 0
                 ? <>
                   {
-                    authorized
+                    state.isAuthorized
                       ? <>
                         <Nav.Link onClick={fetchIssues}>Jira Issues</Nav.Link>
                         <Nav.Link onClick={fetchMatchedSkills}>Matched Skills</Nav.Link>
                       </>
                       : <Nav.Link href={authString}>Connect to Jira</Nav.Link>
                   }
-                  <Nav.Link onClick={fetchSkills}>Skills</Nav.Link>
+                  <Nav.Link onClick={() => { navigate('api/v1/skills') }}>Skills</Nav.Link>
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={removeUser}>Logout</Nav.Link>
                 </>
@@ -104,6 +106,7 @@ SkillTrackerNav.defaultProps = {
 SkillTrackerNav.propTypes = {
   user: PropTypes.object,
   authString: PropTypes.string,
+  authorized: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired
 }
 

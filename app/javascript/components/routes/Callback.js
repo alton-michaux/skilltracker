@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { sendToStorage } from '../utils/local/storage'
 import { toast } from 'react-hot-toast'
+import { sendToStorage } from '../utils/local/storage'
 
 const Callback = ({ success }) => {
   useEffect(() => {
     if (success) {
-      toast('Jira Authorization Successful')
       sendToStorage(success, 'auth')
+      toast('Jira Authorization Successful')
     }
   }, [success])
 
