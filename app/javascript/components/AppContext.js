@@ -4,7 +4,10 @@ import StateHandler from './reducers/stateHandler'
 import PropTypes from 'prop-types'
 import jiraAPI from './utils/api/jira'
 import setDefaultHeaders from './utils/api'
+import { toast, Toaster } from 'react-hot-toast'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
+import userAPI from './utils/api/user'
+import SkillAPI from './utils/api/skills'
 
 const AppContext = createContext(initialState)
 
@@ -12,6 +15,12 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(StateHandler, initialState)
 
   const { authorizeJiraSession } = jiraAPI()
+
+  const { userLogout } = userAPI()
+
+  const { getJiraIssues } = jiraAPI()
+
+  const { getSkills, matchedSkills } = SkillAPI()
 
   const authRetrieve = () => {
     // Check if the user has an existing valid token in local storage on app load
@@ -62,6 +71,46 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: 'isAuthorized', payload: success })
   }
 
+  const fetchMatchedSkills = async (id) => {
+    try {
+      await matchedSkills(id)
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
+  const fetchSkills = async () => {
+    try {
+      const response = await getSkills()
+      if (response) {
+        console.log('🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:', state)
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
+  const fetchIssues = async (id) => {
+    try {
+      const response = await getJiraIssues()
+      if (response) {
+        console.log('🚀 ~ file: AppContext.js:97 ~ fetchIssues ~ response:', response)
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
+  const removeUser = async (onLogout) => {
+    try {
+      await userLogout()
+      onLogout()
+      toast('Logged out successfully')
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
   const values = {
     state,
     authRetrieve,
@@ -69,13 +118,20 @@ export const AppProvider = ({ children }) => {
     handleLogin,
     handleLogout,
     handleUser,
-    handleJiraAuth
+    handleJiraAuth,
+    fetchMatchedSkills,
+    fetchSkills,
+    fetchIssues,
+    removeUser
   }
 
   return (
-    <AppContext.Provider value={{ values }}>
-      {children}
-    </AppContext.Provider>
+    <>
+      <AppContext.Provider value={{ values }}>
+        {children}
+      </AppContext.Provider>
+      <Toaster/>
+    </>
   )
 }
 
@@ -89,5 +145,5 @@ export const useAppContext = () => {
 }
 
 AppProvider.propTypes = {
-  children: PropTypes.string.isRequired
+  children: PropTypes.object.isRequired
 }
