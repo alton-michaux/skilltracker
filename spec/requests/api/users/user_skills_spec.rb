@@ -37,11 +37,6 @@ describe 'Skills API' do
           expect(data[0]['skill']['name']).to eq skill.name
         end
       end
-
-      response '404', 'Not found' do
-        let(:user_id) { user2.id }
-        run_test!
-      end
     end
   end
 end

@@ -8,7 +8,6 @@ import { toast, Toaster } from 'react-hot-toast'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import userAPI from './utils/api/user'
 import SkillAPI from './utils/api/skills'
-import { CatchingPokemonSharp } from '@mui/icons-material'
 
 const AppContext = createContext(initialState)
 
