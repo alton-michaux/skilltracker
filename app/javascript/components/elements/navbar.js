@@ -10,7 +10,7 @@ import userAPI from '../utils/api/user'
 import jiraAPI from '../utils/api/jira'
 import SkillAPI from '../utils/api/skills'
 
-const SkillTrackerNav = ({ user, authString, onLogout, authorized }) => {
+const SkillTrackerNav = ({ user, authString, onLogout }) => {
   const { state } = useAppContext()
 
   const navigate = useNavigate()
@@ -32,17 +32,17 @@ const SkillTrackerNav = ({ user, authString, onLogout, authorized }) => {
     }
   }
 
-  // const fetchSkills = async () => {
-  //   try {
-  //     const response = await getSkills()
-  //     if (response) {
-  //       console.log("🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:", state)
-  //       navigate('api/v1/skills')
-  //     }
-  //   } catch (error) {
-  //     toast(error.message)
-  //   }
-  // }
+  const fetchSkills = async () => {
+    try {
+      const response = await getSkills()
+      if (response) {
+        console.log('🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:', state)
+        navigate('api/v1/skills')
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
 
   const fetchIssues = async () => {
     try {
@@ -106,7 +106,6 @@ SkillTrackerNav.defaultProps = {
 SkillTrackerNav.propTypes = {
   user: PropTypes.object,
   authString: PropTypes.string,
-  authorized: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired
 }
 

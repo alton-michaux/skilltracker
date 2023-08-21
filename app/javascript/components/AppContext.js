@@ -70,7 +70,7 @@ export const AppProvider = ({ children }) => {
     handleLogout,
     handleUser,
     handleJiraAuth
-  };
+  }
 
   return (
     <AppContext.Provider value={{ values }}>
@@ -80,18 +80,14 @@ export const AppProvider = ({ children }) => {
 }
 
 export const useAppContext = () => {
-  const context = useContext(AppContext);
+  const context = useContext(AppContext)
   if (context?.values) {
-    return context.values;
+    return context.values
   } else {
-    throw new Error('You are trying to access context too far up the component tree');
+    throw new Error('You are trying to access context too far up the component tree')
   }
-};
-
-AppContext.defaultProps = {
-  children: ''
 }
 
-AppContext.PropTypes = {
-  children: PropTypes.string
+AppProvider.propTypes = {
+  children: PropTypes.string.isRequired
 }

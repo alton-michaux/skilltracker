@@ -31,15 +31,14 @@ const AppWrapper = () => {
     tokenRetrieve()
   }, [])
 
-  const authorized = retrieveFromStorage('authorized?')
-  return(
+  return (
     <Router>
       <SkillTrackerNav
         user={state.user}
         setUser={handleUser}
         onLogout={handleLogout}
         authString={state.authString}
-        authorized={authorized}
+        authorized={state.isAuthorized}
       ></SkillTrackerNav>
       <Toaster />
       <Loader />
@@ -63,7 +62,7 @@ const AppWrapper = () => {
         />
       </Routes>
     </Router >
-    )
+  )
 }
 
 export default AppWrapper

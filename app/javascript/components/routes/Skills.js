@@ -2,7 +2,7 @@ import React from 'react'
 import { useAppContext } from '../AppContext'
 import PropTypes from 'prop-types'
 
-const Skills = ({ }) => {
+const Skills = () => {
   const state = useAppContext()
 
   return (

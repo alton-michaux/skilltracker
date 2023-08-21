@@ -25,7 +25,7 @@ const Login = ({ setLogin }) => {
 
     // Include the CSRF token in the form data
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
-    console.log("🚀 ~ file: Login.js:28 ~ handleSubmit ~ data:", data)
+    console.log('🚀 ~ file: Login.js:28 ~ handleSubmit ~ data:', data)
 
     try {
       const response = await userLoginSubmit(data)
