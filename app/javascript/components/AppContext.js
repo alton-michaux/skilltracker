@@ -8,6 +8,7 @@ import { toast, Toaster } from 'react-hot-toast'
 import { retrieveFromStorage, sendToStorage, removeFromStorage } from './utils/local/storage'
 import userAPI from './utils/api/user'
 import SkillAPI from './utils/api/skills'
+import { CatchingPokemonSharp } from '@mui/icons-material'
 
 const AppContext = createContext(initialState)
 
@@ -16,7 +17,7 @@ export const AppProvider = ({ children }) => {
 
   const { authorizeJiraSession } = jiraAPI()
 
-  const { userLogout } = userAPI()
+  const { userLogout, userLoginSubmit } = userAPI()
 
   const { getJiraIssues } = jiraAPI()
 
@@ -71,9 +72,42 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: 'isAuthorized', payload: success })
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+
+    // Create an object to store the form data
+    const data = {}
+
+    for (const [name, value] of formData.entries()) {
+      data[name] = value
+    }
+
+    // Include the CSRF token in the form data
+    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
+
+    try {
+      const response = await userLoginSubmit(data)
+      if (response) {
+        const id = response.user_data.id
+        const name = response.user_data.full_name
+
+        handleLogin(response)
+
+        return { id, name }
+      }
+    } catch (error) {
+      toast(error.message)
+    }
+  }
+
   const fetchMatchedSkills = async (id) => {
     try {
-      await matchedSkills(id)
+      const response = await matchedSkills(id)
+      if (response) {
+        dispatch({ type: 'matchedSkills', payload: response })
+      }
     } catch (error) {
       toast(error.message)
     }
@@ -83,7 +117,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await getSkills()
       if (response) {
-        console.log('🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:', state)
+        dispatch({ type: 'skills', payload: response })
       }
     } catch (error) {
       toast(error.message)
@@ -94,7 +128,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await getJiraIssues()
       if (response) {
-        console.log('🚀 ~ file: AppContext.js:97 ~ fetchIssues ~ response:', response)
+        dispatch({ type: 'tickets', payload: response })
       }
     } catch (error) {
       toast(error.message)
@@ -119,6 +153,7 @@ export const AppProvider = ({ children }) => {
     handleLogout,
     handleUser,
     handleJiraAuth,
+    handleSubmit,
     fetchMatchedSkills,
     fetchSkills,
     fetchIssues,
@@ -130,7 +165,7 @@ export const AppProvider = ({ children }) => {
       <AppContext.Provider value={{ values }}>
         {children}
       </AppContext.Provider>
-      <Toaster/>
+      <Toaster />
     </>
   )
 }

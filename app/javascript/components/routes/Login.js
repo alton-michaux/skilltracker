@@ -1,53 +1,26 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
-import toast, { Toaster } from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast'
 import PropTypes from 'prop-types'
-import userAPI from '../utils/api/user'
 import SkillTrackerButton from '../elements/button'
+import { useAppContext } from '../AppContext'
 
-const Login = ({ setLogin }) => {
+const Login = () => {
   const navigate = useNavigate()
 
-  const { userLoginSubmit } = userAPI()
+  const { handleSubmit } = useAppContext()
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    const formData = new FormData(event.target)
-
-    // Create an object to store the form data
-    const data = {}
-
-    for (const [name, value] of formData.entries()) {
-      data[name] = value
-    }
-
-    // Include the CSRF token in the form data
-    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
-    console.log('🚀 ~ file: Login.js:28 ~ handleSubmit ~ data:', data)
-
-    try {
-      const response = await userLoginSubmit(data)
-      if (response) {
-        const id = response.user_data.id
-        const name = response.user_data.full_name
-
-        setLogin(response)
-
-        navigate(`/api/v1/users/${id}/${name}`)
-
-        toast(`Logged in as ${name}`)
-      }
-    } catch (error) {
-      toast(error.message)
-    }
+  const handleLogin = async (e) => {
+    const {id, name} = await handleSubmit(e)
+    navigate(`/api/v1/users/${id}/${name}`)
+    toast(`Logged in as ${name}`)
   }
 
   return (
     <div className="text-center d-flex-inline main-div">
       <h2 className="main-headers">Log in</h2>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={(e) => { handleLogin(e) }}>
         <Form.Group controlId="formEmail" className='p-2'>
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" name="email" className="text-center" autoFocus required />

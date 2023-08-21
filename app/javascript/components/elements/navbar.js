@@ -33,55 +33,6 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
     navigate('/')
   }
 
-  // const { userLogout } = userAPI()
-
-  // const { getJiraIssues } = jiraAPI()
-
-  // const { getSkills, matchedSkills } = SkillAPI()
-
-  // const fetchMatchedSkills = async () => {
-  //   try {
-  //     await matchedSkills(id)
-  //     navigate(`api/v1/users/${id}/user_skills`)
-  //   } catch (error) {
-  //     toast(error.message)
-  //   }
-  // }
-
-  // const fetchSkills = async () => {
-  //   try {
-  //     const response = await getSkills()
-  //     if (response) {
-  //       console.log('🚀 ~ file: navbar.js:36 ~ fetchSkills ~ response:', state)
-  //       navigate('api/v1/skills')
-  //     }
-  //   } catch (error) {
-  //     toast(error.message)
-  //   }
-  // }
-
-  // const fetchIssues = async () => {
-  //   try {
-  //     const response = await getJiraIssues()
-  //     if (response) {
-  //       navigate(`/api/v1/users/${id}/tickets`)
-  //     }
-  //   } catch (error) {
-  //     toast(error.message)
-  //   }
-  // }
-
-  // const removeUser = async () => {
-  //   try {
-  //     await userLogout()
-  //     onLogout()
-  //     toast('Logged out successfully')
-  //     navigate('/')
-  //   } catch (error) {
-  //     toast(error.message)
-  //   }
-  // }
-
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>

@@ -3,18 +3,18 @@ import { useAppContext } from '../AppContext'
 import PropTypes from 'prop-types'
 
 const Skills = () => {
-  const state = useAppContext()
+  const { state } = useAppContext()
 
   return (
     <>
       <div className="text-center">Skills</div>
       <ul>
         {
-        state?.skills?.map((skill) => {
-          return (
-            <li key={skill.id}>{skill.name}</li>
-          )
-        })
+          state.skills.map((skill) => {
+            return (
+              <li key={skill.id}>{skill.name}</li>
+            )
+          })
         }
       </ul>
     </>
