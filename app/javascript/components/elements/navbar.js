@@ -11,8 +11,6 @@ const SkillTrackerNav = ({ onLogout }) => {
 
   const navigate = useNavigate()
 
-  const id = state.user.id
-
   const handleMatchedSkills = (id) => {
     fetchMatchedSkills(id)
     navigate(`api/v1/users/${id}/user_skills`)
@@ -46,13 +44,13 @@ const SkillTrackerNav = ({ onLogout }) => {
                   {
                     state.isAuthorized
                       ? <>
-                        <Nav.Link onClick={(id) => { handleFetchIssues(id) }}>Jira Issues</Nav.Link>
-                        <Nav.Link onClick={(id) => { handleMatchedSkills(id) }}>Matched Skills</Nav.Link>
+                        <Nav.Link onClick={() => { handleFetchIssues(state.user.id) }}>Jira Issues</Nav.Link>
+                        <Nav.Link onClick={() => { handleMatchedSkills(state.user.id) }}>Matched Skills</Nav.Link>
                       </>
                       : <Nav.Link href={state.authString}>Connect to Jira</Nav.Link>
                   }
                   <Nav.Link onClick={() => { handleFetchSkills() }}>Skills</Nav.Link>
-                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${state.user.full_name}`) }}>Profile</Nav.Link>
+                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${state.user.id}/${state.user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={() => { handleRemoveUser(onLogout) }}>Logout</Nav.Link>
                 </>
                 : <></>

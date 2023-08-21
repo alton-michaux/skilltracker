@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import TicketComponent from '../comps/Tickets'
 import SkillComponent from '../comps/Skills'
 import { useAppContext } from '../AppContext'
@@ -9,7 +8,7 @@ const UserProfile = () => {
   return (
     <>
       <h2 className="text-center">
-        Welcome {state.user.name}!
+        Welcome {state.user.full_name}!
       </h2>
       <div className="text-center main-div user-profile-div">
         <div className="secondary-div user-skills-div">
