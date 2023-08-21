@@ -167,6 +167,18 @@ export const AppProvider = ({ children }) => {
     }
   }
 
+  const handleLoader = (flag) => {
+    if (flag === 'loading') {
+      dispatch({ type: 'loading' })
+    }
+    if (flag === 'success') {
+      dispatch({ type: 'success' })
+    }
+    if (flag === 'error') {
+      dispatch({ type: 'error' })
+    }
+  }
+
   const values = {
     state,
     authRetrieve,
@@ -180,7 +192,8 @@ export const AppProvider = ({ children }) => {
     fetchMatchedSkills,
     fetchSkills,
     fetchIssues,
-    removeUser
+    removeUser,
+    handleLoader
   }
 
   return (
