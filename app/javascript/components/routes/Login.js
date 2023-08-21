@@ -9,10 +9,10 @@ import { useAppContext } from '../AppContext'
 const Login = () => {
   const navigate = useNavigate()
 
-  const { handleSubmit } = useAppContext()
+  const { handleLoginSubmit } = useAppContext()
 
   const handleLogin = async (e) => {
-    const {id, name} = await handleSubmit(e)
+    const { id, name } = await handleLoginSubmit(e)
     navigate(`/api/v1/users/${id}/${name}`)
     toast(`Logged in as ${name}`)
   }

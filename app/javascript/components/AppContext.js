@@ -17,7 +17,7 @@ export const AppProvider = ({ children }) => {
 
   const { authorizeJiraSession } = jiraAPI()
 
-  const { userLogout, userLoginSubmit } = userAPI()
+  const { userLogout, userLoginSubmit, userRegisterSubmit } = userAPI()
 
   const { getJiraIssues } = jiraAPI()
 
@@ -72,7 +72,7 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: 'isAuthorized', payload: success })
   }
 
-  const handleSubmit = async (event) => {
+  const handleLoginSubmit = async (event) => {
     event.preventDefault()
 
     const formData = new FormData(event.target)
@@ -99,6 +99,28 @@ export const AppProvider = ({ children }) => {
       }
     } catch (error) {
       toast(error.message)
+    }
+  }
+
+  const handleRegistrationSubmit = async (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+
+    // Create an object to store the form data
+    const data = {}
+
+    for (const [name, value] of formData.entries()) {
+      data[name] = value
+    }
+
+    // Include the CSRF token in the form data
+    data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
+
+    try {
+      await userRegisterSubmit(data)
+    } catch (response) {
+      toast(response.error)
     }
   }
 
@@ -153,7 +175,8 @@ export const AppProvider = ({ children }) => {
     handleLogout,
     handleUser,
     handleJiraAuth,
-    handleSubmit,
+    handleLoginSubmit,
+    handleRegistrationSubmit,
     fetchMatchedSkills,
     fetchSkills,
     fetchIssues,
