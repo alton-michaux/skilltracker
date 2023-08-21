@@ -57,7 +57,7 @@ module Api
       def oauth2_client
         client_id = ENV['CLIENT_ID']
         client_secret = ENV['CLIENT_SECRET']
-    
+
         options = {
           site: 'https://auth.atlassian.com',
           authorize_url: '/authorize',
@@ -67,9 +67,9 @@ module Api
           client_secret: client_secret,
           scope: @scopes
         }
-    
+
         @redirect = options[:redirect_uri]
-    
+
         OAuth2::Client.new(client_id, client_secret, options)
       end
 

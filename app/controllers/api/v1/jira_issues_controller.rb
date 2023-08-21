@@ -10,11 +10,7 @@ module Api
       before_action :fetch_jira_client
 
       def index
-        query_params = {
-          jql: "assignee = currentUser() AND status != Resolved",
-          maxResults: 50
-        }
-# byebug
+        # byebug
         response = @jira_client.get("#{base_url}/rest/api/2/search")
 
         body = parse_response(response)
@@ -37,7 +33,7 @@ module Api
       def get_projects
         response = @jira_client.get("#{base_url}/rest/api/2/issue/createmeta")
 
-        body = parse_response(response)
+        parse_response(response)
       end
 
       private
@@ -47,8 +43,8 @@ module Api
       end
 
       def fetch_jira_client
-        client_id = ENV["CLIENT_ID"]
-        client_secret = ENV["CLIENT_SECRET"]
+        client_id = ENV['CLIENT_ID']
+        client_secret = ENV['CLIENT_SECRET']
 
         cloud_id = session[:cloud_id]
 
@@ -65,7 +61,7 @@ module Api
           consumer_secret: client_secret,
           private_key_file: Rails.root.join('private_key.pem').to_s
         )
-    
+
         @jira_client.set_access_token(
           access_token,
           client_secret

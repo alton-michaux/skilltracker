@@ -7,7 +7,7 @@ module Api
         include FormAuth
 
         before_action :form_auth_token, except: [:index]
-        before_action :authorize_request, except: [:create, :new, :destroy]
+        before_action :authorize_request, except: %i[create new destroy]
         before_action :set_user, except: [:create]
 
         def create

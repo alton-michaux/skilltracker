@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveMatchedSkills < ActiveRecord::Migration[5.2]
   def up
     drop_table :matched_skills, force: :cascade
