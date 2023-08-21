@@ -2,7 +2,6 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import { useNavigate } from 'react-router-dom'
 import { toast, Toaster } from 'react-hot-toast'
-import PropTypes from 'prop-types'
 import SkillTrackerButton from '../elements/button'
 import { useAppContext } from '../AppContext'
 
@@ -38,10 +37,6 @@ const Login = () => {
       </Form>
     </div>
   )
-}
-
-Login.propTypes = {
-  setLogin: PropTypes.func.isRequired
 }
 
 export default Login

@@ -1,10 +1,8 @@
 import React from 'react'
 import { useAppContext } from '../AppContext'
-import PropTypes from 'prop-types'
 
 const Skills = () => {
   const { state } = useAppContext()
-  console.log('🚀 ~ file: Skills.js:7 ~ Skills ~ state:', state.skills)
 
   return (
     <>
@@ -21,14 +19,6 @@ const Skills = () => {
       </ul>
     </>
   )
-}
-
-Skills.defaultProps = {
-  skills: {}
-}
-
-Skills.propTypes = {
-  skills: PropTypes.object
 }
 
 export default Skills

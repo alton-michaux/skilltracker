@@ -6,12 +6,12 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import PropTypes from 'prop-types'
 
-const SkillTrackerNav = ({ user, authString, onLogout }) => {
+const SkillTrackerNav = ({ onLogout }) => {
   const { state, fetchMatchedSkills, fetchSkills, fetchIssues, removeUser } = useAppContext()
 
   const navigate = useNavigate()
 
-  const id = user.id
+  const id = state.user.id
 
   const handleMatchedSkills = (id) => {
     fetchMatchedSkills(id)
@@ -41,7 +41,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {
-              Object.keys(user).length > 0
+              Object.keys(state.user).length > 0
                 ? <>
                   {
                     state.isAuthorized
@@ -49,10 +49,10 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
                         <Nav.Link onClick={(id) => { handleFetchIssues(id) }}>Jira Issues</Nav.Link>
                         <Nav.Link onClick={(id) => { handleMatchedSkills(id) }}>Matched Skills</Nav.Link>
                       </>
-                      : <Nav.Link href={authString}>Connect to Jira</Nav.Link>
+                      : <Nav.Link href={state.authString}>Connect to Jira</Nav.Link>
                   }
                   <Nav.Link onClick={() => { handleFetchSkills() }}>Skills</Nav.Link>
-                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${user.full_name}`) }}>Profile</Nav.Link>
+                  <Nav.Link onClick={() => { navigate(`/api/v1/users/${id}/${state.user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={() => { handleRemoveUser(onLogout) }}>Logout</Nav.Link>
                 </>
                 : <></>
@@ -64,14 +64,7 @@ const SkillTrackerNav = ({ user, authString, onLogout }) => {
   )
 }
 
-SkillTrackerNav.defaultProps = {
-  user: {},
-  authString: '/'
-}
-
 SkillTrackerNav.propTypes = {
-  user: PropTypes.object,
-  authString: PropTypes.string,
   onLogout: PropTypes.func.isRequired
 }
 
