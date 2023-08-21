@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
-import { useAppContext } from '../../AppContext'
+// import { useAppContext } from '../../AppContext'
 
 // Function to set default headers
 const setDefaultHeaders = (token) => {
@@ -13,11 +13,11 @@ const setDefaultHeaders = (token) => {
 }
 
 export const URLFunctions = () => {
-  const { handleLoader } = useAppContext()
+  // const { handleLoader } = useAppContext()
 
-  const handleState = (flag) => {
-    handleLoader(flag)
-  }
+  // const handleState = (flag) => {
+  //   handleLoader(flag)
+  // }
 
   // Function to handle API requests
   const handleRequest = (method, url, data) => {
@@ -31,13 +31,13 @@ export const URLFunctions = () => {
   const get = async (url) => {
     try {
       const response = await handleRequest('get', url)
-      handleState('loading')
+      // handleState('loading')
       if (response.data) {
-        handleState('success')
+        // handleState('success')
         return response.data
       }
     } catch (error) {
-      handleState('error')
+      // handleState('error')
       toast(error.message)
     }
   }
@@ -45,13 +45,13 @@ export const URLFunctions = () => {
   const put = async (url, data) => {
     try {
       const response = await handleRequest('put', url, data)
-      handleState('loading')
+      // handleState('loading')
       if (response.data) {
-        handleState('success')
+        // handleState('success')
         return response.data
       }
     } catch (error) {
-      handleState('error')
+      // handleState('error')
       toast(error.message)
     }
   }
@@ -59,13 +59,13 @@ export const URLFunctions = () => {
   const patch = async (url, data) => {
     try {
       const response = await handleRequest('patch', url, data)
-      handleState('loading')
+      // handleState('loading')
       if (response.data) {
-        handleState('success')
+        // handleState('success')
         return response.data
       }
     } catch (error) {
-      handleState('error')
+      // handleState('error')
       toast(error.message)
     }
   }
@@ -73,13 +73,13 @@ export const URLFunctions = () => {
   const post = async (url, data) => {
     try {
       const response = await handleRequest('post', url, data)
-      handleState('loading')
+      // handleState('loading')
       if (response.data) {
-        handleState('success')
+        // handleState('success')
         return response.data
       }
     } catch (error) {
-      handleState('error')
+      // handleState('error')
       toast(error.message)
     }
   }
@@ -87,13 +87,13 @@ export const URLFunctions = () => {
   const destroy = async (url, data) => {
     try {
       const response = await handleRequest('delete', url, data)
-      handleState('loading')
+      // handleState('loading')
       if (response.data) {
-        handleState('success')
+        // handleState('success')
         return response.data
       }
     } catch (error) {
-      handleState('error')
+      // handleState('error')
       toast(error.message)
     }
   }

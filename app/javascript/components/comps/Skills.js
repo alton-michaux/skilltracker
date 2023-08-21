@@ -1,15 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useAppContext } from '../AppContext'
 
-const SkillComponent = ({ user }) => {
+const SkillComponent = () => {
+  const { state } = useAppContext()
   return (
     <ul> {
-      user?.skills?.map((data) => {
+      Object.keys(state.matchedSkills).length > 0 &&
+      state.skills.map((skill) => {
         return (
-          <li key={data.skill.id}>
+          <li key={skill.id}>
             <div className="skill-div">
-              <h4>{data.skill.name}</h4>
-              <p>{data.skill.description}</p>
+              <h4>{skill.name}</h4>
             </div>
           </li>
         )
@@ -17,14 +18,6 @@ const SkillComponent = ({ user }) => {
     }
     </ul>
   )
-}
-
-SkillComponent.defaultProps = {
-  user: {}
-}
-
-SkillComponent.propTypes = {
-  user: PropTypes.object
 }
 
 export default SkillComponent

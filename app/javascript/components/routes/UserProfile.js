@@ -13,15 +13,11 @@ const UserProfile = () => {
       <div className="text-center main-div user-profile-div">
         <div className="secondary-div user-skills-div">
           <h2>Your Skills</h2>
-          <SkillComponent
-            user={state.user}
-          ></SkillComponent>
+          <SkillComponent/>
         </div>
         <div className="secondary-div user-tickets-div">
           <h2>Your Work</h2>
-          <TicketComponent
-            user={state.user}
-          ></TicketComponent>
+          <TicketComponent/>
         </div>
       </div>
     </>
