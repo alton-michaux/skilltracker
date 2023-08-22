@@ -1,10 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useAppContext } from '../AppContext'
 
-const TicketComponent = ({ user }) => {
+const TicketComponent = () => {
+  const { state } = useAppContext()
   return (
     <ul> {
-      user?.tickets?.map((ticket) => {
+      Object.keys(state.tickets).length > 0 &&
+      state.tickets.map((ticket) => {
         return (
           <li key={ticket.id}>
             <div className="ticket-div">
@@ -18,14 +20,6 @@ const TicketComponent = ({ user }) => {
     }
     </ul>
   )
-}
-
-TicketComponent.defaultProps = {
-  user: {}
-}
-
-TicketComponent.propTypes = {
-  user: PropTypes.object
 }
 
 export default TicketComponent

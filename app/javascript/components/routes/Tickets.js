@@ -1,20 +1,24 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useAppContext } from '../AppContext'
 
-const Tickets = ({ issues }) => {
+const Tickets = () => {
+  const { state } = useAppContext()
+
   return (
-    <>
-      <div className="text-center">Tickets</div>
-    </>
+    <div className="text-center">
+      <h2>Tickets</h2>
+      <ul>
+        {
+          Object.keys(state.tickets).length > 0 &&
+          state.tickets.map((ticket) => {
+            return (
+              <li key={ticket.id}>{ticket.title}</li>
+            )
+          })
+        }
+      </ul>
+    </div>
   )
-}
-
-Tickets.defaultProps = {
-  issues: {}
-}
-
-Tickets.propTypes = {
-  issues: PropTypes.object
 }
 
 export default Tickets

@@ -1,18 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useAppContext } from '../AppContext'
 
 const MatchedSkills = () => {
+  const { state } = useAppContext()
   return (
-    <div className="text-center">Matched Skills</div>
+    <div className="text-center">
+      <h2>Matched Skills</h2>
+      <ul>
+        {
+          Object.keys(state.matchedSkills).length > 0 &&
+          state.matchedSkills.map((skill) => {
+            return (
+              <li key={skill.id}>{skill.skill.name}</li>
+            )
+          })
+        }
+      </ul>
+    </div>
   )
-}
-
-MatchedSkills.defaultProps = {
-  id: 0
-}
-
-MatchedSkills.propTypes = {
-  id: PropTypes.number.isRequired
 }
 
 export default MatchedSkills

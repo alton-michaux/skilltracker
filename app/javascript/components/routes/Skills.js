@@ -1,18 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useAppContext } from '../AppContext'
 
-const Skills = ({ skills }) => {
+const Skills = () => {
+  const { state } = useAppContext()
+
   return (
-    <div className="text-center">Skills</div>
+    <>
+      <div className="text-center">
+        <h2>Skills</h2>
+        <ul>
+          {
+            Object.keys(state.skills).length > 0 &&
+            state.skills.map((skill) => {
+              return (
+                <li key={skill.id}>{skill.name}</li>
+              )
+            })
+          }
+        </ul>
+      </div>
+    </>
   )
-}
-
-Skills.defaultProps = {
-  skills: {}
-}
-
-Skills.propTypes = {
-  skills: PropTypes.object
 }
 
 export default Skills

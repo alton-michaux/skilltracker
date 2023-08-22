@@ -10,7 +10,7 @@ User.create(email: 'admin@gmail.com', password: 'password', first_name: 'Alton',
 puts "#{User.count} users created"
 
 # 10.times do
-#   Skill.create(name: Faker::Job.unique.key_skill, description: Faker::Lorem.sentence(word_count: 3, supplemental: false, random_words_to_add: 4))
+#   Skill.create(name: Faker::Job.unique.key_skill))
 # end
 
 puts "#{Skill.count} skills created"

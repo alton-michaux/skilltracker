@@ -9,6 +9,15 @@ module Api
       before_action :set_skill, only: [:delete]
 
       def index
+        skill_query = %w[ruby javascript management]
+        count = 100
+
+        response = api_layer("https://api.apilayer.com/skills?q=#{skill_query.sample}&count=#{count}")
+
+        skills = JSON.parse(response.body)
+
+        skills.each { |s| Skill.create(name: s) unless Skill.find_by(name: s) }
+
         render json: Skill.all, each_serializer: SkillSerializer, status: 200
       end
 
@@ -38,7 +47,7 @@ module Api
       end
 
       def skill_params
-        params.require(:skill).permit(:id, :name, :description)
+        params.require(:skill).permit(:id, :name)
       end
     end
   end

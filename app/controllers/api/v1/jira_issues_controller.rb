@@ -7,15 +7,10 @@ module Api
 
       before_action :form_auth_token
       before_action :set_issue, only: :show
-      before_action :fetch_jira_client
+      before_action :fetch_jira_client, only: :index
 
       def index
-        query_params = {
-          jql: "assignee = currentUser() AND status != Resolved",
-          maxResults: 50
-        }
-# byebug
-        response = @jira_client.get("#{base_url}/rest/api/2/search")
+        response = @jira_client.get("#{base_url}/rest/api/2/issue")
 
         body = parse_response(response)
 
@@ -24,6 +19,8 @@ module Api
         issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
         # @issues = @jira_client.Issue.all
         render json: { issues: issues }, status: 200
+      rescue JIRA::HTTPError => e
+        render json: { error: e.message }
       end
 
       def show
@@ -37,7 +34,7 @@ module Api
       def get_projects
         response = @jira_client.get("#{base_url}/rest/api/2/issue/createmeta")
 
-        body = parse_response(response)
+        parse_response(response)
       end
 
       private
@@ -47,8 +44,8 @@ module Api
       end
 
       def fetch_jira_client
-        client_id = ENV["CLIENT_ID"]
-        client_secret = ENV["CLIENT_SECRET"]
+        client_id = ENV['CLIENT_ID']
+        client_secret = ENV['CLIENT_SECRET']
 
         cloud_id = session[:cloud_id]
 
@@ -65,7 +62,7 @@ module Api
           consumer_secret: client_secret,
           private_key_file: Rails.root.join('private_key.pem').to_s
         )
-    
+
         @jira_client.set_access_token(
           access_token,
           client_secret

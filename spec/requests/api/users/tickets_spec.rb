@@ -6,7 +6,7 @@ require 'swagger_helper'
 describe 'Tickets API' do
   let!(:user) { create(:user, email: 'user@testemail.com') }
   let!(:user2) { create(:user, email: 'user2@testemail.com') }
-  let!(:skill) { create(:skill, name: 'API', description: 'Build, maintain and troubleshoot internal API systems') }
+  let!(:skill) { create(:skill, name: 'API') }
   let!(:ticket) { create(:ticket, user: user) }
   let!(:ticket2) { create(:ticket, :data, user: user) }
 

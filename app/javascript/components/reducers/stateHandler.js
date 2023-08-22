@@ -45,6 +45,11 @@ const StateHandler = (state, action) => {
         ...state,
         skills: action.payload
       }
+    case 'matchedSkills':
+      return {
+        ...state,
+        matchedSkills: action.payload
+      }
     case 'tickets':
       return {
         ...state,

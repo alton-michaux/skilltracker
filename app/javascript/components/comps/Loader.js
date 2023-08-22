@@ -1,17 +1,17 @@
-import * as React from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useAppContext } from '../AppContext'
 
 const Loader = () => {
-  const { state } = useAppContext()
+  const state = useAppContext()
 
   const loaderStyle = {
     width: '500px',
     margin: 'auto',
     top: '40vh',
     zIndex: 1,
-    display: state.isLoading ? 'block' : 'none'
+    display: state?.isLoading ? 'block' : 'none'
   }
 
   return (

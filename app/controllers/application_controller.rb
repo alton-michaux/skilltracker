@@ -2,6 +2,8 @@
 
 require 'oauth2'
 require 'jira-ruby'
+require 'uri'
+require 'net/http'
 
 class ApplicationController < ActionController::Base
   include FormAuth
@@ -45,6 +47,65 @@ class ApplicationController < ActionController::Base
     request.headers['X-CSRF-Token'] = @csrf_token
 
     @csrf_token
+  end
+
+  def fetch_oauth2_token
+    return unless session_params[:code]
+
+    client = oauth2_client
+
+    # Exchange the authorization code for an access token
+    access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
+
+    # Fetch the cloudId using the access token
+    response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
+    cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
+
+    session[:cloud_id] = cloud_id if cloud_id
+
+    # Configure OAuth2.0 client with OAuth2 access token
+    @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
+
+    session[:access_token] = access_token.token
+  rescue OAuth2::Error => e
+    render json: { error: e.message }, status: 500
+  end
+
+  def fetch_jira_client
+    byebug
+    access_token = session[:access_token] || @oauth_token.token
+
+    @jira_client = JIRA::Client.new(
+      username: nil,
+      password: nil,
+      auth_type: :oauth_2legged,
+      site: "https://#{@cloud_id}.atlassian.net",
+      context_path: '/rest/api/2',
+      default_headers: { 'Authorization': "Basic #{access_token}",
+                         'Accept': 'application/json' },
+      consumer_key: ENV['CLIENT_ID'],
+      consumer_secret: ENV['CLIENT_SECRET'],
+      private_key_file: Rails.root.join('private_key.pem').to_s
+    )
+
+    @jira_client.set_access_token(
+      access_token,
+      ENV['CLIENT_ID']
+    )
+    byebug
+    session[:jira_client] = @jira_client
+  end
+
+  def api_layer(url)
+    url = URI(url)
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request['apikey'] = ENV['SKILLS_API_KEY']
+
+    https.request(request)
   end
 
   def base_url
