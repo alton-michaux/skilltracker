@@ -3,7 +3,6 @@ import { useAppContext } from '../AppContext'
 
 const Tickets = () => {
   const { state } = useAppContext()
-  console.log('🚀 ~ file: Tickets.js:6 ~ Tickets ~ state:', state)
 
   return (
     <div className="text-center">

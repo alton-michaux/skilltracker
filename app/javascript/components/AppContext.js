@@ -148,8 +148,11 @@ export const AppProvider = ({ children }) => {
   const fetchIssues = async (id) => {
     try {
       const response = await getJiraIssues()
-      if (response) {
+      if (!response.error) {
+        console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
         dispatch({ type: 'tickets', payload: response })
+      } else {
+        toast(response.error)
       }
     } catch (error) {
       toast(error.message)

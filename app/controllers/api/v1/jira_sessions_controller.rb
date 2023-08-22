@@ -24,7 +24,8 @@ module Api
       def authorize
         if verified_request?
           state = request.headers['HTTP_X_CSRF_TOKEN']
-          @scopes = 'read:jira-work read:jira-user read:issue:jira read:issue-meta:jira read:priority:jira read:issue-type:jira read:issue-status:jira read:project:jira read:issue.time-tracking:jira read:me'
+
+          @scopes = 'offline_access read:jira-work read:jira-user read:issue:jira read:issue-meta:jira read:priority:jira read:issue-type:jira read:issue-status:jira read:project:jira read:issue.time-tracking:jira read:me'
 
           auth_url = auth_string(ENV['CLIENT_ID'], state, @csrf_token, @scopes, @redirect)
 
@@ -35,7 +36,6 @@ module Api
       end
 
       def callback
-        # byebug
         if @oauth_token
           render component: 'routes/Callback', props: { success: true }, status: 200
         else

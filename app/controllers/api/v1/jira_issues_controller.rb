@@ -7,11 +7,10 @@ module Api
 
       before_action :form_auth_token
       before_action :set_issue, only: :show
-      before_action :fetch_jira_client
+      before_action :fetch_jira_client, only: :index
 
       def index
-        # byebug
-        response = @jira_client.get("#{base_url}/rest/api/2/search")
+        response = @jira_client.get("#{base_url}/rest/api/2/issue")
 
         body = parse_response(response)
 
@@ -20,6 +19,8 @@ module Api
         issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
         # @issues = @jira_client.Issue.all
         render json: { issues: issues }, status: 200
+      rescue JIRA::HTTPError => e
+        render json: { error: e.message }
       end
 
       def show

@@ -72,6 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_jira_client
+    byebug
     access_token = session[:access_token] || @oauth_token.token
 
     @jira_client = JIRA::Client.new(
@@ -80,7 +81,8 @@ class ApplicationController < ActionController::Base
       auth_type: :oauth_2legged,
       site: "https://#{@cloud_id}.atlassian.net",
       context_path: '/rest/api/2',
-      default_headers: { 'Authorization' => "Bearer #{access_token}" },
+      default_headers: { 'Authorization': "Basic #{access_token}",
+                         'Accept': 'application/json' },
       consumer_key: ENV['CLIENT_ID'],
       consumer_secret: ENV['CLIENT_SECRET'],
       private_key_file: Rails.root.join('private_key.pem').to_s
@@ -90,6 +92,8 @@ class ApplicationController < ActionController::Base
       access_token,
       ENV['CLIENT_ID']
     )
+    byebug
+    session[:jira_client] = @jira_client
   end
 
   def api_layer(url)

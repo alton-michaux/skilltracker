@@ -3,7 +3,6 @@ import { useAppContext } from '../AppContext'
 
 const MatchedSkills = () => {
   const { state } = useAppContext()
-  console.log('🚀 ~ file: MatchedSkills.js:6 ~ MatchedSkills ~ state:', state)
   return (
     <div className="text-center">
       <h2>Matched Skills</h2>

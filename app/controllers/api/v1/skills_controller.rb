@@ -9,7 +9,7 @@ module Api
       before_action :set_skill, only: [:delete]
 
       def index
-        skill_query = ['ruby', 'javascript', 'management']
+        skill_query = %w[ruby javascript management]
         count = 100
 
         response = api_layer("https://api.apilayer.com/skills?q=#{skill_query.sample}&count=#{count}")
@@ -49,8 +49,6 @@ module Api
       def skill_params
         params.require(:skill).permit(:id, :name)
       end
-
-      def skill_client; end
     end
   end
 end
