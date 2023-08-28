@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
 
   def fetch_oauth2_token
     return unless session_params[:code]
-
+# byebug
     client = oauth2_client
 
     # Exchange the authorization code for an access token
@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
 
     # Fetch the cloudId using the access token
     response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
-    cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
+    cloud_id = JSON.parse(response.body).last['id'] if response.status == 200
 
     session[:cloud_id] = cloud_id if cloud_id
 
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
       password: nil,
       auth_type: :oauth_2legged,
       context_path: '/jira',
-      site: "https://#{@cloud_id}.atlassian.net",
+      site: "https://#{@cloud_id || session[:cloud_id]}.atlassian.net",
       default_headers: { 'Authorization': "Basic #{access_token}",
                          'Accept': 'application/json' },
       consumer_key: ENV['CLIENT_ID'],

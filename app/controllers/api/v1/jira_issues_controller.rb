@@ -10,7 +10,7 @@ module Api
       before_action :fetch_jira_client, only: :index
 
       def index
-        byebug
+        # byebug
         response = @jira_client.get("#{base_url}/rest/api/2/issue")
 
         body = parse_response(response)
@@ -19,7 +19,7 @@ module Api
 
         issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
 
-        render json: { issues: issues }, status: 200
+        render json: Ticket.all, each_serializer: TicketSerializer, status: 200
       rescue JIRA::HTTPError => e
         render json: { error: e.message }
       end
