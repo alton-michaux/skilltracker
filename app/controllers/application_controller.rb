@@ -48,6 +48,25 @@ class ApplicationController < ActionController::Base
 
     @csrf_token
   end
+  
+  def oauth2_client
+    client_id = ENV['CLIENT_ID']
+    client_secret = ENV['CLIENT_SECRET']
+
+    options = {
+      site: 'https://auth.atlassian.com',
+      authorize_url: '/authorize',
+      token_url: '/oauth/token',
+      redirect_uri: 'http://localhost:3000/callback',
+      client_id: client_id,
+      client_secret: client_secret,
+      scope: @scopes
+    }
+
+    @redirect = options[:redirect_uri]
+
+    OAuth2::Client.new(client_id, client_secret, options)
+  end
 
   def fetch_oauth2_token
     return unless session_params[:code]
@@ -72,15 +91,14 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_jira_client
-    byebug
     access_token = session[:access_token] || @oauth_token.token
 
     @jira_client = JIRA::Client.new(
       username: nil,
       password: nil,
       auth_type: :oauth_2legged,
+      context_path: '/jira',
       site: "https://#{@cloud_id}.atlassian.net",
-      context_path: '/rest/api/2',
       default_headers: { 'Authorization': "Basic #{access_token}",
                          'Accept': 'application/json' },
       consumer_key: ENV['CLIENT_ID'],
@@ -92,8 +110,6 @@ class ApplicationController < ActionController::Base
       access_token,
       ENV['CLIENT_ID']
     )
-    byebug
-    session[:jira_client] = @jira_client
   end
 
   def api_layer(url)

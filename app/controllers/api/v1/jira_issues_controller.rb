@@ -10,6 +10,7 @@ module Api
       before_action :fetch_jira_client, only: :index
 
       def index
+        byebug
         response = @jira_client.get("#{base_url}/rest/api/2/issue")
 
         body = parse_response(response)
@@ -17,7 +18,7 @@ module Api
         issues = body['issues']
 
         issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
-        # @issues = @jira_client.Issue.all
+
         render json: { issues: issues }, status: 200
       rescue JIRA::HTTPError => e
         render json: { error: e.message }
@@ -41,32 +42,6 @@ module Api
 
       def set_issue
         @issue = @client.Issue.find(params[:id])
-      end
-
-      def fetch_jira_client
-        client_id = ENV['CLIENT_ID']
-        client_secret = ENV['CLIENT_SECRET']
-
-        cloud_id = session[:cloud_id]
-
-        access_token = session[:access_token] || @oauth_token.token
-
-        @jira_client = JIRA::Client.new(
-          username: nil,
-          password: nil,
-          auth_type: :oauth_2legged,
-          site: "https://#{cloud_id}.atlassian.net",
-          context_path: '/rest/api/2',
-          default_headers: { 'Authorization' => "Bearer #{access_token}" },
-          consumer_key: client_id,
-          consumer_secret: client_secret,
-          private_key_file: Rails.root.join('private_key.pem').to_s
-        )
-
-        @jira_client.set_access_token(
-          access_token,
-          client_secret
-        )
       end
     end
   end

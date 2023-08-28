@@ -51,49 +51,6 @@ module Api
 
         nil
       end
-
-      private
-
-      def oauth2_client
-        client_id = ENV['CLIENT_ID']
-        client_secret = ENV['CLIENT_SECRET']
-
-        options = {
-          site: 'https://auth.atlassian.com',
-          authorize_url: '/authorize',
-          token_url: '/oauth/token',
-          redirect_uri: 'http://localhost:3000/callback',
-          client_id: client_id,
-          client_secret: client_secret,
-          scope: @scopes
-        }
-
-        @redirect = options[:redirect_uri]
-
-        OAuth2::Client.new(client_id, client_secret, options)
-      end
-
-      def fetch_oauth2_token
-        return unless session_params[:code]
-
-        client = oauth2_client
-
-        # Exchange the authorization code for an access token
-        access_token = client.auth_code.get_token(session_params[:code], redirect_uri: 'http://localhost:3000/callback')
-
-        # Fetch the cloudId using the access token
-        response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
-        cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
-
-        session[:cloud_id] = cloud_id if cloud_id
-
-        # Configure OAuth2.0 client with OAuth2 access token
-        @oauth_token = OAuth2::AccessToken.new(client, access_token.token)
-
-        session[:access_token] = access_token.token
-      rescue OAuth2::Error => e
-        render json: { error: e.message }, status: 500
-      end
     end
   end
 end
