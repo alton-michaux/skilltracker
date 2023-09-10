@@ -10,10 +10,10 @@ module Api
       before_action :fetch_jira_client, only: :index
 
       def index
-        # byebug
-        response = @jira_client.get("#{base_url}/rest/api/2/issue")
+        jira_projects
+        response = @jira_client.get("#{base_url}/rest/api/2/search")
 
-        body = parse_response(response)
+        body = JSON.parse(response.body)
 
         issues = body['issues']
 
@@ -35,13 +35,18 @@ module Api
       def get_projects
         response = @jira_client.get("#{base_url}/rest/api/2/issue/createmeta")
 
-        parse_response(response)
+        JSON.parse(response.body)
       end
 
       private
 
       def set_issue
         @issue = @client.Issue.find(params[:id])
+      end
+
+      def jira_projects
+        response = @jira_client.get("#{base_url}/rest/api/2/project/search")
+        projects = JSON.parse(response.body)
       end
     end
   end

@@ -33,10 +33,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def parse_response(response)
-    JSON.parse(response.body)
-  end
-
   def auth_string(client_id, state, token, scopes, redirect)
     "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
@@ -70,7 +66,7 @@ class ApplicationController < ActionController::Base
 
   def fetch_oauth2_token
     return unless session_params[:code]
-# byebug
+
     client = oauth2_client
 
     # Exchange the authorization code for an access token

@@ -6,7 +6,6 @@ module Api
     class JiraSessionsController < ApplicationController
       include FormAuth
 
-      skip_before_action :verify_authenticity_token, only: %i[callback authorize]
       before_action :form_auth_token, only: [:callback]
       before_action :handle_csrf, only: :authorize
       before_action :fetch_oauth2_token, only: :callback
