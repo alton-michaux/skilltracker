@@ -11,6 +11,7 @@ module Api
         before_action :configure_account_update_params, only: [:update]
 
         def create
+          # byebug
           user = build_resource(sign_up_params)
 
           if user.save
@@ -26,8 +27,6 @@ module Api
         # GET /resource/edit
 
         # PUT /resource
-
-        # DELETE /resource
 
         # GET /resource/cancel
         # Forces the session data which is usually expired after sign

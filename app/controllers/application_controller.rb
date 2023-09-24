@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
 
   def fetch_oauth2_token
     return unless session_params[:code]
-# byebug
+
     client = oauth2_client
 
     # Exchange the authorization code for an access token
@@ -91,16 +91,15 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_jira_client
-    access_token = session[:access_token] || @oauth_token.token
+    access_token = session[:access_token]
 
     @jira_client = JIRA::Client.new(
       username: nil,
       password: nil,
       auth_type: :oauth_2legged,
       context_path: '/jira',
-      site: "https://#{@cloud_id || session[:cloud_id]}.atlassian.net",
-      default_headers: { 'Authorization': "Basic #{access_token}",
-                         'Accept': 'application/json' },
+      site: "https://#{session[:cloud_id]}.atlassian.net",
+      default_headers: { 'Authorization': "Basic #{access_token}" },
       consumer_key: ENV['CLIENT_ID'],
       consumer_secret: ENV['CLIENT_SECRET'],
       private_key_file: Rails.root.join('private_key.pem').to_s

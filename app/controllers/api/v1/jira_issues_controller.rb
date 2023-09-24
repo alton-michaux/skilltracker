@@ -10,12 +10,9 @@ module Api
       before_action :fetch_jira_client, only: :index
 
       def index
-        # byebug
-        response = @jira_client.get("#{base_url}/rest/api/2/issue")
+        response = parse_response(@jira_client.get("#{base_url}/rest/api/2/issue/picker"))
 
-        body = parse_response(response)
-
-        issues = body['issues']
+        issues = response['sections'][0]['issues']
 
         issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
 
