@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'oauth2'
-require 'jira-ruby'
 require 'uri'
 require 'net/http'
 
@@ -9,10 +8,6 @@ class ApplicationController < ActionController::Base
   include FormAuth
 
   attr_accessor :current_user, :client
-
-  rescue_from JIRA::OauthClient::UninitializedAccessTokenError do
-    redirect_to new_jira_session_url
-  end
 
   def not_found
     render component: 'routes/NotFound', status: 404
@@ -86,36 +81,20 @@ class ApplicationController < ActionController::Base
     render json: { error: e.message }, status: 500
   end
 
-  def fetch_jira_client
-    access_token = session[:access_token] || @oauth_token.token
-
-    @jira_client = JIRA::Client.new(
-      username: nil,
-      password: nil,
-      auth_type: :oauth_2legged,
-      context_path: '/jira',
-      site: "https://#{@cloud_id || session[:cloud_id]}.atlassian.net",
-      default_headers: { 'Authorization': "Basic #{access_token}",
-                         'Accept': 'application/json' },
-      consumer_key: ENV['CLIENT_ID'],
-      consumer_secret: ENV['CLIENT_SECRET'],
-      private_key_file: Rails.root.join('private_key.pem').to_s
-    )
-
-    @jira_client.set_access_token(
-      access_token,
-      ENV['CLIENT_ID']
-    )
-  end
-
-  def api_layer(url)
+  def api_layer(url, jira = false)
     url = URI(url)
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
-    request['apikey'] = ENV['SKILLS_API_KEY']
+
+    if jira
+      request['Authorization'] = "Bearer #{session[:access_token]}"
+      request['Accept'] = "*/*"
+    else
+      request['apikey'] = ENV['SKILLS_API_KEY']
+    end
 
     https.request(request)
   end
