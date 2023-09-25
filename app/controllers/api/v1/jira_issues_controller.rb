@@ -7,17 +7,15 @@ module Api
 
       before_action :form_auth_token
       before_action :set_issue, only: :show
-      before_action :fetch_jira_client, only: :index
 
       def index
-        jira_projects
-        response = @jira_client.get("#{base_url}/rest/api/2/search")
+        response = api_layer("#{base_url}/rest/api/2/issue", true)
 
         body = JSON.parse(response.body)
 
         issues = body['issues']
 
-        issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
+        # issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
 
         render json: Ticket.all, each_serializer: TicketSerializer, status: 200
       rescue JIRA::HTTPError => e
@@ -32,21 +30,18 @@ module Api
         end
       end
 
-      def get_projects
-        response = @jira_client.get("#{base_url}/rest/api/2/issue/createmeta")
+      def projects
+        response = api_layer("#{base_url}/rest/api/2/project", true)
 
-        JSON.parse(response.body)
+        body = JSON.parse(response.body)
+      rescue JIRA::HTTPError => e
+        render json: { error: e.message }
       end
 
       private
 
       def set_issue
         @issue = @client.Issue.find(params[:id])
-      end
-
-      def jira_projects
-        response = @jira_client.get("#{base_url}/rest/api/2/project/search")
-        projects = JSON.parse(response.body)
       end
     end
   end

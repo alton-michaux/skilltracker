@@ -36,7 +36,7 @@ module Api
 
       def callback
         if @oauth_token
-          render component: 'routes/Callback', props: { success: true }, status: 200
+          render component: 'routes/Callback', props: { success: true, user: myself }, status: 200
         else
           render json: { error: 'Jira client invalid' }, status: 500
         end
@@ -49,6 +49,24 @@ module Api
         redirect_to skills_path
 
         nil
+      end
+
+      private
+
+      def myself
+        response = api_layer("#{base_url}/rest/api/2/myself", true)
+
+        body = JSON.parse(response.body)
+        
+        email = body["emailAddress"]
+        name = body["displayName"]
+        profile_picture = body["avatarUrls"]["48x48"]
+
+        jira_user = {
+          name: name,
+          email: email,
+          profile_picture: profile_picture
+        }
       end
     end
   end
