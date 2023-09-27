@@ -14,7 +14,13 @@ const Tickets = () => {
               {
                 state?.tickets?.map((ticket) => {
                   return (
-                    <li key={ticket.id}>{ticket.title}</li>
+                    <li key={ticket.id}>
+                      Title: {ticket?.title}
+                      Description: {ticket?.description}
+                      Status: {ticket?.status}
+                      Labels: {ticket?.labels}
+                      Assignee: {ticket?.assignee}
+                    </li>
                   )
                 })
               } </>

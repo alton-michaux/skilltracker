@@ -9,17 +9,26 @@ module Api
       before_action :set_issue, only: :show
 
       def index
-        response = api_layer("#{base_url}/rest/api/2/issue", true)
+        response = api_layer("#{base_url}/rest/api/2/search?jql=assignee=currentuser()", true)
 
         body = JSON.parse(response.body)
 
         issues = body['issues']
 
-        # issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
+        issues.each do |issue|
+          ticket = {
+            title: issue["fields"]["summary"].strip,
+            status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
+            description: issue["fields"]["customfield_10051"],
+            labels: issue["fields"]["labels"].map(&:capitalize),
+            assignee: issue["fields"]["assignee"]["displayName"],
+            user_id: 1
+          }
+
+          Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])
+        end
 
         render json: Ticket.all, each_serializer: TicketSerializer, status: 200
-      rescue JIRA::HTTPError => e
-        render json: { error: e.message }
       end
 
       def show
@@ -42,6 +51,21 @@ module Api
 
       def set_issue
         @issue = @client.Issue.find(params[:id])
+      end
+
+      def convert_status(status)
+        case status
+        when "To Do"
+          return 0
+        when "In Progress"
+          return 1
+        when "In Review"
+          return 2
+        when "Complete"
+          return 3
+        else
+          return 4
+        end
       end
     end
   end
