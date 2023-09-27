@@ -7,20 +7,28 @@ module Api
 
       before_action :form_auth_token
       before_action :set_issue, only: :show
-      before_action :fetch_jira_client, only: :index
 
       def index
-        response = @jira_client.get("#{base_url}/rest/api/2/issue")
+        response = api_layer("#{base_url}/rest/api/2/search?jql=assignee=currentuser()", true)
 
-        body = parse_response(response)
+        body = JSON.parse(response.body)
 
         issues = body['issues']
 
-        issues.map { |issue| Ticket.new(user_id: current_user.id, ticket: issue) }
-        # @issues = @jira_client.Issue.all
-        render json: { issues: issues }, status: 200
-      rescue JIRA::HTTPError => e
-        render json: { error: e.message }
+        issues.each do |issue|
+          ticket = {
+            title: issue["fields"]["summary"].strip,
+            status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
+            description: issue["fields"]["customfield_10051"],
+            labels: issue["fields"]["labels"].map(&:capitalize),
+            assignee: issue["fields"]["assignee"]["displayName"],
+            user_id: 1
+          }
+
+          Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])
+        end
+
+        render json: Ticket.all, each_serializer: TicketSerializer, status: 200
       end
 
       def show
@@ -31,10 +39,12 @@ module Api
         end
       end
 
-      def get_projects
-        response = @jira_client.get("#{base_url}/rest/api/2/issue/createmeta")
+      def projects
+        response = api_layer("#{base_url}/rest/api/2/project", true)
 
-        parse_response(response)
+        body = JSON.parse(response.body)
+      rescue JIRA::HTTPError => e
+        render json: { error: e.message }
       end
 
       private
@@ -43,30 +53,19 @@ module Api
         @issue = @client.Issue.find(params[:id])
       end
 
-      def fetch_jira_client
-        client_id = ENV['CLIENT_ID']
-        client_secret = ENV['CLIENT_SECRET']
-
-        cloud_id = session[:cloud_id]
-
-        access_token = session[:access_token] || @oauth_token.token
-
-        @jira_client = JIRA::Client.new(
-          username: nil,
-          password: nil,
-          auth_type: :oauth_2legged,
-          site: "https://#{cloud_id}.atlassian.net",
-          context_path: '/rest/api/2',
-          default_headers: { 'Authorization' => "Bearer #{access_token}" },
-          consumer_key: client_id,
-          consumer_secret: client_secret,
-          private_key_file: Rails.root.join('private_key.pem').to_s
-        )
-
-        @jira_client.set_access_token(
-          access_token,
-          client_secret
-        )
+      def convert_status(status)
+        case status
+        when "To Do"
+          return 0
+        when "In Progress"
+          return 1
+        when "In Review"
+          return 2
+        when "Complete"
+          return 3
+        else
+          return 4
+        end
       end
     end
   end

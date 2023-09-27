@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'oauth2'
-require 'jira-ruby'
 require 'uri'
 require 'net/http'
 
@@ -9,10 +8,6 @@ class ApplicationController < ActionController::Base
   include FormAuth
 
   attr_accessor :current_user, :client
-
-  rescue_from JIRA::OauthClient::UninitializedAccessTokenError do
-    redirect_to new_jira_session_url
-  end
 
   def not_found
     render component: 'routes/NotFound', status: 404
@@ -33,10 +28,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def parse_response(response)
-    JSON.parse(response.body)
-  end
-
   def auth_string(client_id, state, token, scopes, redirect)
     "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=#{client_id}&scope=#{CGI.escape(scopes)}&redirect_uri=#{redirect}&state=#{state}&response_type=code&prompt=consent&_csrf=#{token}"
   end
@@ -47,6 +38,25 @@ class ApplicationController < ActionController::Base
     request.headers['X-CSRF-Token'] = @csrf_token
 
     @csrf_token
+  end
+  
+  def oauth2_client
+    client_id = ENV['CLIENT_ID']
+    client_secret = ENV['CLIENT_SECRET']
+
+    options = {
+      site: 'https://auth.atlassian.com',
+      authorize_url: '/authorize',
+      token_url: '/oauth/token',
+      redirect_uri: 'http://localhost:3000/callback',
+      client_id: client_id,
+      client_secret: client_secret,
+      scope: @scopes
+    }
+
+    @redirect = options[:redirect_uri]
+
+    OAuth2::Client.new(client_id, client_secret, options)
   end
 
   def fetch_oauth2_token
@@ -59,7 +69,7 @@ class ApplicationController < ActionController::Base
 
     # Fetch the cloudId using the access token
     response = access_token.get('https://api.atlassian.com/oauth/token/accessible-resources')
-    cloud_id = JSON.parse(response.body).first['id'] if response.status == 200
+    cloud_id = JSON.parse(response.body).last['id'] if response.status == 200
 
     session[:cloud_id] = cloud_id if cloud_id
 
@@ -71,39 +81,20 @@ class ApplicationController < ActionController::Base
     render json: { error: e.message }, status: 500
   end
 
-  def fetch_jira_client
-    byebug
-    access_token = session[:access_token] || @oauth_token.token
-
-    @jira_client = JIRA::Client.new(
-      username: nil,
-      password: nil,
-      auth_type: :oauth_2legged,
-      site: "https://#{@cloud_id}.atlassian.net",
-      context_path: '/rest/api/2',
-      default_headers: { 'Authorization': "Basic #{access_token}",
-                         'Accept': 'application/json' },
-      consumer_key: ENV['CLIENT_ID'],
-      consumer_secret: ENV['CLIENT_SECRET'],
-      private_key_file: Rails.root.join('private_key.pem').to_s
-    )
-
-    @jira_client.set_access_token(
-      access_token,
-      ENV['CLIENT_ID']
-    )
-    byebug
-    session[:jira_client] = @jira_client
-  end
-
-  def api_layer(url)
+  def api_layer(url, jira = false)
     url = URI(url)
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
 
     request = Net::HTTP::Get.new(url)
-    request['apikey'] = ENV['SKILLS_API_KEY']
+
+    if jira
+      request['Authorization'] = "Bearer #{session[:access_token]}"
+      request['Accept'] = "*/*"
+    else
+      request['apikey'] = ENV['SKILLS_API_KEY']
+    end
 
     https.request(request)
   end
