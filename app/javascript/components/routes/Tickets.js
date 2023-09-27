@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAppContext } from '../AppContext'
+import TicketComponent from '../comps/Tickets'
 
 const Tickets = () => {
   const { state } = useAppContext()
@@ -15,11 +16,7 @@ const Tickets = () => {
                 state?.tickets?.map((ticket) => {
                   return (
                     <li key={ticket.id}>
-                      Title: {ticket?.title}
-                      Description: {ticket?.description}
-                      Status: {ticket?.status}
-                      Labels: {ticket?.labels}
-                      Assignee: {ticket?.assignee}
+                      <TicketComponent />
                     </li>
                   )
                 })

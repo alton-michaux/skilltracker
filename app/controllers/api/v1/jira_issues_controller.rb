@@ -14,8 +14,8 @@ module Api
         body = JSON.parse(response.body)
 
         issues = body['issues']
-
-        issues.each do |issue|
+byebug
+        issues&.each do |issue|
           ticket = {
             title: issue["fields"]["summary"].strip,
             status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
@@ -61,7 +61,7 @@ module Api
           return 1
         when "In Review"
           return 2
-        when "Complete"
+        when "Done"
           return 3
         else
           return 4

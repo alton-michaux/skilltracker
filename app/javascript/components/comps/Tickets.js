@@ -10,9 +10,14 @@ const TicketComponent = () => {
         return (
           <li key={ticket.id}>
             <div className="ticket-div">
-              <h4>{ticket.title}</h4>
-              <p>{ticket.status}</p>
-              <p>{ticket.description}</p>
+              <div className="card">
+                <img src="..." className="card-img-top" alt="..." />
+                  <div className="card-body">
+                    <h5 className="card-title">{ticket.title}</h5>
+                    <h7 className="card-title">{ticket.status}</h7>
+                    <p className="card-text">{ticket.description}</p>
+                  </div>
+              </div>
             </div>
           </li>
         )
