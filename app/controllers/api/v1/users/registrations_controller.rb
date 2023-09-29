@@ -7,6 +7,7 @@ module Api
         include FormAuth
 
         before_action :form_auth_token
+        before_action :authenticate_api_v1_user!
         before_action :configure_sign_up_params, only: [:create]
         before_action :configure_account_update_params, only: [:update]
 

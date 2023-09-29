@@ -6,6 +6,7 @@ module Api
       include FormAuth
 
       before_action :form_auth_token
+      before_action :authenticate_api_v1_user!
       before_action :set_issue, only: :show
 
       def index
@@ -14,18 +15,21 @@ module Api
         body = JSON.parse(response.body)
 
         issues = body['issues']
-byebug
-        issues&.each do |issue|
-          ticket = {
-            title: issue["fields"]["summary"].strip,
-            status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
-            description: issue["fields"]["customfield_10051"],
-            labels: issue["fields"]["labels"].map(&:capitalize),
-            assignee: issue["fields"]["assignee"]["displayName"],
-            user_id: 1
-          }
 
-          Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])
+        if Ticket.all.empty?
+          issues&.each do |issue|
+            ticket = {
+              title: issue["fields"]["summary"].strip,
+              status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
+              description: issue["fields"]["customfield_10051"],
+              labels: issue["fields"]["labels"].map(&:capitalize),
+              assignee: issue["fields"]["assignee"]["displayName"],
+              reporter_avatar: issue["fields"]["reporter"]["avatarUrls"]["48x48"],
+              user_id: 1
+            }
+
+            Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])
+          end
         end
 
         render json: Ticket.all, each_serializer: TicketSerializer, status: 200

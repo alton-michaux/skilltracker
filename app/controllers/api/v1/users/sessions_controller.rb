@@ -8,7 +8,7 @@ module Api
 
         before_action :form_auth_token, except: [:index]
         before_action :authorize_request, except: %i[create new destroy]
-        before_action :authenticate_user!
+        before_action :authenticate_api_v1_user!
         before_action :set_user, except: [:create]
 
         def create
