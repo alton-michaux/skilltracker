@@ -7,8 +7,6 @@ require 'net/http'
 class ApplicationController < ActionController::Base
   include FormAuth
 
-  before_action :authenticate_api_v1_user!
-
   attr_accessor :current_user, :client
 
   def not_found
