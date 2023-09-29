@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# spec/requests/blogs_spec.rb
 require 'swagger_helper'
 
 describe 'Tickets API' do
@@ -28,7 +27,8 @@ describe 'Tickets API' do
                    assignee: { type: :string }
                  }, required: %w[id title description status assignee]
                }
-
+        let(:token) {  generate_jwt_token(user) }
+        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
 
         run_test! do |response|
@@ -64,7 +64,8 @@ describe 'Tickets API' do
                  status: { type: :integer },
                  assignee: { type: :string }
                }
-
+        let(:token) {  generate_jwt_token(user) }
+        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
         let(:id) { ticket2.id }
 
