@@ -61,7 +61,7 @@ module Api
           return 1
         when "In Review"
           return 2
-        when "Complete"
+        when "Done"
           return 3
         else
           return 4
