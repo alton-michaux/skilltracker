@@ -14,9 +14,9 @@ const TicketComponent = () => {
               <div className="card">
                 <div className="card-body">
                   <img src={ticket.reporter_avatar} className="card-img-top reporter-avatar" alt="Issue reporter avatar" />
-                  <h5 className="card-title">{ticket.title}</h5>
+                  <h5 className="card-title">{truncate(ticket.title, 50)}</h5>
                   <h7 className="card-title">{ticket.status}</h7>
-                  <p className="card-text">{truncate(ticket.description)}</p>
+                  <p className="card-text">{truncate(ticket.description, 100)}</p>
                 </div>
               </div>
             </li>
