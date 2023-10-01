@@ -27,7 +27,8 @@ describe 'Skills API' do
                    endorsements: { type: :integer }
                  }
                }
-
+        let(:token) {  generate_jwt_token(user) }
+        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
 
         run_test! do |response|

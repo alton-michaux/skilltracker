@@ -6,6 +6,7 @@ module Api
       include FormAuth
 
       before_action :form_auth_token
+      before_action :authenticate_api_v1_user!
       before_action :fetch_current_user
 
       attr_accessor :user_skills
