@@ -64,6 +64,8 @@ RSpec.configure do |config|
 
   config.include Warden::Test::Helpers, type: :request
 
+  config.include AuthenticationHelper
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:

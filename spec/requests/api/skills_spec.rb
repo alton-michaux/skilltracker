@@ -19,6 +19,8 @@ describe 'Skills API' do
                  name: { type: :string }
                },
                required: %w[id name]
+        let(:token) {  generate_jwt_token(user) }
+        let(:Authorization) { "Bearer #{token[0]}" }
 
         run_test! do |response|
           data = JSON.parse(response.body)

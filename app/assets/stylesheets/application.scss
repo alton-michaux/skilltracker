@@ -124,7 +124,15 @@ ul {
     margin: 0 auto;
   }
 
-  // .ticket-div {
-  //   border: 1px solid white;
-  // }
+  .ticket-div {
+    border: 1px solid white;
+    max-width: 75%;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+  }
+
+  .reporter-avatar {
+    max-width: 5em;
+  }
 }
