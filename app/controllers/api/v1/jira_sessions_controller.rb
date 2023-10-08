@@ -8,6 +8,7 @@ module Api
 
       before_action :form_auth_token, only: [:callback]
       before_action :handle_csrf, only: :authorize
+      before_action :authorize_request, except: :callback
       before_action :authenticate_api_v1_user!
       before_action :fetch_oauth2_token, only: :callback
       before_action :fetch_session, only: :destroy
