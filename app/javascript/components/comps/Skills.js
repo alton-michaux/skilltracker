@@ -1,19 +1,18 @@
 import React from 'react'
-import { useAppContext } from '../AppContext'
 import { truncate } from '../utils/local/app'
+import PropTypes from 'prop-types'
 
-const SkillComponent = () => {
-  const { state } = useAppContext()
+const SkillComponent = ({ skills }) => {
   return (
     <ul className='list-div'>
-      {Object.keys(state.matchedSkills).length > 0
+      {Object.keys(skills).length > 0
         // eslint-disable-next-line multiline-ternary
-        ? (state.matchedSkills.map((skill) => {
+        ? (skills.map((skill) => {
             return (
-            <li key={skill.id}>
+            <li key={skill}>
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">{truncate(skill.name, 50)}</h5>
+                  <h5 className="card-title">{truncate(skill, 50)}</h5>
                 </div>
               </div>
             </li>
@@ -23,6 +22,14 @@ const SkillComponent = () => {
           )}
     </ul>
   )
+}
+
+SkillComponent.defaultProps = {
+  skills: []
+}
+
+SkillComponent.propTypes = {
+  skills: PropTypes.array
 }
 
 export default SkillComponent

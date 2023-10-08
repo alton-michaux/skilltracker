@@ -3,8 +3,9 @@ import { useAppContext } from '../AppContext'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
+import PropTypes from 'prop-types'
 
-const Search = ({label}) => {
+const Search = ({ label }) => {
   const { fetchSkills } = useAppContext()
 
   const onSearch = (event) => {
@@ -26,6 +27,14 @@ const Search = ({label}) => {
       </IconButton>
     </form>
   )
+}
+
+Search.defaultProps = {
+  label: 'Search'
+}
+
+Search.propTypes = {
+  label: PropTypes.string
 }
 
 export default Search

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAppContext } from '../AppContext'
+import SkillComponent from '../comps/Skills'
 import Search from '../comps/Search'
 
 const Skills = () => {
@@ -13,16 +14,9 @@ const Skills = () => {
           />
         </div>
         <h2>Results</h2>
-        <ul>
-          {
-            Object.keys(state.skills).length > 0 &&
-            state.skills.map((skill, index) => {
-              return (
-                <li key={index}>{skill}</li>
-              )
-            })
-          }
-        </ul>
+        <SkillComponent
+          skills={state.skills}
+        />
       </div>
     </>
   )
