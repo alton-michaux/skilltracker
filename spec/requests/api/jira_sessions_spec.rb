@@ -4,6 +4,13 @@ require 'swagger_helper'
 require 'uri'
 
 describe 'Jira Sessions API' do
+  let!(:user) { create(:user) }
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
+
   path '/api/v1/jira_sessions/authorize' do
     get 'Authorize Jira session' do
       tags 'Jira'
