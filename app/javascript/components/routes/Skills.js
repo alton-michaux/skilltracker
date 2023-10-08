@@ -8,8 +8,9 @@ const Skills = () => {
     <>
       <div className="text-center">
         <div className="search">
-          <h2>Search Skills</h2>
-          <Search/>
+          <Search
+            label='Search Skills'
+          />
         </div>
         <h2>Results</h2>
         <ul>

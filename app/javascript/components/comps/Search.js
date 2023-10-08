@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 
-const Search = () => {
+const Search = ({label}) => {
   const { fetchSkills } = useAppContext()
 
   const onSearch = (event) => {
@@ -19,7 +19,7 @@ const Search = () => {
         id="outlined-basic"
         variant="outlined"
         fullWidth
-        label="Search Skills"
+        label={label}
       />
       <IconButton type="submit" aria-label="search">
         <SearchIcon style={{ fill: 'blue' }} />
