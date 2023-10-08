@@ -5,7 +5,7 @@ import { truncate } from '../utils/local/app'
 const TicketComponent = () => {
   const { state } = useAppContext()
   return (
-    <ul className="ticket-div">
+    <ul className="list-div">
       {Object.keys(state.tickets).length > 0
         // eslint-disable-next-line multiline-ternary
         ? (state.tickets.map((ticket) => {
@@ -22,7 +22,6 @@ const TicketComponent = () => {
             </li>
             )
           })) : (
-          // JSX for when state.tickets has length <= 0
           <p>No tickets available</p>
           )}
     </ul>
