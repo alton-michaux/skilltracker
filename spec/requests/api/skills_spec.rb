@@ -4,8 +4,14 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
+  let!(:user) { create(:user) }
   let!(:skill) { create(:skill) }
   let!(:skill2) { create(:skill, :javascript) }
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
 
   path '/api/v1/skills' do
     get 'Query skill data' do
@@ -19,9 +25,6 @@ describe 'Skills API' do
                  name: { type: :string }
                },
                required: %w[id name]
-        let(:token) {  generate_jwt_token(user) }
-        let(:Authorization) { "Bearer #{token[0]}" }
-
         run_test! do |response|
           data = JSON.parse(response.body)
           expect(data[0]['id']).to eq skill.id

@@ -8,6 +8,11 @@ describe 'Tickets API' do
   let!(:skill) { create(:skill, name: 'API') }
   let!(:ticket) { create(:ticket, user: user) }
   let!(:ticket2) { create(:ticket, :data, user: user) }
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
 
   path '/api/v1/users/{user_id}/tickets' do
     get 'Query ticket data' do
@@ -27,8 +32,6 @@ describe 'Tickets API' do
                    assignee: { type: :string }
                  }, required: %w[id title description status assignee]
                }
-        let(:token) {  generate_jwt_token(user) }
-        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
 
         run_test! do |response|
@@ -64,8 +67,6 @@ describe 'Tickets API' do
                  status: { type: :integer },
                  assignee: { type: :string }
                }
-        let(:token) {  generate_jwt_token(user) }
-        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
         let(:id) { ticket2.id }
 

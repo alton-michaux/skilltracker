@@ -13,7 +13,6 @@ import TicketShow from './routes/TicketShow'
 import UserProfile from './routes/UserProfile'
 import MatchedSkills from './routes/MatchedSkills'
 import PrivateRoute from './routes/PrivateRoute'
-import { URLFunctions } from './utils/api'
 import Loader from './comps/Loader'
 import { retrieveFromStorage } from './utils/local/storage'
 
@@ -58,8 +57,6 @@ const AppWrapper = () => {
         <Route path="/api/v1/users/:id/tickets/:id" element={<TicketShow />} />
         <Route path="/api/v1/users/:id/:name" element={<UserProfile user={state.user} />} />
         <Route path="/api/v1/users/:id/user_skills" element={<MatchedSkills user={state.user} />} />
-        <Route element={<URLFunctions />}
-        />
       </Routes>
     </Router >
   )

@@ -7,6 +7,7 @@ module Api
 
       before_action :form_auth_token
       before_action :authenticate_api_v1_user!
+      before_action :authorize_request
       before_action :set_issue, only: :show
 
       def index
@@ -25,7 +26,7 @@ module Api
               labels: issue["fields"]["labels"].map(&:capitalize),
               assignee: issue["fields"]["assignee"]["displayName"],
               reporter_avatar: issue["fields"]["reporter"]["avatarUrls"]["48x48"],
-              user_id: 1
+              user_id: current_user.id
             }
 
             Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])

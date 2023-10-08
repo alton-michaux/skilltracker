@@ -8,6 +8,11 @@ describe 'Skills API' do
   let!(:user2) { create(:user, email: 'UserTester@email.com') }
   let!(:skill) { create(:skill, name: 'skill') }
   let!(:user_skill) { create(:user_skill, user: user, skill: skill) }
+  # Define a helper method to set the authorization header with a valid token
+  let(:auth_headers) do
+    token = JsonWebToken.encode(user_id: user.id)
+    { 'Authorization' => "Bearer #{token}" }
+  end
 
   path '/api/v1/users/{user_id}/user_skills' do
     get 'Query user skill data' do
@@ -27,8 +32,6 @@ describe 'Skills API' do
                    endorsements: { type: :integer }
                  }
                }
-        let(:token) {  generate_jwt_token(user) }
-        let(:Authorization) { "Bearer #{token[0]}" }
         let(:user_id) { user.id }
 
         run_test! do |response|

@@ -4,7 +4,6 @@ require 'swagger_helper'
 
 describe 'sessions API' do
   let!(:user1) { FactoryBot.create(:user) }
-
   # Define a helper method to set the authorization header with a valid token
   let(:auth_headers) do
     token = JsonWebToken.encode(user_id: user1.id)

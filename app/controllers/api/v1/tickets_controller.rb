@@ -7,6 +7,7 @@ module Api
 
       before_action :form_auth_token
       before_action :authenticate_api_v1_user!
+      before_action :authorize_request
       before_action :set_ticket, only: [:show]
       before_action :fetch_current_user
 
