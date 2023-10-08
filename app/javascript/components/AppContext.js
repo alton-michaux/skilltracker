@@ -49,7 +49,6 @@ export const AppProvider = ({ children }) => {
   }
 
   const handleLogin = (data) => {
-    console.log('🚀 ~ file: AppContext.js:52 ~ handleLogin ~ data:', data)
     sendToStorage(data, 'user')
     handleUser(data.user_data)
     setDefaultHeaders(data.token)
@@ -136,11 +135,10 @@ export const AppProvider = ({ children }) => {
   }
 
   const fetchSkills = async (query) => {
-    console.log('🚀 ~ file: AppContext.js:139 ~ fetchSkills ~ query:', query)
     try {
-      const response = await getSkills()
+      const response = await getSkills(query)
       if (response) {
-        dispatch({ type: 'skills', payload: response })
+        dispatch({ type: 'skills', payload: response.skills })
       }
     } catch (error) {
       toast(error.message)
@@ -150,8 +148,8 @@ export const AppProvider = ({ children }) => {
   const fetchIssues = async (id) => {
     try {
       const response = await getJiraIssues()
+      console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
       if (!response.error) {
-        console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
         dispatch({ type: 'tickets', payload: response })
       } else {
         toast(response.error)

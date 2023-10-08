@@ -3,13 +3,7 @@ import { useAppContext } from '../AppContext'
 import Search from '../comps/Search'
 
 const Skills = () => {
-  const { state, fetchSkills } = useAppContext()
-
-  // const onSearch = (e) => {
-  //   console.log('🚀 ~ file: Skills.js:12 ~ onSearch ~ e:', e)
-  //   // const term = e.target.value
-  //   fetchSkills(e)
-  // }
+  const { state } = useAppContext()
   return (
     <>
       <div className="text-center">
@@ -21,9 +15,9 @@ const Skills = () => {
         <ul>
           {
             Object.keys(state.skills).length > 0 &&
-            state.skills.map((skill) => {
+            state.skills.map((skill, index) => {
               return (
-                <li key={skill.id}>{skill.name}</li>
+                <li key={index}>{skill}</li>
               )
             })
           }
