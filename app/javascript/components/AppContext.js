@@ -49,6 +49,7 @@ export const AppProvider = ({ children }) => {
   }
 
   const handleLogin = (data) => {
+    console.log('🚀 ~ file: AppContext.js:52 ~ handleLogin ~ data:', data)
     sendToStorage(data, 'user')
     handleUser(data.user_data)
     setDefaultHeaders(data.token)
@@ -134,7 +135,8 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  const fetchSkills = async () => {
+  const fetchSkills = async (query) => {
+    console.log('🚀 ~ file: AppContext.js:139 ~ fetchSkills ~ query:', query)
     try {
       const response = await getSkills()
       if (response) {

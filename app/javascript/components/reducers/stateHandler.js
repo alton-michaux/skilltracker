@@ -55,6 +55,11 @@ const StateHandler = (state, action) => {
         ...state,
         tickets: action.payload
       }
+    case 'results':
+      return {
+        ...state,
+        tickets: action.payload
+      }
     default:
       return initialState
   }

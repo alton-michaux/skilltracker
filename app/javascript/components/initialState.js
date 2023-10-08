@@ -6,6 +6,7 @@ const initialState = {
   isError: false,
   isAuthorized: false,
   skills: {},
+  results: {},
   matchedSkills: {},
   tickets: {}
 }

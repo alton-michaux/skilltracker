@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import PropTypes from 'prop-types'
 
 const SkillTrackerNav = ({ onLogout }) => {
-  const { state, fetchMatchedSkills, fetchSkills, fetchIssues, removeUser } = useAppContext()
+  const { state, fetchMatchedSkills, fetchIssues, removeUser } = useAppContext()
 
   const navigate = useNavigate()
 
@@ -17,7 +17,6 @@ const SkillTrackerNav = ({ onLogout }) => {
   }
 
   const handleFetchSkills = () => {
-    fetchSkills()
     navigate('api/v1/skills')
   }
 
