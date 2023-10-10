@@ -52,29 +52,6 @@ module Api
 
         nil
       end
-
-      private
-
-      def myself
-        response = api_layer("#{base_url}/rest/api/2/myself", true)
-
-        body = JSON.parse(response.body)
-        
-        email = body["emailAddress"]
-        name = body["displayName"]
-        profile_picture = body["avatarUrls"]["48x48"]
-# byebug
-#         user = User.find current_user.id
-
-#         user.icon = profile_picture
-#         user.save
-
-        @jira_user = {
-          name: name,
-          email: email,
-          profile_picture: profile_picture
-        }
-      end
     end
   end
 end
