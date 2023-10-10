@@ -124,12 +124,26 @@ ul {
     margin: 0 auto;
   }
 
+  .search form {
+    display: flex;
+    grid-template-columns: auto 1em;
+    margin: 0 auto;
+    max-width: 50%;
+  }
+
   .list-div {
     border: 1px solid white;
     max-width: 75%;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
     grid-template-rows: auto;
+    grid-row-gap: 15px;
+    grid-column-gap: 5px;
+  }
+
+  .card-body {
+    height: 50%;
+    width: 100%;
   }
 
   .reporter-avatar {

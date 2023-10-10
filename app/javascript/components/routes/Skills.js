@@ -1,23 +1,22 @@
 import React from 'react'
 import { useAppContext } from '../AppContext'
+import SkillComponent from '../comps/Skills'
+import Search from '../comps/Search'
 
 const Skills = () => {
   const { state } = useAppContext()
-
   return (
     <>
       <div className="text-center">
-        <h2>Skills</h2>
-        <ul>
-          {
-            Object.keys(state.skills).length > 0 &&
-            state.skills.map((skill) => {
-              return (
-                <li key={skill.id}>{skill.name}</li>
-              )
-            })
-          }
-        </ul>
+        <div className="search">
+          <Search
+            label='Search Skills'
+          />
+        </div>
+        <h2>Results</h2>
+        <SkillComponent
+          skills={state.skills}
+        />
       </div>
     </>
   )

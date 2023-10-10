@@ -134,11 +134,11 @@ export const AppProvider = ({ children }) => {
     }
   }
 
-  const fetchSkills = async () => {
+  const fetchSkills = async (query) => {
     try {
-      const response = await getSkills()
+      const response = await getSkills(query)
       if (response) {
-        dispatch({ type: 'skills', payload: response })
+        dispatch({ type: 'skills', payload: response.skills })
       }
     } catch (error) {
       toast(error.message)
@@ -148,8 +148,8 @@ export const AppProvider = ({ children }) => {
   const fetchIssues = async (id) => {
     try {
       const response = await getJiraIssues()
+      console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
       if (!response.error) {
-        console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
         dispatch({ type: 'tickets', payload: response })
       } else {
         toast(response.error)
