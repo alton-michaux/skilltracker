@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
     begin
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:user_id])
+      session["current_user"] = @current_user
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized
     rescue JWT::DecodeError => e
@@ -97,6 +98,27 @@ class ApplicationController < ActionController::Base
     end
 
     https.request(request)
+  end
+        
+  def myself
+    response = api_layer("#{base_url}/rest/api/2/myself", true)
+
+    body = JSON.parse(response.body)
+    
+    email = body["emailAddress"]
+    name = body["displayName"]
+    profile_picture = body["avatarUrls"]["48x48"]
+    
+    user = User.find session["current_user"]["id"]
+
+    user.icon = profile_picture
+    user.save
+
+    @jira_user = {
+      name: name,
+      email: email,
+      profile_picture: profile_picture
+    }
   end
 
   def base_url
