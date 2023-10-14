@@ -31,7 +31,7 @@ const SkillTrackerNav = ({ onLogout }) => {
   }
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
       <Container>
         <Navbar.Brand href="/" className='navbar-brand'>SkillTracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

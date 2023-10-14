@@ -23,6 +23,7 @@
 html,
 body {
   min-height: 100%;
+  margin-top: 2.5%;
 }
 
 .text-center {
@@ -55,12 +56,35 @@ ul {
   min-height: 100%;
 }
 
+.list-div {
+  display: grid;
+  grid-template-columns: auto;
+}
+
 .list-item-div {
   height: 100%;
 }
 
 .list-item-div div {
   height: 100%;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  width: 100%;
+}
+
+.list-item-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.reporter-avatar {
+  width: 100%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -86,6 +110,8 @@ ul {
     display: none;
   }
 }
+
+// @media screen and (min-width: 1000px) {}
 
 @media screen and (min-width: 1000px) {
   .navbar-brand {
@@ -161,14 +187,14 @@ ul {
     display: flex;
     grid-template-columns: auto 1em;
     margin: 0 auto;
+    margin-bottom: 2.5%;
     max-width: 50%;
   }
 
   .list-div {
     border: 1px solid white;
-    max-width: 75%;
-    display: grid;
-    grid-template-columns: auto auto auto;
+    max-width: 100%;
+    grid-template-columns: auto auto auto auto;
     grid-template-rows: auto;
     grid-row-gap: 15px;
     grid-column-gap: 5px;
