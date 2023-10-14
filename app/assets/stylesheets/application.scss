@@ -55,11 +55,13 @@ ul {
   min-height: 100%;
 }
 
-// @media screen and (max-width: 700px) {
-//   .navbar-div div {
-//     display: none;
-//   }
-// }
+.list-item-div {
+  height: 100%;
+}
+
+.list-item-div div {
+  height: 100%;
+}
 
 @media screen and (max-width: 1000px) {
   html {

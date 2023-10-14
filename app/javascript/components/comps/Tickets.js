@@ -10,7 +10,7 @@ const TicketComponent = () => {
         // eslint-disable-next-line multiline-ternary
         ? (state.tickets.map((ticket) => {
             return (
-            <li key={ticket.id}>
+            <li key={ticket.id} className='list-item-div'>
               <div className="card">
                 <div className="card-body">
                   <img src={ticket.reporter_avatar} className="card-img-top reporter-avatar" alt="Issue reporter avatar" />
