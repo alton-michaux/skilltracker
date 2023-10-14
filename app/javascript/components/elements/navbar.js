@@ -36,7 +36,7 @@ const SkillTrackerNav = ({ onLogout }) => {
         <Navbar.Brand href="/" className='navbar-brand'>SkillTracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto nav-group">
+          <Nav className="me-auto nav-group navbar-div">
             {
               Object.keys(state.user).length > 0
                 ? <>
@@ -51,9 +51,9 @@ const SkillTrackerNav = ({ onLogout }) => {
                   <Nav.Link onClick={() => { handleFetchSkills() }}>Skills</Nav.Link>
                   <Nav.Link onClick={() => { navigate(`/api/v1/users/${state.user.id}/${state.user.full_name}`) }}>Profile</Nav.Link>
                   <Nav.Link onClick={() => { handleRemoveUser(onLogout) }}>Logout</Nav.Link>
-                  <Nav.Link className="navbar-brand" href="#">
-                    <img src={state.user.icon} alt='profile picture'></img>
-                  </Nav.Link>
+                  <div className="navbar-brand icon" href="#">
+                    <img src={state.user.icon} alt='profile icon'></img>
+                  </div>
                 </>
                 : <></>
             }

@@ -29,6 +29,22 @@ body {
   padding: 1.5%;
 }
 
+.icon {
+  margin-right: 0;
+}
+
+.navbar-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-div a {
+  height: 70%;
+  margin: 0 auto;
+  margin-top: 1%;
+}
+
 ul {
   display: flex;
   flex-direction: column;
@@ -39,19 +55,16 @@ ul {
   min-height: 100%;
 }
 
+// @media screen and (max-width: 700px) {
+//   .navbar-div div {
+//     display: none;
+//   }
+// }
+
 @media screen and (max-width: 1000px) {
   html {
     font-size: 35px;
   }
-
-  // .nav-group {
-  //   display: flex;
-  //   flex-direction: column;
-  // }
-
-  // .navbar-brand {
-  //   margin-right: 0;
-  // }
 
   .main-div {
     display: flex;
@@ -66,22 +79,31 @@ ul {
   .main-headers {
     padding-bottom: 5%;
   }
-
-  .button-div {
-    display: flex;
-    justify-content: center;
-    padding: 5%;
-  }
-
-  .button-div button {
-    min-width: 300px;
-    min-height: 150px;
+  
+  .navbar-div div {
+    display: none;
   }
 }
 
 @media screen and (min-width: 1000px) {
   .navbar-brand {
     cursor: pointer;
+  }
+  
+  .button-div {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+  }
+
+  .button-div button {
+    min-width: 300px;
+    min-height: 150px;
+  }
+  
+  .navbar-div div {
+    cursor: auto;
+    display: block;
   }
 
   .main-div {
