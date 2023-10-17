@@ -6,7 +6,7 @@ import { useAppContext } from '../AppContext'
 const UserProfile = () => {
   const { state } = useAppContext()
   return (
-    <>
+    <div className='non-scrolling-page-div'>
       <h2 className="text-center">
         Welcome {state.user.full_name}!
       </h2>
@@ -20,7 +20,7 @@ const UserProfile = () => {
           <TicketComponent/>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

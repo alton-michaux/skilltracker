@@ -10,6 +10,9 @@ export const sendToStorage = (data, type) => {
   if (type === 'auth') {
     localStorage.setItem('authorized?', JSON.stringify(data))
   }
+  if (type === 'tickets') {
+    localStorage.setItem('tickets', JSON.stringify(data))
+  }
 }
 
 export const removeFromStorage = () => {

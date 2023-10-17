@@ -5,7 +5,7 @@ const MatchedSkills = () => {
   const { state } = useAppContext()
   return (
     <div className="text-center">
-      <h2>Matched Skills</h2>
+      <h2 className='component-header'>Matched Skills</h2>
       <ul>
         {
           Object.keys(state.matchedSkills).length > 0 &&
