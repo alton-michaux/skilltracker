@@ -13,10 +13,16 @@ const Skills = () => {
             label='Search Skills'
           />
         </div>
-        <h2>Results</h2>
-        <SkillComponent
-          skills={state.skills}
-        />
+        {
+          Object.keys(state.skills).length > 0
+            ? <>
+              <h2>Results</h2>
+              <SkillComponent
+                skills={state.skills}
+              />
+            </>
+            : <><h4>No Skills Available</h4></>
+        }
       </div>
     </>
   )

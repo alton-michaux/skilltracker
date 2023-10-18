@@ -23,10 +23,27 @@
 html,
 body {
   min-height: 100%;
+  margin-top: 2.5%;
 }
 
 .text-center {
   padding: 1.5%;
+}
+
+.icon {
+  margin-right: 0;
+}
+
+.navbar-div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-div a {
+  height: 70%;
+  margin: 0 auto;
+  margin-top: 1%;
 }
 
 ul {
@@ -39,19 +56,66 @@ ul {
   min-height: 100%;
 }
 
+.non-scrolling-page-div {
+  overflow-y: auto;
+}
+
+.secondary-div {
+  border: 1px solid blue;
+  margin: 2%;
+  min-width: 35vw;
+  max-height: 70vh;
+  overflow-y: scroll;
+  padding: 2%;
+  width: 50%;
+}
+
+.component-header {  
+  position: fixed;
+  background-color: white;
+  top: 2.3em;
+  width: 100%;
+  padding: .5em;
+  z-index: 1000;
+}
+
+.list-div {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto;
+  top: 4em;
+}
+
+.list-item-div {
+  height: 100%;
+}
+
+.list-item-div div {
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  width: 100%;
+}
+
+.list-item-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.reporter-avatar {
+  width: 100%;
+}
+
 @media screen and (max-width: 1000px) {
   html {
     font-size: 35px;
   }
-
-  // .nav-group {
-  //   display: flex;
-  //   flex-direction: column;
-  // }
-
-  // .navbar-brand {
-  //   margin-right: 0;
-  // }
 
   .main-div {
     display: flex;
@@ -66,22 +130,37 @@ ul {
   .main-headers {
     padding-bottom: 5%;
   }
-
-  .button-div {
-    display: flex;
-    justify-content: center;
-    padding: 5%;
-  }
-
-  .button-div button {
-    min-width: 300px;
-    min-height: 150px;
+  
+  .navbar-div div {
+    display: none;
   }
 }
+
+// @media screen and (min-width: 1000px) {}
 
 @media screen and (min-width: 1000px) {
   .navbar-brand {
     cursor: pointer;
+  }
+
+  .non-scrolling-page-div {
+    overflow-y: hidden;
+  }
+  
+  .button-div {
+    display: flex;
+    justify-content: center;
+    padding: 1%;
+  }
+
+  .button-div button {
+    min-width: 200px;
+    min-height: 1em;
+  }
+  
+  .navbar-div div {
+    cursor: auto;
+    display: block;
   }
 
   .main-div {
@@ -103,15 +182,6 @@ ul {
   .user-profile-div {
     display: flex;
     flex-direction: row;
-  }
-
-  .secondary-div {
-    border: 1px solid blue;
-    margin: 2%;
-    min-width: 35vw;
-    max-height: 70vh;
-    overflow-y: scroll;
-    padding: 2%;
   }
 
   .button-div {
@@ -137,14 +207,14 @@ ul {
     display: flex;
     grid-template-columns: auto 1em;
     margin: 0 auto;
+    margin-bottom: 2.5%;
     max-width: 50%;
   }
 
   .list-div {
     border: 1px solid white;
-    max-width: 75%;
-    display: grid;
-    grid-template-columns: auto auto auto;
+    max-width: 100%;
+    grid-template-columns: auto auto;
     grid-template-rows: auto;
     grid-row-gap: 15px;
     grid-column-gap: 5px;

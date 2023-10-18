@@ -146,16 +146,21 @@ export const AppProvider = ({ children }) => {
   }
 
   const fetchIssues = async (id) => {
-    try {
-      const response = await getJiraIssues()
-      console.log('🚀 ~ file: AppContext.js:152 ~ fetchIssues ~ response:', response)
-      if (!response.error) {
-        dispatch({ type: 'tickets', payload: response })
-      } else {
-        toast(response.error)
+    const tickets = retrieveFromStorage('tickets')
+    if (tickets) {
+      dispatch({ type: 'tickets', payload: tickets })
+    } else {
+      try {
+        const response = await getJiraIssues()
+        if (!response.error) {
+          sendToStorage(response, 'tickets')
+          dispatch({ type: 'tickets', payload: response })
+        } else {
+          toast(response.error)
+        }
+      } catch (error) {
+        toast(error.message)
       }
-    } catch (error) {
-      toast(error.message)
     }
   }
 
