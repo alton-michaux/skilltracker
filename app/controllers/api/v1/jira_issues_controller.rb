@@ -17,19 +17,23 @@ module Api
 
         issues = body['issues']
 
-        if Ticket.all.empty?
-          issues&.each do |issue|
-            ticket = {
-              title: issue["fields"]["summary"].strip,
-              status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
-              description: issue["fields"]["customfield_10051"],
-              labels: issue["fields"]["labels"].map(&:capitalize),
-              assignee: issue["fields"]["assignee"]["displayName"],
-              reporter_avatar: issue["fields"]["reporter"]["avatarUrls"]["48x48"],
-              user_id: current_user.id
-            }
+        issues&.each do |issue|
+          ticket = {
+            title: issue["fields"]["summary"].strip,
+            status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
+            description: issue["fields"]["customfield_10051"],
+            labels: issue["fields"]["labels"].map(&:capitalize),
+            assignee: issue["fields"]["assignee"]["displayName"],
+            reporter_avatar: issue["fields"]["reporter"]["avatarUrls"]["48x48"],
+            user_id: current_user.id
+          }
 
-            Ticket.create(ticket) unless Ticket.find_by(title: ticket[:title])
+          existing_ticket = Ticket.find_by(title: ticket[:title])
+
+          if existing_ticket
+            existing_ticket.update(ticket)
+          else
+            Ticket.create(ticket)
           end
         end
 
