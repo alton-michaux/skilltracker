@@ -50,8 +50,8 @@ export const AppProvider = ({ children }) => {
 
   const handleLogin = (data) => {
     sendToStorage(data, 'user')
-    handleUser(data.user_data)
     setDefaultHeaders(data.token)
+    handleUser(data.user_data)
     dispatch({ type: 'isAuthenticated', payload: true })
   }
 
@@ -85,7 +85,7 @@ export const AppProvider = ({ children }) => {
 
     // Include the CSRF token in the form data
     data.authenticity_token = document.querySelector('meta[name="csrf-token"]').content
-
+    setDefaultHeaders(data.token)
     try {
       const response = await userLoginSubmit(data)
       if (response) {
