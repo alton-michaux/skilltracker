@@ -15,7 +15,7 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
     it 'returns an auth string' do
       sign_in user
 
-      request.headers.merge!(auth_headers)  # Make sure to merge headers into the request
+      request.headers.merge!(auth_headers)
   
       get 'authorize'
   
