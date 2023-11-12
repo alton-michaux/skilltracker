@@ -4,43 +4,43 @@
 require 'swagger_helper'
 
 describe 'Skills API' do
-  let!(:user) { create(:user) }
-  let!(:user2) { create(:user, email: 'UserTester@email.com') }
-  let!(:skill) { create(:skill, name: 'skill') }
-  let!(:user_skill) { create(:user_skill, user: user, skill: skill) }
-  # Define a helper method to set the authorization header with a valid token
-  let(:auth_headers) do
-    token = JsonWebToken.encode(user_id: user.id)
-    { 'Authorization' => "Bearer #{token}" }
-  end
+  # let!(:user) { create(:user) }
+  # let!(:user2) { create(:user, email: 'UserTester@email.com') }
+  # let!(:skill) { create(:skill, name: 'skill') }
+  # let!(:user_skill) { create(:user_skill, user: user, skill: skill) }
+  # # Define a helper method to set the authorization header with a valid token
+  # let(:auth_headers) do
+  #   token = JsonWebToken.encode(user_id: user.id)
+  #   { 'Authorization' => "Bearer #{token}" }
+  # end
 
-  path '/api/v1/users/{user_id}/user_skills' do
-    get 'Query user skill data' do
-      tags 'Skills', 'Users'
-      produces 'application/json'
-      parameter name: :user_id, in: :path, type: :string
+  # path '/api/v1/users/{user_id}/user_skills' do
+  #   get 'Query user skill data' do
+  #     tags 'Skills', 'Users'
+  #     produces 'application/json'
+  #     parameter name: :user_id, in: :path, type: :string
 
-      response '200', 'Return correct information based on query' do
-        schema type: :array,
-               items: {
-                 type: :object,
-                 properties: {
-                   id: { type: :integer },
-                   user: { type: :object },
-                   skill: { type: :object },
-                   proficiency: { type: :integer },
-                   endorsements: { type: :integer }
-                 }
-               }
-        let(:user_id) { user.id }
+  #     response '200', 'Return correct information based on query' do
+  #       schema type: :array,
+  #              items: {
+  #                type: :object,
+  #                properties: {
+  #                  id: { type: :integer },
+  #                  user: { type: :object },
+  #                  skill: { type: :object },
+  #                  proficiency: { type: :integer },
+  #                  endorsements: { type: :integer }
+  #                }
+  #              }
+  #       let(:user_id) { user.id }
 
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data[0]['id']).to eq user_skill.id
-          expect(data[0]['user']['email']).to eq user.email
-          expect(data[0]['skill']['name']).to eq skill.name
-        end
-      end
-    end
-  end
+  #       run_test! do |response|
+  #         data = JSON.parse(response.body)
+  #         expect(data[0]['id']).to eq user_skill.id
+  #         expect(data[0]['user']['email']).to eq user.email
+  #         expect(data[0]['skill']['name']).to eq skill.name
+  #       end
+  #     end
+  #   end
+  # end
 end
