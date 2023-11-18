@@ -3,14 +3,25 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::JiraSessionsController, type: :controller do
+  include Devise::Test::ControllerHelpers
   describe 'Jira Sessions API' do
-    describe 'POST #authorize' do
-      it 'returns an auth string' do
-        get 'authorize'
+    let!(:user) { create(:user) }
 
-        # Assert the response
-        expect(response).to have_http_status(:success)
-      end
+    let(:auth_headers) do
+      token = JsonWebToken.encode(user_id: user.id)
+      { 'Authorization' => "Bearer #{token}" }
+    end
+  
+    it 'returns an auth string' do
+      sign_in user
+
+      request.headers.merge!(auth_headers)
+  
+      get 'authorize'
+  
+      expect(response).to have_http_status(:success)
+      body = JSON.parse(response.body)
+      expect(body["auth"]).not_to be_nil
     end
 
     # describe 'GET #callback' do

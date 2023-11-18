@@ -11,20 +11,20 @@ describe 'Jira Sessions API' do
     { 'Authorization' => "Bearer #{token}" }
   end
 
-  path '/api/v1/jira_sessions/authorize' do
-    get 'Authorize Jira session' do
-      tags 'Jira'
-      produces 'application/json'
+  # path '/api/v1/jira_sessions/authorize' do
+  #   get 'Authorize Jira session' do
+  #     tags 'Jira'
+  #     produces 'application/json'
 
-      response '200', 'Return auth string' do
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(response).to have_http_status(:success)
-          expect(data['auth']).to_not be_nil
-        end
-      end
-    end
-  end
+  #     response '200', 'Return auth string' do
+  #       run_test! do |response|
+  #         data = JSON.parse(response.body)
+  #         expect(response).to have_http_status(:success)
+  #         expect(data['auth']).to_not be_nil
+  #       end
+  #     end
+  #   end
+  # end
 
   # path 'api/v1/jira_sessions/callback' do
   #   get 'Redirect Jira authentication' do
