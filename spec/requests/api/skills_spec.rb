@@ -9,25 +9,25 @@ describe 'Skills API' do
   let!(:skill2) { create(:skill, :javascript) }
 
   # path '/api/v1/skills' do
-    # get 'Query skill data' do
-    #   tags 'Skills'
-    #   produces 'application/json'
+  # get 'Query skill data' do
+  #   tags 'Skills'
+  #   produces 'application/json'
 
-    #   response '200', 'Return correct information based on query' do
-    #     schema type: :array,
-    #            properties: {
-    #              id: { type: :integer },
-    #              name: { type: :string }
-    #            },
-    #            required: %w[id name]
+  #   response '200', 'Return correct information based on query' do
+  #     schema type: :array,
+  #            properties: {
+  #              id: { type: :integer },
+  #              name: { type: :string }
+  #            },
+  #            required: %w[id name]
 
-    #     run_test! do |response|
-    #       data = JSON.parse(response.body)
-    #       expect(data[0]['id']).to eq skill.id
-    #       expect(data[1]['name']).to eq skill2.name
-    #     end
-    #   end
-    # end
+  #     run_test! do |response|
+  #       data = JSON.parse(response.body)
+  #       expect(data[0]['id']).to eq skill.id
+  #       expect(data[1]['name']).to eq skill2.name
+  #     end
+  #   end
+  # end
 
   #   post 'Creates a Skill' do
   #     tags 'Skills'

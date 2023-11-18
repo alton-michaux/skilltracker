@@ -20,12 +20,12 @@ module Api
         if Ticket.all.empty?
           issues&.each do |issue|
             ticket = {
-              title: issue["fields"]["summary"].strip,
-              status: convert_status(issue["fields"]["status"]["statusCategory"]["name"]),
-              description: issue["fields"]["customfield_10051"],
-              labels: issue["fields"]["labels"].map(&:capitalize),
-              assignee: issue["fields"]["assignee"]["displayName"],
-              reporter_avatar: issue["fields"]["reporter"]["avatarUrls"]["48x48"],
+              title: issue['fields']['summary'].strip,
+              status: convert_status(issue['fields']['status']['statusCategory']['name']),
+              description: issue['fields']['customfield_10051'],
+              labels: issue['fields']['labels'].map(&:capitalize),
+              assignee: issue['fields']['assignee']['displayName'],
+              reporter_avatar: issue['fields']['reporter']['avatarUrls']['48x48'],
               user_id: current_user.id
             }
 
@@ -47,7 +47,7 @@ module Api
       def projects
         response = api_layer("#{base_url}/rest/api/2/project", true)
 
-        body = JSON.parse(response.body)
+        JSON.parse(response.body)
       rescue JIRA::HTTPError => e
         render json: { error: e.message }
       end
@@ -60,16 +60,16 @@ module Api
 
       def convert_status(status)
         case status
-        when "To Do"
-          return 0
-        when "In Progress"
-          return 1
-        when "In Review"
-          return 2
-        when "Done"
-          return 3
+        when 'To Do'
+          0
+        when 'In Progress'
+          1
+        when 'In Review'
+          2
+        when 'Done'
+          3
         else
-          return 4
+          4
         end
       end
     end

@@ -11,17 +11,17 @@ RSpec.describe Api::V1::JiraSessionsController, type: :controller do
       token = JsonWebToken.encode(user_id: user.id)
       { 'Authorization' => "Bearer #{token}" }
     end
-  
+
     it 'returns an auth string' do
       sign_in user
 
       request.headers.merge!(auth_headers)
-  
+
       get 'authorize'
-  
+
       expect(response).to have_http_status(:success)
       body = JSON.parse(response.body)
-      expect(body["auth"]).not_to be_nil
+      expect(body['auth']).not_to be_nil
     end
 
     # describe 'GET #callback' do
