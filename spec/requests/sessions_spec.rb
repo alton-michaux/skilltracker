@@ -74,7 +74,7 @@ describe 'sessions API' do
       security [Bearer: {}]
 
       response '204', 'blacklist token' do
-        let(:token) {  generate_jwt_token(user) }
+        let(:token) { generate_jwt_token(user) }
         let(:Authorization) { "Bearer #{token[0]}" }
         # Set the authorization header with a valid token for the logout request
         let(:Authorization) { auth_headers['Authorization'] }

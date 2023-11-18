@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     begin
       @decoded = JsonWebToken.decode(header)
       @current_user = User.find(@decoded[:user_id])
-      session["current_user"] = @current_user
+      session['current_user'] = @current_user
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized
     rescue JWT::DecodeError => e
@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
     @csrf_token
   end
-  
+
   def oauth2_client
     client_id = ENV['CLIENT_ID']
     client_secret = ENV['CLIENT_SECRET']
@@ -92,24 +92,24 @@ class ApplicationController < ActionController::Base
 
     if jira
       request['Authorization'] = "Bearer #{session[:access_token]}"
-      request['Accept'] = "*/*"
+      request['Accept'] = '*/*'
     else
       request['apikey'] = ENV['SKILLS_API_KEY']
     end
 
     https.request(request)
   end
-        
+
   def myself
     response = api_layer("#{base_url}/rest/api/2/myself", true)
 
     body = JSON.parse(response.body)
-    
-    email = body["emailAddress"]
-    name = body["displayName"]
-    profile_picture = body["avatarUrls"]["48x48"]
-    
-    user = User.find session["current_user"]["id"]
+
+    email = body['emailAddress']
+    name = body['displayName']
+    profile_picture = body['avatarUrls']['48x48']
+
+    user = User.find session['current_user']['id']
 
     user.icon = profile_picture
     user.save

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveMatchedSkillIdFromUserSkills < ActiveRecord::Migration[5.2]
   def up
     remove_column :user_skills, :matched_skill_id, :integer
