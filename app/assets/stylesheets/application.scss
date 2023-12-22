@@ -26,6 +26,15 @@ body {
   margin-top: 2.5%;
 }
 
+.main-div {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  min-width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+}
+
 .search {
   margin-top: 2em;
 }
@@ -128,12 +137,10 @@ ul {
 
   .main-div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     max-width: 50%;
     min-height: 100vh;
-    margin: 0 auto;
     padding: 2%;
-    justify-content: center;
   }
 
   .main-headers {
@@ -181,16 +188,16 @@ ul {
     justify-content: space-between;
     min-width: 75vw;
   }
+  
+  .user-profile-div {
+    display: flex;
+    flex-direction: row;
+  }
 
   .main-headers {
     display: flex;
     flex-direction: column;
     max-height: 100px;
-  }
-
-  .user-profile-div {
-    display: flex;
-    flex-direction: row;
   }
 
   .button-div {

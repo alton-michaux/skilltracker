@@ -7,7 +7,7 @@ const UserProfile = () => {
   const { state } = useAppContext()
   return (
     <div className='non-scrolling-page-div'>
-      <h2 className="text-center">
+      <h2 className="text-center mt-3">
         Welcome {state.user.full_name}!
       </h2>
       <div className="text-center main-div user-profile-div">
