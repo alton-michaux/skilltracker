@@ -70,11 +70,12 @@ ul {
   width: 50%;
 }
 
-.component-header {  
-  position: fixed;
+.component-header {
+  text-align: center;
+  margin: 0 auto;
   background-color: white;
   top: 2.3em;
-  width: 100%;
+  width: 50%;
   padding: .5em;
   z-index: 1000;
 }
