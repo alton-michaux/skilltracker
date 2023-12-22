@@ -26,6 +26,10 @@ body {
   margin-top: 2.5%;
 }
 
+.search {
+  margin-top: 2em;
+}
+
 .text-center {
   padding: 1.5%;
 }
@@ -57,6 +61,7 @@ ul {
 }
 
 .non-scrolling-page-div {
+  padding-top: 1em;
   overflow-y: auto;
 }
 
@@ -72,10 +77,13 @@ ul {
 
 .component-header {
   text-align: center;
+  position: fixed;
   margin: 0 auto;
+  margin-bottom: 3em;
   background-color: white;
-  top: 2.3em;
-  width: 50%;
+  top: 2em;
+  height: 10%;
+  width: 100%;
   padding: .5em;
   z-index: 1000;
 }
