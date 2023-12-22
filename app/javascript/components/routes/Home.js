@@ -6,7 +6,7 @@ const Home = () => {
   const { state } = useAppContext()
   return (
     <div>
-      <h5 className="text-center">Welcome to SkillTracker{state.user.full_name ? ` ${state.user.full_name}` : ''}!</h5>
+      <h5 className="text-center mt-5">Welcome to SkillTracker{state.user.full_name ? ` ${state.user.full_name}` : ''}!</h5>
       <div className="container-sm">
         <div className="row main-div">
           {
